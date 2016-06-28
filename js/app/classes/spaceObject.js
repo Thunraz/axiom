@@ -1,12 +1,11 @@
+'use strict';
 define(
-    ['three', 'app/classes/spaceObjectType'],
-    function(THREE, SpaceObjectType) {
+    ['three'],
+    function(THREE) {
         return class SpaceObject {
             constructor() {
-                this.radius = 1.0;
                 this.mass = 1.0;
-                this.position = THREE.Vector3(0, 0, 0);
-                this.spaceObjectType = SpaceObjectType.NONE;
+                this.position = new THREE.Vector3(0.0, 0.0, 0.0);
             }
         }
     }
