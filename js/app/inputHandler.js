@@ -1,3 +1,4 @@
+'use strict';
 define(['app/controls', 'app/config'], function(controls, config) {
 
     // ##############################################
