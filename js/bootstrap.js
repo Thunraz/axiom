@@ -12,5 +12,5 @@
         }
     });
 
-    require(['app/3']);
+    require(['app/axiom']);
 })();
