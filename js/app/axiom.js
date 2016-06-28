@@ -5,36 +5,37 @@ define(
         'three',
         'app/controls',
         'app/inputHandler',
-        'app/classes/Planet'
+        'app/classes/Planet',
+        'app/classes/Star'
     ],
-    function(config, THREE, controls, inputHandler, Planet) {
-        var scene = new THREE.Scene();
-        var camera = new THREE.PerspectiveCamera(config.camera.fov, config.canvasWidth/config.canvasHeight, 0.1, 1000);
+    function(config, THREE, controls, inputHandler, Planet, Star) {
+        let scene = new THREE.Scene();
+        let camera = new THREE.PerspectiveCamera(config.camera.fov, config.canvasWidth/config.canvasHeight, 0.1, 1000);
 
-        var renderer = new THREE.WebGLRenderer();
+        let renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(config.canvasWidth, config.canvasHeight);
         document.getElementById('game').appendChild( renderer.domElement );
 
-        var ambientLight = new THREE.AmbientLight( 0x101010 ); // soft white light
+        let ambientLight = new THREE.AmbientLight( 0x101010 ); // soft white light
         scene.add( ambientLight );
 
-        var pointLight = new THREE.PointLight( 0x111111, 4 * Math.PI, 100 );
-        pointLight.position.set( 1, 1, 2 );
-        scene.add( pointLight );
-
         camera.position.z = 50;
-        
-        var homePlanet = new Planet('home', 1234.0, 100.0, new THREE.Vector3(0.0, 0.0, 0.0), true, 0x33ff33);
-        scene.add(homePlanet.mesh);
+
+        let astroObjects = [
+            new Planet(scene, 'home',  1234.0, 100.0, new THREE.Vector3(-10.0, 5.0, 0.0), true, 0x33ff33),
+            new Planet(scene, 'second', 234.0,  50.0, new THREE.Vector3(7.0, 3.0, 0.0),   true, 0xff3333),
+
+            new Star(scene, 'sol', 30000.0, 300.0, new THREE.Vector3(0.0, 0.0, 0.0), 0xffff00)
+        ];
 
         function update() {
             requestAnimationFrame(update);
-
-            inputHandler.checkInput();
-
             renderer.render(scene, camera);
-
             inputHandler.checkInput(camera);
+
+            for(var obj in astroObjects) {
+                astroObjects[obj].update();
+            }
         }
 
         update();

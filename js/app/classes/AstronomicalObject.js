@@ -6,6 +6,8 @@ define(
             constructor() {
                 super();
             }
+
+            update() { super.update(); }
         }
     }
 );

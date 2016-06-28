@@ -7,6 +7,8 @@ define(
                 this.mass = 1.0;
                 this.position = new THREE.Vector3(0.0, 0.0, 0.0);
             }
+
+            update() { }
         }
     }
 );
