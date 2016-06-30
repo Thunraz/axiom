@@ -7,7 +7,7 @@ define(
                 super();
             }
 
-            update() { super.update(); }
+            update(deltaT) { super.update(deltaT); }
         }
     }
 );
