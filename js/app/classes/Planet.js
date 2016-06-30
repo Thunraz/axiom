@@ -35,6 +35,10 @@ define(
                 this.mesh = new THREE.Mesh(geometry, material);
                 this.mesh.position.set(this.position.x, this.position.y, this.position.z);
             }
+
+            update(deltaT) {
+                this.mesh.position.set(this.position.x, this.position.y, this.position.z);
+            }
         }
     }
 );

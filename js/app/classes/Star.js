@@ -38,6 +38,10 @@ define(
                 this.mesh.position.set(this.position.x, this.position.y, this.position.z);
                 this.scene.add(this.mesh);
             }
+
+            update(deltaT) {
+                this.mesh.position.set(this.position.x, this.position.y, this.position.z);
+            }
         }
     }
 );

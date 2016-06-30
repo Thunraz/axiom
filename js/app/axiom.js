@@ -39,7 +39,7 @@ define(
 
             // Update all the objects' positions
             for(var obj in astroObjects) {
-                astroObjects[obj].updatePosition(deltaT);
+                astroObjects[obj].updatePosition(currentFrameTime, deltaT);
             }
 
             // Update all the objects
