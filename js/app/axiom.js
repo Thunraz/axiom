@@ -37,7 +37,12 @@ define(
             // Handle user input            
             inputHandler.checkInput(camera);
 
-            // Update all the objects            
+            // Update all the objects' positions
+            for(var obj in astroObjects) {
+                astroObjects[obj].updatePosition(deltaT);
+            }
+
+            // Update all the objects
             for(var obj in astroObjects) {
                 astroObjects[obj].update(deltaT);
             }
