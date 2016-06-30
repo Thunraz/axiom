@@ -28,16 +28,26 @@ define(
             new Star(scene, 'sol', 30000.0, 300.0, new THREE.Vector3(0.0, 0.0, 0.0), 0xffff00)
         ];
 
-        function update() {
-            requestAnimationFrame(update);
-            renderer.render(scene, camera);
+        let lastFrameTime = 0;
+
+        function update(currentFrameTime) {
+            let deltaT = currentFrameTime - lastFrameTime;
+            lastFrameTime = currentFrameTime;
+
+            // Handle user input            
             inputHandler.checkInput(camera);
 
+            // Update all the objects            
             for(var obj in astroObjects) {
-                astroObjects[obj].update();
+                astroObjects[obj].update(deltaT);
             }
+            
+            // Render the scene
+            renderer.render(scene, camera);
+
+            requestAnimationFrame(update);
         }
 
-        update();
+        requestAnimationFrame(update);
     }
 );
