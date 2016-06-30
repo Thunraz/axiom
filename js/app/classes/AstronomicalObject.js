@@ -6,8 +6,6 @@ define(
             constructor() {
                 super();
             }
-
-            update(deltaT) { super.update(deltaT); }
         }
     }
 );

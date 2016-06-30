@@ -9,6 +9,8 @@ define(
                 this.velocity = new THREE.Vector3(0.0, 0.0, 0.0);
             }
 
+            updatePosition(deltaT) { }
+
             update(deltaT) { }
         }
     }
