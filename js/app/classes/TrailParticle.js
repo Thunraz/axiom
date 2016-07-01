@@ -1,6 +1,6 @@
 'use strict';
 define(
-    ['three', 'app/classes/spaceObject'],
+    ['three', 'app/classes/SpaceObject'],
     function(THREE, SpaceObject) {
         return class TrailParticle extends SpaceObject {
             constructor(scene, parent, position, size, lifetime) {

@@ -1,6 +1,6 @@
 'use strict';
 define(
-    ['three', 'app/classes/astronomicalObject', 'app/classes/astronomicalObjectType'],
+    ['three', 'app/classes/AstronomicalObject', 'app/classes/AstronomicalObjectType'],
     function(THREE, AstronomicalObject, AstronomicalObjectType) {
         return class Star extends AstronomicalObject {
 
