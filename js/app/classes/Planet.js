@@ -1,31 +1,31 @@
 'use strict';
 define(
-    ['three', 'app/classes/astronomicalObject', 'app/classes/astronomicalObjectType'],
-    function(THREE, AstronomicalObject, AstronomicalObjectType) {
+    ['three', 'app/classes/astronomicalObject', 'app/classes/astronomicalObjectType', 'app/classes/TrailParticle'],
+    function(THREE, AstronomicalObject, AstronomicalObjectType, TrailParticle) {
         return class Planet extends AstronomicalObject {
 
             constructor(scene, name, mass, radius, position, isSolid, color) {
                 super();
 
-                this.scene    = scene;
+                this.scene        = scene;
 
-                this.name     = name;
-                this.mass     = mass;
-                this.radius   = radius;
-                this.position = position;
-                this.color    = color;
+                this.name         = name;
+                this.mass         = mass;
+                this.radius       = radius;
+                this.position     = position;
+                this.color        = color;
+
+                this.trail        = [];
+
+                this.frameCounter = 0;
                 
-                this.mesh     = null;
+                this._createMesh();
                 
                 if(isSolid) {
                     this.astronomicalObjectType = AstronomicalObjectType.SOLID;
                 } else {
                     this.astronomicalObjectType = AstronomicalObjectType.GAS;
                 }
-
-                this._createMesh();
-
-                this.scene.add(this.mesh);
             }
             
             _createMesh() {
@@ -34,10 +34,31 @@ define(
                 
                 this.mesh = new THREE.Mesh(geometry, material);
                 this.mesh.position.set(this.position.x, this.position.y, this.position.z);
+                
+                this.mesh.name = this.name;
+                this.scene.add(this.mesh);
             }
 
             update(deltaT) {
+                this.frameCounter++;
+
                 this.mesh.position.set(this.position.x, this.position.y, this.position.z);
+
+                if(this.frameCounter % 10 == 0) {
+                    if(this.trail.length < 100) {
+                        this.trail.push(new TrailParticle(this.scene, this, this.position, this.radius / 200, 10));
+                    }
+                }
+
+                for(let i = 0; i < this.trail.length; i++) {
+                    this.trail[i].update(deltaT);
+                }
+
+                this.trail = this.trail.filter((value) => { return value.alive });
+            }
+
+            updatePosition(time, deltaT, spaceObjects) {
+                super.updatePosition(time, deltaT, spaceObjects);
             }
         }
     }
