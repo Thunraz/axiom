@@ -1,6 +1,6 @@
 'use strict';
 define(
-    ['app/classes/spaceObject'],
+    ['app/classes/SpaceObject'],
     function(SpaceObject) {
         return class AstronomicalObject extends SpaceObject {
             constructor() {
