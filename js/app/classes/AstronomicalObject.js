@@ -35,16 +35,15 @@ define(
                 this.velocity = this.velocity.add(
                     this.acceleration.add(newAcceleration).multiplyScalar(deltaT / 2)
                 );
-
-                /*if (this.counter <= 10) {
-                    //console.log(this.name);
-                    console.log(this.velocity);
-                    this.counter++;
-                }*/
             }
 
-            force(time, position) {
-                return new THREE.Vector3(-position.x / time, -position.y / time, 0.0);
+            force(time, position, spaceObjects) {
+                for(let i = 0; i < spaceObjects.length; i++) {
+                    if(spaceObjects[i] == this) continue;
+                    //console.log(obj);
+                }
+                
+                return new THREE.Vector3(-position.x / 1000, -position.y / 1000, 0.0);
             }
         }
     }

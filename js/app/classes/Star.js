@@ -15,7 +15,6 @@ define(
                 this.position = position;
                 this.color    = color;
                 
-                this._mesh    = null;
                 this.astronomicalObjectType = AstronomicalObjectType.STAR;
 
                 this._createLight();
@@ -41,6 +40,7 @@ define(
 
             update(deltaT) {
                 this.mesh.position.set(this.position.x, this.position.y, this.position.z);
+                this.light.position.set(this.position.x, this.position.y, this.position.z);
             }
         }
     }
