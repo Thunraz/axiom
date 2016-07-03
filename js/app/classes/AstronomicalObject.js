@@ -40,11 +40,22 @@ define(
             force(time, position, spaceObjects) {
                 for(let i = 0; i < spaceObjects.length; i++) {
                     if(spaceObjects[i] == this) continue;
-                    //console.log(obj);
+                    let spaceObject = spaceObjects[i];
+
+                    let distance = this.calculateDistance(position, spaceObject.position);
                 }
                 
                 return new THREE.Vector3(-position.x / 1000, -position.y / 1000, 0.0);
             }
+
+            calculateDistance(pos1, pos2) {
+                let x = Math.pow(pos2.x - pos1.x, 2);
+                let y = Math.pow(pos2.y - pos1.y, 2);
+                let z = Math.pow(pos2.z - pos1.z, 2);
+
+                return Math.sqrt(x + y + z);
+            }
+
         }
     }
 );
