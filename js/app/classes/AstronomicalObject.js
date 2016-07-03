@@ -1,7 +1,7 @@
 'use strict';
 define(
-    ['app/classes/SpaceObject'],
-    function(SpaceObject) {
+    ['app/classes/SpaceObject', 'app/classes/Constants'],
+    function(SpaceObject, Constants) {
         return class AstronomicalObject extends SpaceObject {
             constructor() {
                 super();
@@ -25,35 +25,47 @@ define(
                 velocity += timestep * (acceleration + newAcceleration) / 2;
 
                 */
-                this.acceleration = this.force(time, this.position, spaceObjects).divideScalar(this.mass);
+
+                this.acceleration = this.force(time, spaceObjects).divideScalar(this.mass);
 
                 this.position = this.position.add(
                     this.velocity.add(this.acceleration.divideScalar(2))
                 );
 
-                let newAcceleration = this.force(time, this.position, spaceObjects).divideScalar(this.mass);
+                let newAcceleration = this.force(time, spaceObjects).divideScalar(this.mass);
                 this.velocity = this.velocity.add(
                     this.acceleration.add(newAcceleration).multiplyScalar(deltaT / 2)
                 );
             }
 
-            force(time, position, spaceObjects) {
+            force(time, spaceObjects) {
+                let vec = new THREE.Vector3(0, 0, 0);
+
                 for(let i = 0; i < spaceObjects.length; i++) {
-                    if(spaceObjects[i] == this) continue;
                     let spaceObject = spaceObjects[i];
 
-                    let distance = this.calculateDistance(position, spaceObject.position);
+                    if(spaceObject == this) continue;
+
+                    let distance = this.position.distanceTo(spaceObject.position);
+                    let val = Constants.GRAVITATIONAL_CONSTANT * (this.mass * spaceObject.mass) / Math.pow(distance, 2);
+
+                    let direction = spaceObject.position.sub(this.position);
+
+                    vec.set(
+                        vec.x * direction.x * val,
+                        vec.y * direction.y * val,
+                        vec.z * direction.z * val
+                    );
+
+                    if(this.counter < 10) {
+                        console.log(this.name + '; distance: ', distance, '; direction: ', direction, '; vec: ', vec);
+
+                        this.counter++;
+                    }
                 }
                 
-                return new THREE.Vector3(-position.x / 1000, -position.y / 1000, 0.0);
-            }
-
-            calculateDistance(pos1, pos2) {
-                let x = Math.pow(pos2.x - pos1.x, 2);
-                let y = Math.pow(pos2.y - pos1.y, 2);
-                let z = Math.pow(pos2.z - pos1.z, 2);
-
-                return Math.sqrt(x + y + z);
+                //return new THREE.Vector3(-position.x / 1000, -position.y / 1000, 0.0);
+                return vec;
             }
 
         }
