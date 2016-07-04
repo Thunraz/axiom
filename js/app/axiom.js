@@ -3,12 +3,18 @@ define(
     [
         'app/config',
         'three',
+        'stats',
         'app/controls',
         'app/inputHandler',
         'app/classes/Planet',
         'app/classes/Star'
     ],
-    function(config, THREE, controls, inputHandler, Planet, Star) {
+    function(config, THREE, Stats, controls, inputHandler, Planet, Star) {
+        console.log(THREE);
+        let stats = new Stats();
+        stats.showPanel(0);
+        document.body.appendChild(stats.dom);
+
         let scene = new THREE.Scene();
         let camera = new THREE.PerspectiveCamera(config.camera.fov, config.canvasWidth/config.canvasHeight, 0.1, 1000);
 
@@ -37,6 +43,8 @@ define(
         let lastFrameTime = 0;
 
         function update(currentFrameTime) {
+            stats.begin();
+
             let deltaT = currentFrameTime - lastFrameTime;
             lastFrameTime = currentFrameTime;
 
@@ -59,6 +67,7 @@ define(
             // Render the scene
             renderer.render(scene, camera);
 
+            stats.end();
             requestAnimationFrame(update);
         }
 
