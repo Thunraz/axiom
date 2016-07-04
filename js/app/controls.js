@@ -3,5 +3,8 @@ define({
     up: false,
     right: false,
     down: false,
-    left: false
+    left: false,
+
+    cameraUp: false,
+    cameraDown: false
 });
