@@ -62,6 +62,15 @@ define(
                 
                 this.mesh.position.set(this.position.x, this.position.y, this.position.z);
                 this.light.position.set(this.position.x, this.position.y, this.position.z);
+
+                if(config.showDirectionalVectors && this.arrowMesh == null) {
+                    this.arrowMesh = this._createDirectionalArrow();
+                    this.scene.add(this.arrowMesh);
+                }
+
+                if(this.arrowMesh != null) {
+                    this.arrowMesh.visible = config.showDirectionalVectors;
+                }
             }
 
             // ##############################################

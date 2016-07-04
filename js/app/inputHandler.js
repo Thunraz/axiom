@@ -5,8 +5,10 @@ define(['app/controls', 'app/config'], function(controls, config) {
     // # Add event listeners ########################
     // ##############################################
 
-    document.addEventListener( 'keydown', onKeyDown, false );
-    document.addEventListener( 'keyup', onKeyUp, false );
+    document.addEventListener('keydown', onKeyDown, false);
+    document.addEventListener('keyup', onKeyUp, false);
+
+    document.getElementById('ShowDirectionalVectors').addEventListener('change', showDirectionalVectors, false);
 
     // ##############################################
     // # Private functions ##########################
@@ -68,6 +70,12 @@ define(['app/controls', 'app/config'], function(controls, config) {
                 controls.zoomOut = false;
                 break;
         }
+    }
+
+    // ##############################################
+
+    function showDirectionalVectors(event) {
+        config.showDirectionalVectors = event.target.checked;
     }
 
     // ##############################################
