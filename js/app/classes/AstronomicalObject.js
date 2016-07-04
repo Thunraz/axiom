@@ -3,6 +3,11 @@ define(
     ['app/classes/SpaceObject', 'app/classes/Constants'],
     function(SpaceObject, Constants) {
         return class AstronomicalObject extends SpaceObject {
+
+            // ##############################################
+            // # Constructor ################################
+            // ##############################################
+            
             constructor() {
                 super();
                 
@@ -10,56 +15,46 @@ define(
 
                 this.velocity     = new THREE.Vector3(0.0, 0.0, 0.0);
                 this.acceleration = new THREE.Vector3(0.0, 0.0, 0.0);
-
-                this.counter = 0;
             }
 
+            // ##############################################
+            // # Public functions ###########################
+            // ##############################################
+
             updatePosition(deltaT, spaceObjects) {
-                /*
-                Velocity Verlet:
-
-                acceleration = force(time, position) / mass;
-                time        += timestep;
-                position    += timestep * (velocity + timestep * acceleration / 2);
-                */
-
-                this.acceleration = this.force(this.position, spaceObjects).divideScalar(this.mass);
+                this.acceleration = AstronomicalObject.force(this.position, this.mass, this.id, spaceObjects).divideScalar(this.mass);
 
                 this.position = this.position.add(
                     this.velocity
                         .add(this.acceleration.multiplyScalar(deltaT / 2))
-                        //.multiplyScalar(deltaT)
                 );
             }
+
+            // ##############################################
 
             update(deltaT, spaceObjects) {
                 super.update(deltaT, spaceObjects);
 
-                /*
-                Velocity Verlet again:
-
-                newAcceleration = force(time, position) / mass;
-                velocity += timestep * (acceleration + newAcceleration) / 2;
-                */
-
-                let newAcceleration = this.force(this.position, spaceObjects).divideScalar(this.mass);
+                let newAcceleration = AstronomicalObject.force(this.position, this.mass, this.id, spaceObjects).divideScalar(this.mass);
                 this.velocity = this.velocity.add(
                     this.acceleration.add(newAcceleration).multiplyScalar(deltaT)
                 );
-
-                this.counter++;
             }
 
-            force(position, spaceObjects) {
+            // ##############################################
+            // # Static functions ###########################
+            // ##############################################
+
+            static force(position, mass, id, spaceObjects) {
                 let vec = new THREE.Vector3(0, 0, 0);
 
                 for(let i = 0; i < spaceObjects.length; i++) {
                     let spaceObject = spaceObjects[i];
 
-                    if(spaceObject.id == this.id) continue;
+                    if(spaceObject.id == id) continue;
 
                     let distance = position.distanceTo(spaceObject.position);
-                    let val = Constants.GRAVITATIONAL_CONSTANT * (this.mass * spaceObject.mass) / Math.pow(distance, 2);
+                    let val = Constants.GRAVITATIONAL_CONSTANT * (mass * spaceObject.mass) / Math.pow(distance, 2);
 
                     let direction =
                         new THREE.Vector3(0, 0, 0)
@@ -72,6 +67,8 @@ define(
                 return vec;
             }
 
-        }
+            // ##############################################
+
+        } // class
     }
 );

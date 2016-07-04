@@ -4,6 +4,10 @@ define(
     function(THREE, AstronomicalObject, AstronomicalObjectType, TrailParticle) {
         return class Planet extends AstronomicalObject {
 
+            // ##############################################
+            // # Constructor ################################
+            // ##############################################
+            
             constructor(scene, name, mass, radius, position, isSolid, color) {
                 super();
 
@@ -27,6 +31,10 @@ define(
                     this.astronomicalObjectType = AstronomicalObjectType.GAS;
                 }
             }
+
+            // ##############################################
+            // # Private functions ##########################
+            // ##############################################
             
             _createMesh() {
                 let geometry = new THREE.SphereGeometry(this.radius / 100, 32, 32);
@@ -38,6 +46,10 @@ define(
                 this.mesh.name = this.name;
                 this.scene.add(this.mesh);
             }
+
+            // ##############################################
+            // # Public functions ###########################
+            // ##############################################
 
             update(deltaT, spaceObjects) {
                 super.update(deltaT, spaceObjects);
@@ -58,6 +70,9 @@ define(
 
                 this.trail = this.trail.filter((value) => { return value.alive });
             }
-        }
+
+            // ##############################################
+
+        } // class
     }
 );

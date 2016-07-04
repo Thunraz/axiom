@@ -3,6 +3,11 @@ define(
     ['three', 'app/classes/SpaceObject'],
     function(THREE, SpaceObject) {
         return class TrailParticle extends SpaceObject {
+
+            // ##############################################
+            // # Constructor ################################
+            // ##############################################
+
             constructor(scene, parent, position, size, lifetime) {
                 super();
 
@@ -21,6 +26,10 @@ define(
                 this.scene.add(this.mesh);
             }
 
+            // ##############################################
+            // # Private functions ##########################
+            // ##############################################
+
             _createMesh() {
                 let geometry = new THREE.PlaneGeometry(this.size, this.size, this.size);
                 let material = new THREE.MeshBasicMaterial({color: this.color});
@@ -28,6 +37,10 @@ define(
                 this.mesh = new THREE.Mesh(geometry, material);
                 this.mesh.position.set(this.position.x, this.position.y, this.position.z);
             }
+
+            // ##############################################
+            // # Public functions ###########################
+            // ##############################################
 
             update(deltaT) {
                 super.update(deltaT);
@@ -47,6 +60,8 @@ define(
                 }
             }
 
-        }
+            // ##############################################
+
+        } // class
     }
 );

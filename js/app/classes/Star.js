@@ -4,6 +4,10 @@ define(
     function(THREE, AstronomicalObject, AstronomicalObjectType) {
         return class Star extends AstronomicalObject {
 
+            // ##############################################
+            // # Constructor ################################
+            // ##############################################
+
             constructor(scene, name, mass, radius, position, color) {
                 super();
 
@@ -21,11 +25,17 @@ define(
                 this._createMesh();
             }
 
+            // ##############################################
+            // # Private functions ##########################
+            // ##############################################
+
             _createLight() {
                 this.light = new THREE.PointLight( 0x111111, 4 * Math.PI, 100 );
                 this.light.position.set(this.position.x, this.position.y, this.position.z);
                 this.scene.add(this.light);
             }
+
+            // ##############################################
             
             _createMesh() {
                 let geometry = new THREE.SphereGeometry(this.radius / 100, 32, 32);
@@ -38,12 +48,19 @@ define(
                 this.scene.add(this.mesh);
             }
 
+            // ##############################################
+            // # Public functions ###########################
+            // ##############################################
+
             update(deltaT, spaceObjects) {
                 super.update(deltaT, spaceObjects);
                 
                 this.mesh.position.set(this.position.x, this.position.y, this.position.z);
                 this.light.position.set(this.position.x, this.position.y, this.position.z);
             }
-        }
+
+            // ##############################################
+
+        } // class
     }
 );
