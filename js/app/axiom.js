@@ -32,7 +32,7 @@ define(
         astroObjects[0].velocity.setY(.02);
 
         astroObjects[1].velocity.setX(.01);
-        astroObjects[1].velocity.setY(.05);
+        astroObjects[1].velocity.setY(.02);
 
         let lastFrameTime = 0;
 
