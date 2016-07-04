@@ -1,7 +1,7 @@
 'use strict';
 define(
-    ['three', 'app/classes/AstronomicalObject', 'app/classes/AstronomicalObjectType', 'app/classes/TrailParticle'],
-    function(THREE, AstronomicalObject, AstronomicalObjectType, TrailParticle) {
+    ['three', 'app/classes/AstronomicalObject', 'app/classes/AstronomicalObjectType', 'app/classes/TrailParticle', 'app/config'],
+    function(THREE, AstronomicalObject, AstronomicalObjectType, TrailParticle, config) {
         return class Planet extends AstronomicalObject {
 
             // ##############################################
@@ -29,6 +29,11 @@ define(
                     this.astronomicalObjectType = AstronomicalObjectType.SOLID;
                 } else {
                     this.astronomicalObjectType = AstronomicalObjectType.GAS;
+                }
+
+                if(config.showDirectionalVectors) {
+                    this.arrowMesh = this._createDirectionalArrow();
+                    this.scene.add(this.arrowMesh);
                 }
             }
 

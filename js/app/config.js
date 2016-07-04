@@ -6,5 +6,7 @@ define({
     camera: {
         movementSpeed: 1.0,
         fov: 45
-    }
+    },
+
+    showDirectionalVectors: false
 });

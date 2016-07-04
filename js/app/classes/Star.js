@@ -1,7 +1,7 @@
 'use strict';
 define(
-    ['three', 'app/classes/AstronomicalObject', 'app/classes/AstronomicalObjectType'],
-    function(THREE, AstronomicalObject, AstronomicalObjectType) {
+    ['three', 'app/classes/AstronomicalObject', 'app/classes/AstronomicalObjectType', 'app/config'],
+    function(THREE, AstronomicalObject, AstronomicalObjectType, config) {
         return class Star extends AstronomicalObject {
 
             // ##############################################
@@ -23,6 +23,11 @@ define(
 
                 this._createLight();
                 this._createMesh();
+
+                if(config.showDirectionalVectors) {
+                    this.arrowMesh = this._createDirectionalArrow();
+                    this.scene.add(this.arrowMesh);
+                }
             }
 
             // ##############################################
