@@ -2,12 +2,16 @@
 (function() {
     requirejs.config({
         paths: {
-            'three': 'lib/three.min'
+            'three': 'lib/three.min',
+            'stats': 'lib/stats.min'
         },
 
         shim: {
-            three: {
+            'three': {
                 exports: 'THREE'
+            },
+            'stats': {
+                exports: 'Stats'
             }
         }
     });
