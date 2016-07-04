@@ -8,13 +8,13 @@ define(
                 
                 this.mass         = 0.0;
 
-                this.velocity     = new THREE.Vector3(0.0, 0.01, 0.0);
+                this.velocity     = new THREE.Vector3(0.0, 0.0, 0.0);
                 this.acceleration = new THREE.Vector3(0.0, 0.0, 0.0);
 
                 this.counter = 0;
             }
 
-            updatePosition(time, deltaT, spaceObjects) {
+            updatePosition(deltaT, time, spaceObjects) {
                 /*
                 Velocity Verlet:
 
@@ -25,20 +25,25 @@ define(
                 velocity += timestep * (acceleration + newAcceleration) / 2;
 
                 */
-
-                this.acceleration = this.force(time, spaceObjects).divideScalar(this.mass);
+                this.acceleration = this.force(time, this.position, spaceObjects).divideScalar(this.mass);
 
                 this.position = this.position.add(
                     this.velocity.add(this.acceleration.divideScalar(2))
                 );
+            }
 
-                let newAcceleration = this.force(time, spaceObjects).divideScalar(this.mass);
+            update(deltaT, time, spaceObjects) {
+                super.update(deltaT, time, spaceObjects);
+
+                let newAcceleration = this.force(time, this.position, spaceObjects).divideScalar(this.mass);
                 this.velocity = this.velocity.add(
                     this.acceleration.add(newAcceleration).multiplyScalar(deltaT / 2)
                 );
+
+                this.counter++;
             }
 
-            force(time, spaceObjects) {
+            force(time, position, spaceObjects) {
                 let vec = new THREE.Vector3(0, 0, 0);
 
                 for(let i = 0; i < spaceObjects.length; i++) {
@@ -46,25 +51,17 @@ define(
 
                     if(spaceObject == this) continue;
 
-                    let distance = this.position.distanceTo(spaceObject.position);
+                    let distance = position.distanceTo(spaceObject.position);
                     let val = Constants.GRAVITATIONAL_CONSTANT * (this.mass * spaceObject.mass) / Math.pow(distance, 2);
 
-                    let direction = spaceObject.position.sub(this.position);
+                    let direction =
+                        new THREE.Vector3(0, 0, 0)
+                        .subVectors(spaceObject.position, position)
+                        .normalize()
+                        .multiplyScalar(val);
 
-                    vec.set(
-                        vec.x * direction.x * val,
-                        vec.y * direction.y * val,
-                        vec.z * direction.z * val
-                    );
-
-                    if(this.counter < 10) {
-                        console.log(this.name + '; distance: ', distance, '; direction: ', direction, '; vec: ', vec);
-
-                        this.counter++;
-                    }
+                    vec.add(direction);
                 }
-                
-                //return new THREE.Vector3(-position.x / 1000, -position.y / 1000, 0.0);
                 return vec;
             }
 

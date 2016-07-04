@@ -38,14 +38,14 @@ define(
             inputHandler.checkInput(camera);
 
             // Update all the objects' positions
-            for(var obj in astroObjects) {
-                astroObjects[obj].updatePosition(currentFrameTime, deltaT, astroObjects);
-            }
+            astroObjects.forEach(function(astroObject, index) {
+                astroObject.updatePosition(currentFrameTime, deltaT, astroObjects);
+            });
 
             // Update all the objects
-            for(var obj in astroObjects) {
-                astroObjects[obj].update(deltaT);
-            }
+            astroObjects.forEach(function(astroObject, index) {
+                astroObject.update(currentFrameTime, deltaT, astroObjects);
+            });
             
             // Render the scene
             renderer.render(scene, camera);
