@@ -10,7 +10,6 @@ define(
         'app/classes/Star'
     ],
     function(config, THREE, Stats, controls, inputHandler, Planet, Star) {
-        console.log(THREE);
         let stats = new Stats();
         stats.showPanel(0);
         document.body.appendChild(stats.dom);
