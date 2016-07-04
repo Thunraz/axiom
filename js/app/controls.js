@@ -5,6 +5,6 @@ define({
     down: false,
     left: false,
 
-    cameraUp: false,
-    cameraDown: false
+    zoomIn: false,
+    zoomOut: false
 });

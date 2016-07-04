@@ -31,11 +31,11 @@ define(['app/controls', 'app/config'], function(controls, config) {
                 break;
 
             case 81: // Q
-                controls.cameraUp = true;
+                controls.zoomIn = true;
                 break;
 
             case 69: // E
-                controls.cameraDown = true;
+                controls.zoomOut = true;
                 break;
         }
     }
@@ -61,11 +61,11 @@ define(['app/controls', 'app/config'], function(controls, config) {
                 break;
 
             case 81: // Q
-                controls.cameraUp = false;
+                controls.zoomIn = false;
                 break;
 
             case 69: // E
-                controls.cameraDown = false;
+                controls.zoomOut = false;
                 break;
         }
     }
@@ -89,12 +89,12 @@ define(['app/controls', 'app/config'], function(controls, config) {
             camera.position.x += (camera.position.z / 50) * config.camera.movementSpeed;
         }
 
-        if(controls.cameraUp && !controls.cameraDown) {
+        if(controls.zoomIn && !controls.zoomOut) {
             camera.zoom *= 1 - config.camera.zoomFactor;
             camera.updateProjectionMatrix();
         }
 
-        if(controls.cameraDown && !controls.cameraUp) {
+        if(controls.zoomOut && !controls.zoomIn) {
             camera.zoom *= 1 + config.camera.zoomFactor;
             camera.updateProjectionMatrix();
         }
