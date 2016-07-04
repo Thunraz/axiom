@@ -9,5 +9,5 @@ define({
         fov:           45
     },
 
-    showDirectionalVectors: true
+    showDirectionalVectors: false
 });

@@ -74,6 +74,15 @@ define(
                 }
 
                 this.trail = this.trail.filter((value) => { return value.alive });
+
+                if(config.showDirectionalVectors && this.arrowMesh == null) {
+                    this.arrowMesh = this._createDirectionalArrow();
+                    this.scene.add(this.arrowMesh);
+                }
+
+                if(this.arrowMesh != null) {
+                    this.arrowMesh.visible = config.showDirectionalVectors;
+                }
             }
 
             // ##############################################

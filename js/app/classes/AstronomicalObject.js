@@ -15,10 +15,6 @@ define(
 
                 this.velocity     = new THREE.Vector3(0.0, 0.0, 0.0);
                 this.acceleration = new THREE.Vector3(0.0, 0.0, 0.0);
-
-                if(config.showDirectionalVectors) {
-                    this.arrowGeometry = new THREE.BufferGeometry();
-                }
             }
 
             // ##############################################
@@ -59,6 +55,10 @@ define(
 
                 // Only calculate this if config value is set
                 if(config.showDirectionalVectors) {
+                    if(this.arrowGeometry == null) {
+                        this.arrowGeometry = new THREE.BufferGeometry();
+                    }
+
                     let directionalVector = this.position.clone();
                     directionalVector.add(this.velocity.clone().normalize().multiplyScalar(this.velocity.length() * this.radius));
                     
