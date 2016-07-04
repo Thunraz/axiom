@@ -28,7 +28,7 @@ define(
 
         let astroObjects = [
             new Planet(scene, 'home',  1234.0, 100.0, new THREE.Vector3(-10.0, 5.0, 0.0), true, 0x33ff33),
-            new Planet(scene, 'second', 80034.0,  50.0, new THREE.Vector3(7.0, 3.0, 0.0),   true, 0xff3333),
+            new Planet(scene, 'second', 6000.0,  50.0, new THREE.Vector3(7.0, 3.0, 0.0),   true, 0xff3333),
 
             new Star(scene, 'sol', 400000.0, 300.0, new THREE.Vector3(0.0, 0.0, 0.0), 0xffff00)
         ];
@@ -37,7 +37,7 @@ define(
         astroObjects[0].velocity.setY(.02);
 
         astroObjects[1].velocity.setX(.01);
-        astroObjects[1].velocity.setY(.02);
+        astroObjects[1].velocity.setY(-.02);
 
         let lastFrameTime = 0;
 
