@@ -29,6 +29,14 @@ define(['app/controls', 'app/config'], function(controls, config) {
             case 68: // D
                 controls.right = true;
                 break;
+
+            case 81: // Q
+                controls.cameraUp = true;
+                break;
+
+            case 69: // E
+                controls.cameraDown = true;
+                break;
         }
     }
 
@@ -51,6 +59,14 @@ define(['app/controls', 'app/config'], function(controls, config) {
             case 68: // D
                 controls.right = false;
                 break;
+
+            case 81: // Q
+                controls.cameraUp = false;
+                break;
+
+            case 69: // E
+                controls.cameraDown = false;
+                break;
         }
     }
 
@@ -71,6 +87,14 @@ define(['app/controls', 'app/config'], function(controls, config) {
         
         if(controls.right && !controls.left) {
             camera.position.x += config.camera.movementSpeed;
+        }
+
+        if(controls.cameraUp && !controls.cameraDown) {
+            camera.position.z += config.camera.movementSpeed;
+        }
+
+        if(controls.cameraDown && !controls.cameraUp) {
+            camera.position.z -= config.camera.movementSpeed;
         }
     }
 
