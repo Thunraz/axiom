@@ -29,7 +29,7 @@ define(
                 this.mesh.position.set(this.position.x, this.position.y, this.position.z);
             }
 
-            update(deltaT) {
+            update(deltaT, time, spaceObjects) {
                 if(this.life <= this.lifetime) {
                     let factor = 1 - this.life / this.lifetime / 50;
 

@@ -39,7 +39,9 @@ define(
                 this.scene.add(this.mesh);
             }
 
-            update(deltaT) {
+            update(deltaT, time, spaceObjects) {
+                super.update(deltaT, time, spaceObjects);
+
                 this.frameCounter++;
 
                 this.mesh.position.set(this.position.x, this.position.y, this.position.z);
@@ -55,10 +57,6 @@ define(
                 }
 
                 this.trail = this.trail.filter((value) => { return value.alive });
-            }
-
-            updatePosition(time, deltaT, spaceObjects) {
-                super.updatePosition(time, deltaT, spaceObjects);
             }
         }
     }

@@ -38,7 +38,9 @@ define(
                 this.scene.add(this.mesh);
             }
 
-            update(deltaT) {
+            update(deltaT, time, spaceObjects) {
+                super.update(deltaT, time, spaceObjects);
+                
                 this.mesh.position.set(this.position.x, this.position.y, this.position.z);
                 this.light.position.set(this.position.x, this.position.y, this.position.z);
             }
