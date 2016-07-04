@@ -74,19 +74,19 @@ define(['app/controls', 'app/config'], function(controls, config) {
 
     function cameraMovement(camera) {
         if(controls.up && !controls.down) {
-            camera.position.y += config.camera.movementSpeed;
+            camera.position.y += (camera.position.z / 50) * config.camera.movementSpeed;
         }
         
         if(controls.down && !controls.up) {
-            camera.position.y -= config.camera.movementSpeed;
+            camera.position.y -= (camera.position.z / 50) * config.camera.movementSpeed;
         }
 
         if(controls.left && !controls.right) {
-            camera.position.x -= config.camera.movementSpeed;
+            camera.position.x -= (camera.position.z / 50) * config.camera.movementSpeed;
         }
         
         if(controls.right && !controls.left) {
-            camera.position.x += config.camera.movementSpeed;
+            camera.position.x += (camera.position.z / 50) * config.camera.movementSpeed;
         }
 
         if(controls.cameraUp && !controls.cameraDown) {
