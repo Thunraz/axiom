@@ -56,7 +56,7 @@ define(
                 for(let i = 0; i < spaceObjects.length; i++) {
                     let spaceObject = spaceObjects[i];
 
-                    if(spaceObject == this) continue;
+                    if(spaceObject.id == this.id) continue;
 
                     let distance = position.distanceTo(spaceObject.position);
                     let val = Constants.GRAVITATIONAL_CONSTANT * (this.mass * spaceObject.mass) / Math.pow(distance, 2);
