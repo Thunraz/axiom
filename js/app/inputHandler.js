@@ -90,11 +90,13 @@ define(['app/controls', 'app/config'], function(controls, config) {
         }
 
         if(controls.cameraUp && !controls.cameraDown) {
-            camera.position.z += config.camera.movementSpeed;
+            camera.zoom *= 1 - config.camera.zoomFactor;
+            camera.updateProjectionMatrix();
         }
 
         if(controls.cameraDown && !controls.cameraUp) {
-            camera.position.z -= config.camera.movementSpeed;
+            camera.zoom *= 1 + config.camera.zoomFactor;
+            camera.updateProjectionMatrix();
         }
     }
 
