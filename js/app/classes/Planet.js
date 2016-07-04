@@ -39,8 +39,8 @@ define(
                 this.scene.add(this.mesh);
             }
 
-            update(deltaT, time, spaceObjects) {
-                super.update(deltaT, time, spaceObjects);
+            update(deltaT, spaceObjects) {
+                super.update(deltaT, spaceObjects);
 
                 this.frameCounter++;
 

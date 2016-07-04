@@ -7,7 +7,7 @@ define(
                 this.position = new THREE.Vector3(0.0, 0.0, 0.0);
             }
 
-            update(deltaT, time, spaceObjects) { }
+            update(deltaT) { }
         }
     }
 );

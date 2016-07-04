@@ -25,8 +25,14 @@ define(
             new Planet(scene, 'home',  1234.0, 100.0, new THREE.Vector3(-10.0, 5.0, 0.0), true, 0x33ff33),
             new Planet(scene, 'second', 234.0,  50.0, new THREE.Vector3(7.0, 3.0, 0.0),   true, 0xff3333),
 
-            new Star(scene, 'sol', 30000.0, 300.0, new THREE.Vector3(0.0, 0.0, 0.0), 0xffff00)
+            new Star(scene, 'sol', 400000.0, 300.0, new THREE.Vector3(0.0, 0.0, 0.0), 0xffff00)
         ];
+
+        astroObjects[0].velocity.setX(.01);
+        astroObjects[0].velocity.setY(.02);
+
+        astroObjects[1].velocity.setX(.02);
+        astroObjects[1].velocity.setY(-.02);
 
         let lastFrameTime = 0;
 
@@ -39,12 +45,12 @@ define(
 
             // Update all the objects' positions
             astroObjects.forEach(function(astroObject, index) {
-                astroObject.updatePosition(currentFrameTime, deltaT, astroObjects);
+                astroObject.updatePosition(deltaT, astroObjects);
             });
 
             // Update all the objects
             astroObjects.forEach(function(astroObject, index) {
-                astroObject.update(currentFrameTime, deltaT, astroObjects);
+                astroObject.update(deltaT, astroObjects);
             });
             
             // Render the scene
