@@ -40,6 +40,9 @@ define(
             let deltaT = currentFrameTime - lastFrameTime;
             lastFrameTime = currentFrameTime;
 
+            // Ugly hack to prevent "jumps" when the tab lost focus 
+            if(deltaT > 32) deltaT = 1000/60;
+
             // Handle user input            
             inputHandler.checkInput(camera);
 
