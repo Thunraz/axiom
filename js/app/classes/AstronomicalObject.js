@@ -14,36 +14,43 @@ define(
                 this.counter = 0;
             }
 
-            updatePosition(deltaT, time, spaceObjects) {
+            updatePosition(deltaT, spaceObjects) {
                 /*
                 Velocity Verlet:
 
                 acceleration = force(time, position) / mass;
-                time += timestep;
-                position += timestep * (velocity + timestep * acceleration / 2);
-                newAcceleration = force(time, position) / mass;
-                velocity += timestep * (acceleration + newAcceleration) / 2;
-
+                time        += timestep;
+                position    += timestep * (velocity + timestep * acceleration / 2);
                 */
-                this.acceleration = this.force(time, this.position, spaceObjects).divideScalar(this.mass);
+
+                this.acceleration = this.force(this.position, spaceObjects).divideScalar(this.mass);
 
                 this.position = this.position.add(
-                    this.velocity.add(this.acceleration.divideScalar(2))
+                    this.velocity
+                        .add(this.acceleration.multiplyScalar(deltaT / 2))
+                        //.multiplyScalar(deltaT)
                 );
             }
 
-            update(deltaT, time, spaceObjects) {
-                super.update(deltaT, time, spaceObjects);
+            update(deltaT, spaceObjects) {
+                super.update(deltaT, spaceObjects);
 
-                let newAcceleration = this.force(time, this.position, spaceObjects).divideScalar(this.mass);
+                /*
+                Velocity Verlet again:
+
+                newAcceleration = force(time, position) / mass;
+                velocity += timestep * (acceleration + newAcceleration) / 2;
+                */
+
+                let newAcceleration = this.force(this.position, spaceObjects).divideScalar(this.mass);
                 this.velocity = this.velocity.add(
-                    this.acceleration.add(newAcceleration).multiplyScalar(deltaT / 2)
+                    this.acceleration.add(newAcceleration).multiplyScalar(deltaT)
                 );
 
                 this.counter++;
             }
 
-            force(time, position, spaceObjects) {
+            force(position, spaceObjects) {
                 let vec = new THREE.Vector3(0, 0, 0);
 
                 for(let i = 0; i < spaceObjects.length; i++) {
