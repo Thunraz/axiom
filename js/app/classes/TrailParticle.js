@@ -22,7 +22,7 @@ define(
             }
 
             _createMesh() {
-                let geometry = new THREE.BoxGeometry(this.size, this.size, this.size);
+                let geometry = new THREE.PlaneGeometry(this.size, this.size, this.size);
                 let material = new THREE.MeshBasicMaterial({color: this.color});
                 
                 this.mesh = new THREE.Mesh(geometry, material);
