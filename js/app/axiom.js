@@ -7,9 +7,10 @@ define(
         'app/controls',
         'app/inputHandler',
         'app/classes/Planet',
-        'app/classes/Star'
+        'app/classes/Star',
+        'app/classes/GameObjectManager'
     ],
-    function(config, THREE, Stats, controls, inputHandler, Planet, Star) {
+    function(config, THREE, Stats, controls, inputHandler, Planet, Star, GameObjectManager) {
         let stats = new Stats();
         stats.showPanel(0);
         document.body.appendChild(stats.dom);
@@ -26,18 +27,15 @@ define(
 
         camera.position.z = 50;
 
-        let astroObjects = [
-            new Planet(scene, 'home',  1234.0, 100.0, new THREE.Vector3(-10.0, 5.0, 0.0), true, 0x33ff33),
-            new Planet(scene, 'second', 6000.0,  50.0, new THREE.Vector3(7.0, 3.0, 0.0),   true, 0xff3333),
+        GameObjectManager.add(new Planet(scene, 'home',  1234.0, 100.0, new THREE.Vector3(-10.0, 5.0, 0.0), true, 0x33ff33));
+        GameObjectManager.add(new Planet(scene, 'second', 6000.0,  50.0, new THREE.Vector3(7.0, 3.0, 0.0),   true, 0xff3333));
+        GameObjectManager.add(new Star(scene, 'sol', 400000.0, 300.0, new THREE.Vector3(0.0, 0.0, 0.0), 0xffff00));
 
-            new Star(scene, 'sol', 400000.0, 300.0, new THREE.Vector3(0.0, 0.0, 0.0), 0xffff00)
-        ];
+        GameObjectManager.get(0).velocity.setX(.01);
+        GameObjectManager.get(0).velocity.setY(.02);
 
-        astroObjects[0].velocity.setX(.01);
-        astroObjects[0].velocity.setY(.02);
-
-        astroObjects[1].velocity.setX(.01);
-        astroObjects[1].velocity.setY(-.02);
+        GameObjectManager.get(1).velocity.setX(.01);
+        GameObjectManager.get(1).velocity.setY(-.02);
 
         let lastFrameTime = 0;
 
@@ -54,14 +52,10 @@ define(
             inputHandler.checkInput(camera);
 
             // Update all the objects' positions
-            astroObjects.forEach(function(astroObject, index) {
-                astroObject.updatePosition(deltaT, astroObjects);
-            });
+            GameObjectManager.updatePositions(deltaT);
 
             // Update all the objects
-            astroObjects.forEach(function(astroObject, index) {
-                astroObject.update(deltaT, astroObjects);
-            });
+            GameObjectManager.update(deltaT);
             
             // Render the scene
             renderer.render(scene, camera);
