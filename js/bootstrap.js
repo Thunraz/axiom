@@ -2,7 +2,7 @@
 (function() {
     requirejs.config({
         paths: {
-            'three': 'lib/three.min',
+            'three': 'lib/three',
             'stats': 'lib/stats.min'
         },
 

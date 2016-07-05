@@ -45,6 +45,14 @@ define(['app/controls', 'app/config'], function(controls, config) {
     // ##############################################
 
     function onKeyUp(event) {
+        console.log(event.keyCode);
+
+        /*
+        * KeyCodes in use:
+        * 38 Up, 40 Down, 37 Left, 39 Right
+        * 87 W,  65 A,    83 S,    68 D,    81 Q, 69 E
+        */
+
         switch(event.keyCode) {
             case 87: // W
                 controls.up = false;
