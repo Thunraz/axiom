@@ -25,7 +25,7 @@ define(
                 let vertices = new Float32Array([
                     this.position.x, this.position.y, this.position.z,
 
-                    5.0, 5.0, 10.0
+                    this.position.x, this.position.y, this.position.z,
                 ]);
 
                 let colors = new Float32Array([
