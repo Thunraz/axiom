@@ -1,7 +1,10 @@
 'use strict';
-define(Object.freeze({
-    NONE: -1,
-    STAR:  0,
-    SOLID: 1,
-    GAS:   2
-}));
+define(function() {
+    return class AstronomicalObjectType {
+        static get NONE()  { return 0; }
+        static get STAR()  { return 1; }
+        static get SOLID() { return 2; }
+        static get GAS()   { return 3; }
+        static get SHIP()  { return 4; }
+    }
+});
