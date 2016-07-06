@@ -74,7 +74,7 @@ define(
             // ##############################################
 
             update(deltaT, spaceObjects) {
-                super.update(deltaT, spaceObjects);
+                super.update(deltaT);
 
                 let newAcceleration = AstronomicalObject.force(this.position, this.mass, this.id, spaceObjects).divideScalar(this.mass);
                 this.velocity = this.velocity.add(
