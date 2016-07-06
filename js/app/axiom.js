@@ -43,9 +43,7 @@ define(
         GameObjectManager.get('second').velocity.setY(-.02);
 
         GameObjectManager.get('player').velocity.setX(-.03);
-
-        console.log(GameObjectManager.get());
-
+        
         let lastFrameTime = 0;
 
         function update(currentFrameTime) {
