@@ -26,7 +26,9 @@ define(
         let ambientLight = new THREE.AmbientLight( 0x101010 ); // soft white light
         scene.add( ambientLight );
 
+        camera.position.y = -40;
         camera.position.z = 50;
+        camera.rotation.x = 0.75;
 
         GameObjectManager.add(new Planet(scene, 'home',  1234.0, 100.0, new THREE.Vector3(-10.0, 5.0, 0.0), true, 0x33ff33));
         GameObjectManager.add(new Planet(scene, 'second', 6000.0,  50.0, new THREE.Vector3(7.0, 3.0, 0.0),   true, 0xff3333));
@@ -41,6 +43,8 @@ define(
         GameObjectManager.get('second').velocity.setY(-.02);
 
         GameObjectManager.get('player').velocity.setX(-.03);
+
+        console.log(GameObjectManager.get());
 
         let lastFrameTime = 0;
 
