@@ -34,11 +34,13 @@ define(
 
         GameObjectManager.add(new SpaceShip(scene, 'player', 40.0, new THREE.Vector3(0.0, 0.0, 0.0)));
 
-        GameObjectManager.get(0).velocity.setX(.01);
-        GameObjectManager.get(0).velocity.setY(.02);
+        GameObjectManager.get('home').velocity.setX(.01);
+        GameObjectManager.get('home').velocity.setY(.02);
 
-        GameObjectManager.get(1).velocity.setX(.01);
-        GameObjectManager.get(1).velocity.setY(-.02);
+        GameObjectManager.get('second').velocity.setX(.01);
+        GameObjectManager.get('second').velocity.setY(-.02);
+
+        GameObjectManager.get('player').velocity.setX(-.03);
 
         let lastFrameTime = 0;
 

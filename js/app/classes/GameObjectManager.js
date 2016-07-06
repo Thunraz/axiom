@@ -10,8 +10,15 @@ define(
 
                 if(!isNaN(index)) {
                     return GameObjectManager.GameObjects[index]; 
+                } else {
+                    let found = GameObjectManager.GameObjects.find(function(o) {
+                        return o.name == index;
+                    });
+
+                    if(found == null) return GameObjectManager.GameObjects;
+
+                    return found;
                 }
-                return GameObjectManager.GameObjects;
             }
 
             static add(gameObject) {
