@@ -17,18 +17,25 @@ define(
         document.body.appendChild(stats.dom);
 
         let scene = new THREE.Scene();
-        let camera = new THREE.PerspectiveCamera(config.camera.fov, config.canvasWidth/config.canvasHeight, 0.1, 1000);
 
         let renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(config.canvasWidth, config.canvasHeight);
         document.getElementById('game').appendChild( renderer.domElement );
+        
+        let camera = new THREE.PerspectiveCamera(config.camera.fov, config.canvasWidth / config.canvasHeight, 0.1, 1000);
+        camera.rotation.x = 0.75;
+        camera.position.y = -40;
+        camera.position.z = 50;
 
         let ambientLight = new THREE.AmbientLight( 0x101010 ); // soft white light
         scene.add( ambientLight );
 
-        camera.position.y = -40;
-        camera.position.z = 50;
-        camera.rotation.x = 0.75;
+        // Create plane that is being displayed at origin and moves with the camera
+        //let cameraPlaneGeometry = new THREE.PlaneGeometry(20, 20, 10, 10);
+        let cameraPlane = new THREE.Mesh(new THREE.PlaneGeometry(20, 20, 10, 10));
+        let cameraPlaneOffset = new THREE.Vector3().add(camera.position);
+        cameraPlane.material = new THREE.MeshBasicMaterial({ color:0xaaaaaa, wireframe: true});
+        scene.add(cameraPlane);
 
         GameObjectManager.add(new Planet(scene, 'home',   1234.0,   100.0, new THREE.Vector3(-10.0, 5.0, 0.0), true, 0x33ff33));
         GameObjectManager.add(new Planet(scene, 'second', 6000.0,   50.0,  new THREE.Vector3(7.0, 3.0, 0.0),   true, 0xff3333));
@@ -63,6 +70,13 @@ define(
 
             // Update all the objects
             GameObjectManager.update(deltaT);
+
+            // Update cameraPlane position
+            cameraPlane.position.set(
+                camera.position.x - cameraPlaneOffset.x,
+                camera.position.y - cameraPlaneOffset.y,
+                camera.position.z - cameraPlaneOffset.z
+            );
             
             // Render the scene
             renderer.render(scene, camera);
