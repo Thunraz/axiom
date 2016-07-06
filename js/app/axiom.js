@@ -32,7 +32,7 @@ define(
         GameObjectManager.add(new Planet(scene, 'second', 6000.0,  50.0, new THREE.Vector3(7.0, 3.0, 0.0),   true, 0xff3333));
         GameObjectManager.add(new Star(scene, 'sol', 400000.0, 300.0, new THREE.Vector3(0.0, 0.0, 0.0), 0xffff00));
 
-        GameObjectManager.add(new SpaceShip(scene, 'player', 40.0, new THREE.Vector3(0.0, 0.0, 0.0)));
+        GameObjectManager.add(new SpaceShip(scene, 'player', 40.0, new THREE.Vector3(0.0, 5.0, 0.0)));
 
         GameObjectManager.get('home').velocity.setX(.01);
         GameObjectManager.get('home').velocity.setY(.02);
