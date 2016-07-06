@@ -30,9 +30,9 @@ define(
         camera.position.z = 50;
         camera.rotation.x = 0.75;
 
-        GameObjectManager.add(new Planet(scene, 'home',  1234.0, 100.0, new THREE.Vector3(-10.0, 5.0, 0.0), true, 0x33ff33));
-        GameObjectManager.add(new Planet(scene, 'second', 6000.0,  50.0, new THREE.Vector3(7.0, 3.0, 0.0),   true, 0xff3333));
-        GameObjectManager.add(new Star(scene, 'sol', 400000.0, 300.0, new THREE.Vector3(0.0, 0.0, 0.0), 0xffff00));
+        GameObjectManager.add(new Planet(scene, 'home',   1234.0,   100.0, new THREE.Vector3(-10.0, 5.0, 0.0), true, 0x33ff33));
+        GameObjectManager.add(new Planet(scene, 'second', 6000.0,   50.0,  new THREE.Vector3(7.0, 3.0, 0.0),   true, 0xff3333));
+        GameObjectManager.add(new Star(scene,   'sol',    400000.0, 300.0, new THREE.Vector3(0.0, 0.0, 0.0),         0xffff00));
 
         GameObjectManager.add(new SpaceShip(scene, 'player', 40.0, new THREE.Vector3(0.0, 5.0, 0.0)));
 
@@ -43,7 +43,7 @@ define(
         GameObjectManager.get('second').velocity.setY(-.02);
 
         GameObjectManager.get('player').velocity.setX(-.03);
-        
+
         let lastFrameTime = 0;
 
         function update(currentFrameTime) {
