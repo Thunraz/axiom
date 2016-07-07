@@ -8,22 +8,20 @@ define(
             // # Constructor ################################
             // ##############################################
 
-            constructor(scene, name, position, width, height, segments, camera) {
+            constructor(scene, name, position, width, height, segments, moveWithCamera) {
                 super();
 
                 this.scene  = scene;
-                if(camera) {
-                    this.camera = camera;
-                }
+                
+                this.name           = name;
+                this.position       = position;
+                this.width          = width;
+                this.height         = height;
+                this.segments       = segments;
+                this.moveWithCamera = moveWithCamera || false;
 
-                this.name     = name;
-                this.position = position;
-                this.width    = width;
-                this.height   = height;
-                this.segments = segments;
-
-                if(camera) {
-                    this.cameraOffset   = this.position.clone().add(this.camera.position);
+                if(moveWithCamera) {
+                    this.cameraOffset = this.position.clone().add(this.scene.camera.position);
                 }
 
                 this._createMesh(segments);
@@ -66,14 +64,14 @@ define(
             update(deltaT) {
                 super.update(deltaT);
 
-                if(this.camera) {
+                if(this.moveWithCamera) {
                     let roundedOffset = new THREE.Vector3(
-                        (this.camera.position.x - this.cameraOffset.x) % (this.width  / this.segments),
-                        (this.camera.position.y - this.cameraOffset.y) % (this.height / this.segments),
-                        this.camera.position.z - this.cameraOffset.z
+                        (this.scene.camera.position.x - this.cameraOffset.x) % (this.width  / this.segments),
+                        (this.scene.camera.position.y - this.cameraOffset.y) % (this.height / this.segments),
+                        this.scene.camera.position.z - this.cameraOffset.z
                     );
 
-                    let newPosition = this.camera.position
+                    let newPosition = this.scene.camera.position
                         .clone()
                         .sub(this.cameraOffset)
                         .sub(roundedOffset);

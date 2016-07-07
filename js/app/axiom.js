@@ -26,8 +26,11 @@ define(
         
         let camera = new THREE.PerspectiveCamera(config.camera.fov, config.canvasWidth / config.canvasHeight, 0.1, 1000);
         camera.rotation.x = 0.75;
-        camera.position.y = -40;
-        camera.position.z = 50;
+        camera.position.y = -465;
+        camera.position.z = 500;
+        camera.zoom       = 5;
+        camera.updateProjectionMatrix();
+        scene.camera = camera;
 
         let ambientLight = new THREE.AmbientLight( 0x101010 ); // soft white light
         scene.add( ambientLight );
@@ -38,21 +41,21 @@ define(
 
         // scene, name, camera, position, width, height
         GameObjectManager.add([
-            new Grid(scene, 'grid', new THREE.Vector3(0, 0, 0), 40, 40, 6, camera),
+            new Grid(scene, 'grid', new THREE.Vector3(0, 0, 0), 75, 75, 6, true),
 
-            new Planet(scene, 'home',   1234,   100, new THREE.Vector3(-10, 5, 0), true, 0x33ff33),
-            new Planet(scene, 'second', 6000,   50,  new THREE.Vector3(  7, 3, 0), true, 0xff3333),
+            //new Planet(scene, 'firstPlanet',   4.869E24, 0.00121036,  new THREE.Vector3(  7, 3, 0), true, 0xff3333),
+            new Planet(scene, 'homePlanet', 3.301, 100.48794, new THREE.Vector3(20, 5, 0), true, 0x33ff33),
             
-            new Star(scene, 'sol', 400000, 300, new THREE.Vector3(0, 0, 0), 0xffff00),
+            new Star(scene, 'sol', 1.9984, 1392.684, new THREE.Vector3(0, 0, 0), 0xffff00),
 
             new SpaceShip(scene, 'player', 40.0, new THREE.Vector3(0, 5, 0))
         ]);
+        
+        //GameObjectManager.get('firstPlanet').velocity.setX(.01);
+        //GameObjectManager.get('firstPlanet').velocity.setY(-.02);
 
-        GameObjectManager.get('home').velocity.setX(.01);
-        GameObjectManager.get('home').velocity.setY(.02);
-
-        GameObjectManager.get('second').velocity.setX(.01);
-        GameObjectManager.get('second').velocity.setY(-.02);
+        GameObjectManager.get('homePlanet').velocity.setX(.01);
+        GameObjectManager.get('homePlanet').velocity.setY(.02);
 
         GameObjectManager.get('player').velocity.setX(.03);
         GameObjectManager.get('player').velocity.setY(-.01);
@@ -79,7 +82,7 @@ define(
             // Update all the objects
             GameObjectManager.update(deltaT);
 
-            Debug.log(GameObjectManager.get('mercury').position);
+            Debug.log(GameObjectManager.get('homePlanet').position);
             
             // Render the scene
             renderer.render(scene, camera);
