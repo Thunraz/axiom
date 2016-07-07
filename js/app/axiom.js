@@ -6,13 +6,14 @@ define(
         'stats',
         'app/controls',
         'app/inputHandler',
+        'app/classes/Debug',
         'app/classes/GameObjectManager',
         'app/classes/Planet',
         'app/classes/Star',
         'app/classes/SpaceShip',
         'app/classes/Grid'
     ],
-    function(config, THREE, Stats, controls, inputHandler, GameObjectManager, Planet, Star, SpaceShip, Grid) {
+    function(config, THREE, Stats, controls, inputHandler, Debug, GameObjectManager, Planet, Star, SpaceShip, Grid) {
         let stats = new Stats();
         stats.showPanel(0);
         document.body.appendChild(stats.dom);
@@ -61,6 +62,8 @@ define(
         function update(currentFrameTime) {
             stats.begin();
 
+            Debug.clear();
+
             let deltaT = currentFrameTime - lastFrameTime;
             lastFrameTime = currentFrameTime;
 
@@ -75,6 +78,8 @@ define(
 
             // Update all the objects
             GameObjectManager.update(deltaT);
+
+            Debug.log(GameObjectManager.get('mercury').position);
             
             // Render the scene
             renderer.render(scene, camera);
