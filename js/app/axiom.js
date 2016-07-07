@@ -9,9 +9,10 @@ define(
         'app/classes/GameObjectManager',
         'app/classes/Planet',
         'app/classes/Star',
-        'app/classes/SpaceShip'
+        'app/classes/SpaceShip',
+        'app/classes/Grid'
     ],
-    function(config, THREE, Stats, controls, inputHandler, GameObjectManager, Planet, Star, SpaceShip) {
+    function(config, THREE, Stats, controls, inputHandler, GameObjectManager, Planet, Star, SpaceShip, Grid) {
         let stats = new Stats();
         stats.showPanel(0);
         document.body.appendChild(stats.dom);
@@ -31,17 +32,20 @@ define(
         scene.add( ambientLight );
 
         // Create plane that is being displayed at origin and moves with the camera
-        //let cameraPlaneGeometry = new THREE.PlaneGeometry(20, 20, 10, 10);
-        let cameraPlane = new THREE.Mesh(new THREE.PlaneGeometry(20, 20, 10, 10));
-        let cameraPlaneOffset = new THREE.Vector3().add(camera.position);
-        cameraPlane.material = new THREE.MeshBasicMaterial({ color:0xaaaaaa, wireframe: true});
-        scene.add(cameraPlane);
+        let cameraPlaneWidth  = 20;
+        let cameraPlaneHeight = 20;
 
-        GameObjectManager.add(new Planet(scene, 'home',   1234.0,   100.0, new THREE.Vector3(-10.0, 5.0, 0.0), true, 0x33ff33));
-        GameObjectManager.add(new Planet(scene, 'second', 6000.0,   50.0,  new THREE.Vector3(7.0, 3.0, 0.0),   true, 0xff3333));
-        GameObjectManager.add(new Star(scene,   'sol',    400000.0, 300.0, new THREE.Vector3(0.0, 0.0, 0.0),         0xffff00));
+        // scene, name, camera, position, width, height
+        GameObjectManager.add([
+            new Grid(scene, 'grid', new THREE.Vector3(0, 0, 0), 40, 40, 10, camera),
 
-        GameObjectManager.add(new SpaceShip(scene, 'player', 40.0, new THREE.Vector3(0.0, 5.0, 0.0)));
+            new Planet(scene, 'home',   1234,   100, new THREE.Vector3(-10, 5, 0), true, 0x33ff33),
+            new Planet(scene, 'second', 6000,   50,  new THREE.Vector3(  7, 3, 0), true, 0xff3333),
+            
+            new Star(scene, 'sol', 400000, 300, new THREE.Vector3(0, 0, 0), 0xffff00),
+
+            new SpaceShip(scene, 'player', 40.0, new THREE.Vector3(0, 5, 0))
+        ]);
 
         GameObjectManager.get('home').velocity.setX(.01);
         GameObjectManager.get('home').velocity.setY(.02);
@@ -70,13 +74,6 @@ define(
 
             // Update all the objects
             GameObjectManager.update(deltaT);
-
-            // Update cameraPlane position
-            cameraPlane.position.set(
-                camera.position.x - cameraPlaneOffset.x,
-                camera.position.y - cameraPlaneOffset.y,
-                camera.position.z - cameraPlaneOffset.z
-            );
             
             // Render the scene
             renderer.render(scene, camera);
