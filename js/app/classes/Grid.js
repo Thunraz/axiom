@@ -37,14 +37,16 @@ define(
             _createMesh(segments) {
                 let geometry = new THREE.Geometry();
 
-                for(let x = -this.width / 2; x <= this.width / 2; x += this.width / segments) {
+                let condition = (segments % 2 == 0) ? this.width / 2 + 1 : this.width / 2;
+                for(let x = -this.width / 2; x <= condition; x += this.width / segments) {
                     geometry.vertices.push(
                         new THREE.Vector3(x, -this.height / 2, 0),
                         new THREE.Vector3(x,  this.height / 2, 0)
                     );
                 }
-
-                for(let y = -this.height / 2; y <= this.height / 2; y += this.height / segments) {
+                
+                condition = (segments % 2 == 0) ? this.height / 2 + 1 : this.height / 2;
+                for(let y = -this.height / 2; y <= condition; y += this.height / segments) {
                     geometry.vertices.push(
                         new THREE.Vector3(-this.width / 2, y, 0),
                         new THREE.Vector3( this.width / 2, y, 0)
