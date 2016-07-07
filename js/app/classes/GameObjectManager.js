@@ -44,7 +44,9 @@ define(
                 }
 
                 GameObjectManager.GameObjects.forEach(function(gameObject) {
-                    gameObject.updatePosition(deltaT, GameObjectManager.GameObjects);
+                    if(typeof(gameObject.updatePosition) == 'function') {
+                        gameObject.updatePosition(deltaT, GameObjectManager.GameObjects);
+                    }
                 });
             }
         }
