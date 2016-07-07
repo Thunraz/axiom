@@ -53,7 +53,7 @@ define(
         GameObjectManager.get('second').velocity.setX(.01);
         GameObjectManager.get('second').velocity.setY(-.02);
 
-        GameObjectManager.get('player').velocity.setX(-.03);
+        GameObjectManager.get('player').velocity.setX(.03);
 
         let lastFrameTime = 0;
 
