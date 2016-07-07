@@ -25,7 +25,15 @@ define(
                 if(GameObjectManager.GameObjects == null) {
                     GameObjectManager.GameObjects = [];
                 }
-                GameObjectManager.GameObjects.push(gameObject);
+
+                if(Array.isArray(gameObject)) {
+                    gameObject.forEach(function(current) {
+                        GameObjectManager.GameObjects.push(current);
+                    });
+
+                } else {
+                    GameObjectManager.GameObjects.push(gameObject);
+                }
             }
 
             static update(deltaT) {
