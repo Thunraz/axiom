@@ -39,23 +39,22 @@ define(
         let cameraPlaneWidth  = 20;
         let cameraPlaneHeight = 20;
 
-        // scene, name, camera, position, width, height
         GameObjectManager.add([
             new Grid(scene, 'grid', new THREE.Vector3(0, 0, 0), 75, 75, 6, true),
 
-            //new Planet(scene, 'firstPlanet',   4.869E24, 0.00121036,  new THREE.Vector3(  7, 3, 0), true, 0xff3333),
-            new Planet(scene, 'homePlanet', 3.301, 100.48794, new THREE.Vector3(20, 5, 0), true, 0x33ff33),
+            new Planet(scene, 'firstPlanet',    3.301,    21.036, new THREE.Vector3(18, 13, 0), true, 0xff3333),
+            new Planet(scene, 'homePlanet',    48.690, 100.48794, new THREE.Vector3(20, 5, 0), true, 0x33ff33),
             
-            new Star(scene, 'sol', 1.9984, 1392.684, new THREE.Vector3(0, 0, 0), 0xffff00),
+            new Star(scene, 'sol', 1.9984E7, 1392.684, new THREE.Vector3(0, 0, 0), 0xffff00),
 
             new SpaceShip(scene, 'player', 40.0, new THREE.Vector3(0, 5, 0))
         ]);
-        
-        //GameObjectManager.get('firstPlanet').velocity.setX(.01);
-        //GameObjectManager.get('firstPlanet').velocity.setY(-.02);
 
-        GameObjectManager.get('homePlanet').velocity.setX(.01);
-        GameObjectManager.get('homePlanet').velocity.setY(.02);
+        GameObjectManager.get('firstPlanet').velocity.setX(0.01);
+        GameObjectManager.get('firstPlanet').velocity.setY(-0.2);
+
+        GameObjectManager.get('homePlanet').velocity.setX(-.01);
+        GameObjectManager.get('homePlanet').velocity.setY(-0.2);
 
         GameObjectManager.get('player').velocity.setX(.03);
         GameObjectManager.get('player').velocity.setY(-.01);
@@ -82,7 +81,7 @@ define(
             // Update all the objects
             GameObjectManager.update(deltaT);
 
-            Debug.log(GameObjectManager.get('homePlanet').position);
+            Debug.log(GameObjectManager.get('firstPlanet').position);
             
             // Render the scene
             renderer.render(scene, camera);
