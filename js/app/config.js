@@ -4,7 +4,7 @@ define({
     canvasHeight: 600,
 
     camera: {
-        movementSpeed: 1.0,
+        movementSpeed: 5.0,
         zoomFactor:    0.05,
         fov:           45
     },
