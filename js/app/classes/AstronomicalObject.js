@@ -11,7 +11,7 @@ define(
             constructor() {
                 super();
                 
-                this.mass         = 0.0;
+                this.mass  = 0.0;
 
                 this.velocity     = new THREE.Vector3(0.0, 0.0, 0.0);
                 this.acceleration = new THREE.Vector3(0.0, 0.0, 0.0);
@@ -60,7 +60,8 @@ define(
                     }
 
                     let directionalVector = this.position.clone();
-                    directionalVector.add(this.velocity.clone().normalize().multiplyScalar(this.velocity.length() * this.radius));
+                    let scale = this.radius || 50.0;
+                    directionalVector.add(this.velocity.clone().normalize().multiplyScalar(this.velocity.length() * scale));
                     
                     let vertices = new Float32Array([
                         this.position.x, this.position.y, this.position.z,
