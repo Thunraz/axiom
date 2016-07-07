@@ -37,7 +37,7 @@ define(
 
         // scene, name, camera, position, width, height
         GameObjectManager.add([
-            new Grid(scene, 'grid', new THREE.Vector3(0, 0, 0), 40, 40, 10, camera),
+            new Grid(scene, 'grid', new THREE.Vector3(0, 0, 0), 40, 40, 6, camera),
 
             new Planet(scene, 'home',   1234,   100, new THREE.Vector3(-10, 5, 0), true, 0x33ff33),
             new Planet(scene, 'second', 6000,   50,  new THREE.Vector3(  7, 3, 0), true, 0xff3333),
