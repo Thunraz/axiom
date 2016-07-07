@@ -66,6 +66,9 @@ define(
 
                 if(this.camera) {
                     let roundedOffset = new THREE.Vector3(
+                        (this.camera.position.x - this.cameraOffset.x) % (this.width  / this.segments),
+                        (this.camera.position.y - this.cameraOffset.y) % (this.height / this.segments),
+                        this.camera.position.z - this.cameraOffset.z
                     );
 
                     let newPosition = this.camera.position
