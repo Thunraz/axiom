@@ -16,6 +16,7 @@ define(
                 this.name     = name;
                 this.mass     = mass;
                 this.position = position;
+                this.color    = 0x7fffd4;
 
                 let that   = this;
 
@@ -46,6 +47,11 @@ define(
                     that.positionIndicator = new THREE.Line(positionIndicatorGeometry, positionIndicatorMaterial);
                     scene.add(that.positionIndicator);
                 });
+
+                if(config.showDirectionalVectors) {
+                    this.arrowMesh = this._createDirectionalArrow();
+                    this.scene.add(this.arrowMesh);
+                }
             }
 
             // ##############################################
@@ -58,6 +64,15 @@ define(
                 if(this.shipMesh == null) return;
                 this.shipMesh.position.set(this.position.x, this.position.y, this.position.z);
                 this.positionIndicator.position.set(this.position.x, this.position.y, this.position.z);
+
+                if(config.showDirectionalVectors && !this.arrowMesh) {
+                    this.arrowMesh = this._createDirectionalArrow();
+                    this.scene.add(this.arrowMesh);
+                }
+
+                if(this.arrowMesh) {
+                    this.arrowMesh.visible = config.showDirectionalVectors;
+                }
             }
         }
     }
