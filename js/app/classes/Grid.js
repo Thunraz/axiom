@@ -21,6 +21,7 @@ define(
                 this.moveWithCamera = moveWithCamera || false;
 
                 if(moveWithCamera) {
+                    console.log(this.scene.camera);
                     this.cameraOffset = this.position.clone().add(this.scene.camera.position);
                 }
 
@@ -66,7 +67,7 @@ define(
 
                 if(this.moveWithCamera) {
                     let roundedOffset = new THREE.Vector3(
-                        (this.scene.camera.position.x - this.cameraOffset.x) % (this.width  / this.segments),
+                        (this.scene.cameraPivot.children[0].position.x - this.cameraOffset.x) % (this.width  / this.segments),
                         (this.scene.camera.position.y - this.cameraOffset.y) % (this.height / this.segments),
                         this.scene.camera.position.z - this.cameraOffset.z
                     );
