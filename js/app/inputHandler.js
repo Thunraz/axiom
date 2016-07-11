@@ -29,9 +29,14 @@ define(['app/config'], function(config) {
 
     let mapping = {
         /* W */ 87: 'up',
-        /* A */ 83: 'down',
-        /* S */ 65: 'left',
+        /* A */ 65: 'left',
+        /* S */ 83: 'down',
         /* D */ 68: 'right',
+         
+        /* ↑ */ 38: 'up',
+        /* ←*/ 40: 'down',
+        /* ↓ */ 37: 'left',
+        /* →*/ 39: 'right',
 
         /* Q */ 81: 'rotateLeft',
         /* E */ 69: 'rotateRight',
