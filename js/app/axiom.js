@@ -4,7 +4,6 @@ define(
         'app/config',
         'three',
         'stats',
-        'app/controls',
         'app/inputHandler',
         'app/classes/Debug',
         'app/classes/Camera',
@@ -14,7 +13,7 @@ define(
         'app/classes/SpaceShip',
         'app/classes/Grid'
     ],
-    function(config, THREE, Stats, controls, inputHandler, Debug, Camera, GameObjectManager, Planet, Star, SpaceShip, Grid) {
+    function(config, THREE, Stats, inputHandler, Debug, Camera, GameObjectManager, Planet, Star, SpaceShip, Grid) {
         let stats = new Stats();
         stats.showPanel(0);
         document.body.appendChild(stats.dom);
