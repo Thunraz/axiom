@@ -31,7 +31,10 @@ define(
             // ##############################################
 
             _createMesh() {
-                let geometry = new THREE.PlaneGeometry(this.size, this.size, 1, 1);
+                let size = this.size;
+                if(size < 0.5) size = 0.5;
+
+                let geometry = new THREE.PlaneGeometry(size, size, 1, 1);
                 let material = new THREE.MeshBasicMaterial({color: this.color});
                 
                 this.mesh = new THREE.Mesh(geometry, material);
