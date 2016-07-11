@@ -100,9 +100,9 @@ define(
 
                     let direction =
                         new THREE.Vector3(0, 0, 0)
-                        .subVectors(spaceObject.position, position)
-                        .normalize()
-                        .multiplyScalar(val);
+                            .subVectors(spaceObject.position, position)
+                            .normalize()
+                            .multiplyScalar(val);
 
                     vec.add(direction);
                 }
