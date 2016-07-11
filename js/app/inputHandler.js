@@ -47,21 +47,28 @@ define(['app/controls', 'app/config'], function(controls, config) {
 
     // ##############################################
 
-    function cameraMovement(camera) {
+    function cameraMovement(cameraObject) {
+        let camera = cameraObject.camera;
+        let pivot  = cameraObject.pivot;
+
         if(controls.up && !controls.down) {
-            camera.position.y += 1 / camera.zoom * config.camera.movementSpeed;
+            pivot.position.x += -Math.sin(pivot.rotation.z) * 1 / camera.zoom * config.camera.movementSpeed;
+            pivot.position.y += Math.cos(pivot.rotation.z)  * 1 / camera.zoom * config.camera.movementSpeed;
         }
         
         if(controls.down && !controls.up) {
-            camera.position.y -= 1 / camera.zoom * config.camera.movementSpeed;
+            pivot.position.x -= -Math.sin(pivot.rotation.z) * 1 / camera.zoom * config.camera.movementSpeed;
+            pivot.position.y -= Math.cos(pivot.rotation.z)  * 1 / camera.zoom * config.camera.movementSpeed;
         }
 
         if(controls.left && !controls.right) {
-            camera.position.x -= 1 / camera.zoom * config.camera.movementSpeed;
+            pivot.position.x -= Math.cos(pivot.rotation.z) * 1 / camera.zoom * config.camera.movementSpeed;
+            pivot.position.y -= Math.sin(pivot.rotation.z)  * 1 / camera.zoom * config.camera.movementSpeed;
         }
         
         if(controls.right && !controls.left) {
-            camera.position.x += 1 / camera.zoom * config.camera.movementSpeed;
+            pivot.position.x += Math.cos(pivot.rotation.z) * 1 / camera.zoom * config.camera.movementSpeed;
+            pivot.position.y += Math.sin(pivot.rotation.z)  * 1 / camera.zoom * config.camera.movementSpeed;
         }
 
         if(controls.zoomIn && !controls.zoomOut) {
@@ -72,6 +79,14 @@ define(['app/controls', 'app/config'], function(controls, config) {
         if(controls.zoomOut && !controls.zoomIn) {
             camera.zoom *= 1 - config.camera.zoomFactor;
             camera.updateProjectionMatrix();
+        }
+
+        if(controls.rotateLeft && !controls.rotateRight) {
+            pivot.rotation.z += config.camera.rotationSpeed;
+        }
+
+        if(controls.rotateRight && !controls.rotateLeft) {
+            pivot.rotation.z -= config.camera.rotationSpeed;
         }
     }
 
