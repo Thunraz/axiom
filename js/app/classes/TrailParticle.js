@@ -31,7 +31,7 @@ define(
             // ##############################################
 
             _createMesh() {
-                let geometry = new THREE.PlaneGeometry(this.size, this.size, this.size);
+                let geometry = new THREE.PlaneGeometry(this.size, this.size, 1, 1);
                 let material = new THREE.MeshBasicMaterial({color: this.color});
                 
                 this.mesh = new THREE.Mesh(geometry, material);
@@ -46,6 +46,12 @@ define(
                 super.update(deltaT);
 
                 if(this.life <= this.lifetime) {
+                    this.mesh.rotation.set(
+                        this.scene.camera.pivot.rotation.x,
+                        this.scene.camera.pivot.rotation.y,
+                        this.scene.camera.pivot.rotation.z
+                    );
+
                     let factor = 1 - this.life / this.lifetime / 50;
 
                     // Fade to black (alpha not available)
