@@ -1,5 +1,5 @@
 'use strict';
-define(['app/controls', 'app/config'], function(controls, config) {
+define(['app/config'], function(config) {
 
     // ##############################################
     // # Add event listeners ########################
@@ -13,6 +13,19 @@ define(['app/controls', 'app/config'], function(controls, config) {
     // ##############################################
     // # Private functions ##########################
     // ##############################################
+
+    let controls = {
+        up: false,
+        right: false,
+        down: false,
+        left: false,
+
+        rotateLeft: false,
+        rotateRight: false,
+
+        zoomIn: false,
+        zoomOut: false
+    };
 
     let mapping = {
         /* W */ 87: 'up',
