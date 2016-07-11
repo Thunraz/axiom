@@ -34,9 +34,9 @@ define(['app/config'], function(config) {
         /* D */ 68: 'right',
          
         /* ↑ */ 38: 'up',
-        /* ←*/ 40: 'down',
+        /* ← */ 40: 'down',
         /* ↓ */ 37: 'left',
-        /* →*/ 39: 'right',
+        /* → */ 39: 'right',
 
         /* Q */ 81: 'rotateLeft',
         /* E */ 69: 'rotateRight',
