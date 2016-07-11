@@ -35,7 +35,7 @@ define(
                 if(size < 0.5) size = 0.5;
 
                 let geometry = new THREE.PlaneGeometry(size, size, 1, 1);
-                let material = new THREE.MeshBasicMaterial({color: this.color});
+                let material = new THREE.MeshBasicMaterial({color: this.color, transparent: true});
                 
                 this.mesh = new THREE.Mesh(geometry, material);
                 this.mesh.position.set(this.position.x, this.position.y, this.position.z);
@@ -61,6 +61,8 @@ define(
                     this.mesh.material.color.r *= factor;
                     this.mesh.material.color.g *= factor;
                     this.mesh.material.color.b *= factor;
+
+                    this.mesh.material.opacity *= factor;
 
                     this.life += deltaT / 1000;
                 } else {
