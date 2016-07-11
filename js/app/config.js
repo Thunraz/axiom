@@ -6,6 +6,8 @@ define({
     camera: {
         movementSpeed: 5.0,
         zoomFactor:    0.05,
+        rotationSpeed: 0.05,
+
         fov:           45
     },
 

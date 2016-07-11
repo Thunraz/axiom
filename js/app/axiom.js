@@ -76,7 +76,7 @@ define(
             if(deltaT > 32) deltaT = 1000/60;
 
             // Handle user input            
-            inputHandler.checkInput(camera.camera);
+            inputHandler.checkInput(camera);
 
             // Update all the objects' positions
             GameObjectManager.updatePositions(deltaT);
