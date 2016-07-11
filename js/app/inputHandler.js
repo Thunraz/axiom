@@ -14,70 +14,29 @@ define(['app/controls', 'app/config'], function(controls, config) {
     // # Private functions ##########################
     // ##############################################
 
+    let mapping = {
+        /* W */ 87: 'up',
+        /* A */ 83: 'down',
+        /* S */ 65: 'left',
+        /* D */ 68: 'right',
+
+        /* Q */ 81: 'rotateLeft',
+        /* E */ 69: 'rotateRight',
+
+        /* R */ 82: 'zoomIn',
+        /* F */ 70: 'zoomOut'
+    };
+
     function onKeyDown(event) {
-        switch(event.keyCode) {
-            case 87: // W
-                controls.up = true;
-                break;
-
-            case 65: // A
-                controls.left = true;
-                break;
-
-            case 83: // S
-                controls.down = true;
-                break;
-
-            case 68: // D
-                controls.right = true;
-                break;
-
-            case 81: // Q
-                controls.zoomIn = true;
-                break;
-
-            case 69: // E
-                controls.zoomOut = true;
-                break;
-        }
+        if(!mapping[event.keyCode]) return;
+        controls[mapping[event.keyCode]] = true;
     }
 
     // ##############################################
 
     function onKeyUp(event) {
-        console.log(event.keyCode);
-
-        /*
-        * KeyCodes in use:
-        * 38 Up, 40 Down, 37 Left, 39 Right
-        * 87 W,  65 A,    83 S,    68 D,    81 Q, 69 E
-        */
-
-        switch(event.keyCode) {
-            case 87: // W
-                controls.up = false;
-                break;
-
-            case 65: // A
-                controls.left = false;
-                break;
-
-            case 83: // S
-                controls.down = false;
-                break;
-
-            case 68: // D
-                controls.right = false;
-                break;
-
-            case 81: // Q
-                controls.zoomIn = false;
-                break;
-
-            case 69: // E
-                controls.zoomOut = false;
-                break;
-        }
+        if(!mapping[event.keyCode]) return;
+        controls[mapping[event.keyCode]] = false;
     }
 
     // ##############################################
@@ -106,12 +65,12 @@ define(['app/controls', 'app/config'], function(controls, config) {
         }
 
         if(controls.zoomIn && !controls.zoomOut) {
-            camera.zoom *= 1 - config.camera.zoomFactor;
+            camera.zoom *= 1 + config.camera.zoomFactor;
             camera.updateProjectionMatrix();
         }
 
         if(controls.zoomOut && !controls.zoomIn) {
-            camera.zoom *= 1 + config.camera.zoomFactor;
+            camera.zoom *= 1 - config.camera.zoomFactor;
             camera.updateProjectionMatrix();
         }
     }
