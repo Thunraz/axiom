@@ -26,32 +26,39 @@ define(
                     that.shipMesh    = new THREE.Mesh(shipGeometry, shipMaterial);
                     scene.add(that.shipMesh);
 
-                    // Create position indicator
-                    let positionIndicatorGeometry = new THREE.Geometry();
-                    
-                    let numberSegments = 16;
-                    let circleSegment = 2 * Math.PI / numberSegments;
-                    let circleRadius = that.shipMesh.geometry.boundingSphere.radius;
-
-                    for(let i = 0; i <= numberSegments; i++) {
-                        let vector = new THREE.Vector3(
-                            circleRadius * Math.cos(i * circleSegment),
-                            circleRadius * Math.sin(i * circleSegment),
-                            0
-                        );
-
-                        positionIndicatorGeometry.vertices.push(vector);
-                    }
-                    
-                    let positionIndicatorMaterial = new THREE.LineBasicMaterial({ color: 0x7fffd4 });
-                    that.positionIndicator = new THREE.Line(positionIndicatorGeometry, positionIndicatorMaterial);
-                    scene.add(that.positionIndicator);
+                    that._createPositionIndicator();
                 });
 
                 if(config.showDirectionalVectors) {
                     this.arrowMesh = this._createDirectionalArrow();
                     this.scene.add(this.arrowMesh);
                 }
+            }
+
+            // ##############################################
+            // # Private functions ##########################
+            // ##############################################
+
+            _createPositionIndicator() {
+                let positionIndicatorGeometry = new THREE.Geometry();
+                    
+                let numberSegments = 16;
+                let circleSegment = 2 * Math.PI / numberSegments;
+                let circleRadius = this.shipMesh.geometry.boundingSphere.radius;
+
+                for(let i = 0; i <= numberSegments; i++) {
+                    let vector = new THREE.Vector3(
+                        circleRadius * Math.cos(i * circleSegment),
+                        circleRadius * Math.sin(i * circleSegment),
+                        0
+                    );
+
+                    positionIndicatorGeometry.vertices.push(vector);
+                }
+                
+                let positionIndicatorMaterial = new THREE.LineBasicMaterial({ color: 0x7fffd4 });
+                this.positionIndicator        = new THREE.Line(positionIndicatorGeometry, positionIndicatorMaterial);
+                this.scene.add(this.positionIndicator);
             }
 
             // ##############################################
