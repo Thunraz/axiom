@@ -44,22 +44,22 @@ define(
         GameObjectManager.add([
             new Grid(scene, 'grid', new THREE.Vector3(0, 0, 0), 75, 75, 6, true),
 
-            new Planet(scene, 'firstPlanet',    3.301,    21.036, new THREE.Vector3(18, 13, 0), true, 0xff3333),
-            new Planet(scene, 'homePlanet',    48.690, 100.48794, new THREE.Vector3(20,  5, 0), true, 0x33ff33),
+            new Planet(scene, 'redPlanet',    3.301,   21.036, new THREE.Vector3( 0, 18, 0), true, 0xff3333),
+            new Planet(scene, 'homePlanet',    48.690, 100.48794, new THREE.Vector3(25,  0, 0), true, 0x33ff33),
             
-            new Star(scene, 'sol', 1.9984E7, 1392.684, new THREE.Vector3(0, 0, 0), 0xffff00),
+            new Star(scene, 'sol', 1.9984E8, 1392.684, new THREE.Vector3(0, 0, 0), 0xffff00),
 
-            new SpaceShip(scene, 'player', 40.0, new THREE.Vector3(0, 5, 0))
+            new SpaceShip(scene, 'player', 40.0, new THREE.Vector3(0, 50, 0))
         ]);
 
-        GameObjectManager.get('firstPlanet').velocity.setX(0.01);
-        GameObjectManager.get('firstPlanet').velocity.setY(-0.2);
+        GameObjectManager.get('redPlanet').velocity.setX(0.2);
+        GameObjectManager.get('redPlanet').velocity.setZ(0.3);
 
-        GameObjectManager.get('homePlanet').velocity.setX(-.01);
-        GameObjectManager.get('homePlanet').velocity.setY(-0.2);
+        GameObjectManager.get('homePlanet').velocity.setZ(0.03);
+        GameObjectManager.get('homePlanet').velocity.setY(-0.3);
 
-        GameObjectManager.get('player').velocity.setX(.03);
-        GameObjectManager.get('player').velocity.setY(-.01);
+        GameObjectManager.get('player').velocity.setX(.2);
+        GameObjectManager.get('player').velocity.setY(0);
 
         let lastFrameTime = 0;
 
