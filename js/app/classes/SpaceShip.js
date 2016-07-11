@@ -61,9 +61,22 @@ define(
             update(deltaT, spaceObjects) {
                 super.update(deltaT, spaceObjects);
 
+                let camera = this.scene.camera.camera;
+
                 if(this.shipMesh == null) return;
                 this.shipMesh.position.set(this.position.x, this.position.y, this.position.z);
                 this.positionIndicator.position.set(this.position.x, this.position.y, this.position.z);
+                this.positionIndicator.scale.set(
+                    2 + 1 / camera.zoom,
+                    2 + 1 / camera.zoom,
+                    2 + 1 / camera.zoom
+                );
+
+                if(camera.zoom >= 25) {
+                    this.positionIndicator.visible = false;
+                } else {
+                    this.positionIndicator.visible = true;
+                }
 
                 if(config.showDirectionalVectors && !this.arrowMesh) {
                     this.arrowMesh = this._createDirectionalArrow();
