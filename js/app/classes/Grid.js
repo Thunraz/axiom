@@ -21,8 +21,7 @@ define(
                 this.moveWithCamera = moveWithCamera || false;
 
                 if(moveWithCamera) {
-                    console.log(this.scene.camera);
-                    this.cameraOffset = this.position.clone().add(this.scene.camera.position);
+                    this.cameraOffset = this.position.clone().add(this.scene.camera.camera.position);
                 }
 
                 this._createMesh(segments);
@@ -65,14 +64,16 @@ define(
             update(deltaT) {
                 super.update(deltaT);
 
+                let camera = this.scene.camera.camera;
+
                 if(this.moveWithCamera) {
                     let roundedOffset = new THREE.Vector3(
-                        (this.scene.cameraPivot.children[0].position.x - this.cameraOffset.x) % (this.width  / this.segments),
-                        (this.scene.camera.position.y - this.cameraOffset.y) % (this.height / this.segments),
-                        this.scene.camera.position.z - this.cameraOffset.z
+                        (camera.position.x - this.cameraOffset.x) % (this.width  / this.segments),
+                        (camera.position.y - this.cameraOffset.y) % (this.height / this.segments),
+                        camera.position.z - this.cameraOffset.z
                     );
 
-                    let newPosition = this.scene.camera.position
+                    let newPosition = camera.position
                         .clone()
                         .sub(this.cameraOffset)
                         .sub(roundedOffset);

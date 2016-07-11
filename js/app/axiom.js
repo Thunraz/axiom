@@ -7,13 +7,14 @@ define(
         'app/controls',
         'app/inputHandler',
         'app/classes/Debug',
+        'app/classes/Camera',
         'app/classes/GameObjectManager',
         'app/classes/Planet',
         'app/classes/Star',
         'app/classes/SpaceShip',
         'app/classes/Grid'
     ],
-    function(config, THREE, Stats, controls, inputHandler, Debug, GameObjectManager, Planet, Star, SpaceShip, Grid) {
+    function(config, THREE, Stats, controls, inputHandler, Debug, Camera, GameObjectManager, Planet, Star, SpaceShip, Grid) {
         let stats = new Stats();
         stats.showPanel(0);
         document.body.appendChild(stats.dom);
@@ -23,19 +24,17 @@ define(
         let renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(config.canvasWidth, config.canvasHeight);
         document.getElementById('game').appendChild( renderer.domElement );
+
+        let camera = new Camera(
+            scene,
+            config.camera.fov,
+            config.canvasWidth / config.canvasHeight,
+            0.1,
+            1000,
+            new THREE.Vector3(0, -465, 500),
+            new THREE.Vector3(0, 0, 0)
+        );
         
-        let cameraPivot = new THREE.Object3D();
-
-        let camera = new THREE.PerspectiveCamera(config.camera.fov, config.canvasWidth / config.canvasHeight, 0.1, 1000);
-        camera.rotation.x = 0.75;
-        camera.position.y = -465;
-        camera.position.z = 500;
-        camera.zoom       = 5;
-        camera.updateProjectionMatrix();
-        cameraPivot.add(camera);
-        scene.add(cameraPivot)
-        scene.cameraPivot = cameraPivot;
-
         let ambientLight = new THREE.AmbientLight( 0x101010 ); // soft white light
         scene.add( ambientLight );
 
@@ -77,7 +76,7 @@ define(
             if(deltaT > 32) deltaT = 1000/60;
 
             // Handle user input            
-            inputHandler.checkInput(camera);
+            inputHandler.checkInput(camera.camera);
 
             // Update all the objects' positions
             GameObjectManager.updatePositions(deltaT);
@@ -86,7 +85,7 @@ define(
             GameObjectManager.update(deltaT);
             
             // Render the scene
-            renderer.render(scene, camera);
+            renderer.render(scene, camera.camera);
 
             stats.end();
             requestAnimationFrame(update);
