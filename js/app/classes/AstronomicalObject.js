@@ -45,8 +45,13 @@ define(
             // # Public functions ###########################
             // ##############################################
 
-            updatePosition(deltaT, spaceObjects) {
-                this.acceleration = AstronomicalObject.force(this.position, this.mass, this.id, spaceObjects).divideScalar(this.mass);
+            updatePosition(deltaT, gameObjects) {
+                this.acceleration = AstronomicalObject.force(
+                        this.position,
+                        this.mass,
+                        this.id,
+                        gameObjects)
+                    .divideScalar(this.mass);
 
                 this.position = this.position.add(
                     this.velocity
@@ -74,10 +79,16 @@ define(
 
             // ##############################################
 
-            update(deltaT, spaceObjects) {
+            update(deltaT, gameObjects) {
                 super.update(deltaT);
 
-                let newAcceleration = AstronomicalObject.force(this.position, this.mass, this.id, spaceObjects).divideScalar(this.mass);
+                let newAcceleration = AstronomicalObject.force(
+                        this.position,
+                        this.mass,
+                        this.id,
+                        gameObjects)
+                    .divideScalar(this.mass);
+                    
                 this.velocity = this.velocity.add(
                     this.acceleration.add(newAcceleration).multiplyScalar(deltaT)
                 );
@@ -87,11 +98,11 @@ define(
             // # Static functions ###########################
             // ##############################################
 
-            static force(position, mass, id, spaceObjects) {
+            static force(position, mass, id, gameObjects) {
                 let vec = new THREE.Vector3(0, 0, 0);
 
-                for(let i = 0; i < spaceObjects.length; i++) {
-                    let spaceObject = spaceObjects[i];
+                for(let i = 0; i < gameObjects.length; i++) {
+                    let spaceObject = gameObjects[i];
 
                     if(spaceObject.id == id) continue;
 
