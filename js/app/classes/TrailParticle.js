@@ -68,6 +68,7 @@ define(
                 } else {
                     this.alive = false;
                     this.scene.remove(this.mesh);
+                    this.mesh  = null;
                 }
             }
 

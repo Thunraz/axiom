@@ -79,6 +79,9 @@ define(
                 let tPosition = this.position.clone();
                 let tVelocity = this.velocity.clone();
 
+                geometry.removeAttribute('position');
+                geometry.removeAttribute('color');
+
                 geometry.addAttribute('position', new THREE.BufferAttribute(new Float32Array(positions), 3));
                 geometry.addAttribute('color',    new THREE.BufferAttribute(new Float32Array(colors),    3));
 
@@ -127,7 +130,10 @@ define(
                             colors.push(col, col, col);
                         }
                     }
-
+                    
+                    this.trajectory.geometry.removeAttribute('position');
+                    this.trajectory.geometry.removeAttribute('color');
+                    
                     this.trajectory.geometry.attributes.position = new THREE.BufferAttribute(new Float32Array(positions), 3);
                     this.trajectory.geometry.attributes.color    = new THREE.BufferAttribute(new Float32Array(colors),    3);
                 }
