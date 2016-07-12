@@ -88,6 +88,22 @@ define(
             }
             
             // ##############################################
+
+            _adjustContrast(imageData, contrast) {
+                let factor = (259 * (contrast + 255)) / (255 * (259 - contrast));
+
+                for(let i = 0; i < imageData.data.length; i += 4)
+                {
+                    imageData.data[i    ] = factor * (imageData.data[i    ] - 128) + 128;
+                    imageData.data[i + 1] = factor * (imageData.data[i + 1] - 128) + 128;
+                    imageData.data[i + 2] = factor * (imageData.data[i + 2] - 128) + 128;
+
+                    if(imageData.data[i] > 255) console.log('uhoh');
+                }
+                return imageData;
+            }
+
+            // ##############################################
             // # Public functions ###########################
             // ##############################################
 
@@ -124,6 +140,8 @@ define(
                         imageData.data[idx + 2] = pixel[2];
                     }
                 }
+
+                imageData = this._adjustContrast(imageData, 40);
                 context.putImageData(imageData, 0, 0);
 
                 let texture         = new THREE.Texture(canvas);
