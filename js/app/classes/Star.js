@@ -1,7 +1,13 @@
 'use strict';
 define(
-    ['three', 'app/classes/AstronomicalObject', 'app/classes/AstronomicalObjectType', 'app/config'],
-    function(THREE, AstronomicalObject, AstronomicalObjectType, config) {
+    [
+        'three',
+        'app/classes/AstronomicalObject',
+        'app/classes/AstronomicalObjectType',
+        'app/config',
+        'app/classes/PerlinNoise'
+    ],
+    function(THREE, AstronomicalObject, AstronomicalObjectType, config, PerlinNoise) {
         return class Star extends AstronomicalObject {
 
             // ##############################################
@@ -43,9 +49,13 @@ define(
             // ##############################################
             
             _createMesh() {
+                let perlinNoise = new PerlinNoise();
+
                 let geometry = new THREE.SphereGeometry(this.radius / 100, 32, 32);
                 let material = new THREE.MeshPhongMaterial({
-                    emissive: this.color
+                    //emissive: this.color
+                    emissiveMap: perlinNoise.NoiseTexture(64, 64),
+                    //map: perlinNoise.NoiseTexture(256, 256)
                 });
                 
                 this.mesh = new THREE.Mesh(geometry, material);
