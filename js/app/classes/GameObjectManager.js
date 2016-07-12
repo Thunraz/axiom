@@ -2,7 +2,7 @@
 define(
     [],
     function() {
-        let manager =  class GameObjectManager {
+        return class GameObjectManager {
             static get(index) {
                 if(GameObjectManager.GameObjects == null) {
                     GameObjectManager.GameObjects = [];
@@ -36,29 +36,27 @@ define(
                 }
             }
 
-            static update(deltaT) {
+            static update(deltaT, smoothDeltaT) {
                 if(GameObjectManager.GameObjects == null) {
                     GameObjectManager.GameObjects = [];
                 }
 
                 GameObjectManager.GameObjects.forEach(function(gameObject) {
-                    gameObject.update(deltaT, GameObjectManager.GameObjects);
+                    gameObject.update(deltaT, smoothDeltaT, GameObjectManager.GameObjects);
                 });
             }
 
-            static updatePositions(deltaT) {
+            static updatePositions(deltaT, smoothDeltaT) {
                 if(GameObjectManager.GameObjects == null) {
                     GameObjectManager.GameObjects = [];
                 }
 
                 GameObjectManager.GameObjects.forEach(function(gameObject) {
                     if(typeof(gameObject.updatePosition) == 'function') {
-                        gameObject.updatePosition(deltaT, GameObjectManager.GameObjects);
+                        gameObject.updatePosition(deltaT, smoothDeltaT, GameObjectManager.GameObjects);
                     }
                 });
             }
         }
-
-        return manager;
     }
 );

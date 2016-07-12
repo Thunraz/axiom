@@ -25,6 +25,8 @@ define(
                 this.position = position;
                 this.color    = 0x7fffd4;
 
+                this.avgDeltaT = [];
+
                 let that   = this;
 
                 let loader = new THREE.JSONLoader();
@@ -79,9 +81,6 @@ define(
                 let tPosition = this.position.clone();
                 let tVelocity = this.velocity.clone();
 
-                geometry.removeAttribute('position');
-                geometry.removeAttribute('color');
-
                 geometry.addAttribute('position', new THREE.BufferAttribute(new Float32Array(positions), 3));
                 geometry.addAttribute('color',    new THREE.BufferAttribute(new Float32Array(colors),    3));
 
@@ -91,7 +90,7 @@ define(
 
             // ##############################################
 
-            _updateTrajectory(deltaT, spaceObjects) {
+            _updateTrajectory(deltaT, smoothDeltaT, spaceObjects) {
                 if(this.trajectory) {
                     let positions   = [this.position.x, this.position.y, this.position.z];
                     let colors      = [1, 1, 1];
@@ -110,7 +109,7 @@ define(
 
                         tPosition = tPosition.add(
                             tVelocity
-                                .add(tAcceleration.multiplyScalar(deltaT / 2))
+                                .add(tAcceleration.multiplyScalar(smoothDeltaT / 2))
                         );
 
                         let newAcceleration = AstronomicalObject.force(
@@ -120,7 +119,7 @@ define(
                             .divideScalar(this.mass);
 
                         tVelocity = tVelocity.add(
-                            tAcceleration.add(newAcceleration).multiplyScalar(deltaT)
+                            tAcceleration.add(newAcceleration).multiplyScalar(smoothDeltaT)
                         );
 
                         let col = 1 - (i / n / 2 + 0.5);
@@ -143,10 +142,10 @@ define(
             // # Public functions ###########################
             // ##############################################
             
-            update(deltaT, spaceObjects) {
-                super.update(deltaT, spaceObjects);
+            update(deltaT, smoothDeltaT, spaceObjects) {
+                super.update(deltaT, smoothDeltaT, spaceObjects);
 
-                this._updateTrajectory(deltaT, spaceObjects);
+                this._updateTrajectory(deltaT, smoothDeltaT, spaceObjects);
 
                 let camera = this.scene.camera.camera;
 

@@ -33,21 +33,16 @@ define(
             new THREE.Vector3(0, -465, 500),
             new THREE.Vector3(0, 0, 0)
         );
-        
-        let ambientLight = new THREE.AmbientLight( 0x101010 ); // soft white light
-        scene.add( ambientLight );
 
-        // Create plane that is being displayed at origin and moves with the camera
-        let cameraPlaneWidth  = 20;
-        let cameraPlaneHeight = 20;
+        scene.add(new THREE.AmbientLight( 0x101010 ));
 
         GameObjectManager.add([
             new Grid(scene, 'grid', new THREE.Vector3(0, 0, 0), 75, 75, 6, true),
 
-            new Planet(scene, 'redPlanet',    3.301,   21.036, new THREE.Vector3( 0, 18, 0), true, 0xff3333),
-            new Planet(scene, 'homePlanet',    48.690, 100.48794, new THREE.Vector3(25,  0, 0), true, 0x33ff33),
+            new Planet(scene,  'redPlanet',    3.301,   20, new THREE.Vector3( 0, 18, 0), true, 0xff3333),
+            new Planet(scene, 'homePlanet',   48.690,  100, new THREE.Vector3(25,  0, 0), true, 0x33ff33),
             
-            new Star(scene, 'sol', 1.9984E8, 1392.684, new THREE.Vector3(0, 0, 0), 0xffff00),
+            new Star(  scene,        'sol', 1.9984E8, 1400, new THREE.Vector3( 0,  0, 0),       0xffff00),
 
             new SpaceShip(scene, 'player', 40.0, new THREE.Vector3(0, 50, 0))
         ]);
@@ -61,11 +56,12 @@ define(
         GameObjectManager.get('player').velocity.setX(.2);
         GameObjectManager.get('player').velocity.setY(0);
 
-        let lastFrameTime = 0;
+        let lastFrameTime    = 0;
+        let lastDeltaTValues = [];
+        let smoothDeltaT     = 0;
 
         function update(currentFrameTime) {
             stats.begin();
-
             Debug.clear();
 
             let deltaT = currentFrameTime - lastFrameTime;
@@ -74,14 +70,21 @@ define(
             // Ugly hack to prevent "jumps" when the tab lost focus 
             if(deltaT > 32) deltaT = 1000/60;
 
+            // Smooth deltaT
+            while(lastDeltaTValues.length >= config.framesToSmoothDeltaT) {
+                lastDeltaTValues.splice(0, 1);
+            }
+            lastDeltaTValues.push(deltaT);
+            smoothDeltaT = lastDeltaTValues.reduce(function(prev, cur) { return prev + cur;}) / lastDeltaTValues.length;
+
             // Handle user input            
             inputHandler.checkInput(camera);
 
             // Update all the objects' positions
-            GameObjectManager.updatePositions(deltaT);
+            GameObjectManager.updatePositions(deltaT, smoothDeltaT);
 
             // Update all the objects
-            GameObjectManager.update(deltaT);
+            GameObjectManager.update(deltaT, smoothDeltaT);
             
             // Render the scene
             renderer.render(scene, camera.camera);

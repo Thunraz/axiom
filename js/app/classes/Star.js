@@ -67,8 +67,8 @@ define(
             // # Public functions ###########################
             // ##############################################
 
-            update(deltaT, spaceObjects) {
-                super.update(deltaT, spaceObjects);
+            update(deltaT, smoothDeltaT, spaceObjects) {
+                super.update(deltaT, smoothDeltaT, spaceObjects);
                 
                 this.mesh.position.set(this.position.x, this.position.y, this.position.z);
                 this.light.position.set(this.position.x, this.position.y, this.position.z);

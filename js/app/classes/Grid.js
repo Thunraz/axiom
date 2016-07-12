@@ -61,7 +61,7 @@ define(
             // # Public functions ###########################
             // ##############################################
 
-            update(deltaT) {
+            update(deltaT, smoothDeltaT) {
                 super.update(deltaT);
 
                 let camera = this.scene.camera.camera;
