@@ -45,7 +45,7 @@ define(
             // # Public functions ###########################
             // ##############################################
 
-            updatePosition(deltaT, gameObjects) {
+            updatePosition(deltaT, smoothDeltaT, gameObjects) {
                 this.acceleration = AstronomicalObject.force(
                         this.position,
                         this.mass,
@@ -79,7 +79,7 @@ define(
 
             // ##############################################
 
-            update(deltaT, gameObjects) {
+            update(deltaT, smoothDeltaT, gameObjects) {
                 super.update(deltaT);
 
                 let newAcceleration = AstronomicalObject.force(

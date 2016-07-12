@@ -56,8 +56,8 @@ define(
             // # Public functions ###########################
             // ##############################################
 
-            update(deltaT, spaceObjects) {
-                super.update(deltaT, spaceObjects);
+            update(deltaT, smoothDeltaT, spaceObjects) {
+                super.update(deltaT, smoothDeltaT, spaceObjects);
 
                 this.frameCounter++;
 

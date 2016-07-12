@@ -11,5 +11,7 @@ define({
         fov:           45
     },
 
-    showDirectionalVectors: false
+    showDirectionalVectors: false,
+    
+    framesToSmoothDeltaT: 128
 });
