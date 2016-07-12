@@ -3,11 +3,12 @@ define(
     [
         'app/config',
         'three',
+        'app/classes/Debug',
         'app/classes/AstronomicalObject',
         'app/classes/AstronomicalObjectType',
         'app/classes/GameObjectManager'
     ],
-    function(config, THREE, AstronomicalObject, AstronomicalObjectType, GameObjectManager) {
+    function(config, THREE, Debug, AstronomicalObject, AstronomicalObjectType, GameObjectManager) {
         return class SpaceShip extends AstronomicalObject {
 
             // ##############################################
@@ -71,42 +72,12 @@ define(
             // ##############################################
 
             _createInitialTrajectory() {
-                let geometry = new THREE.BufferGeometry();
-                let material = new THREE.LineBasicMaterial({ vertexColors: THREE.VertexColors });
+                let geometry  = new THREE.BufferGeometry();
+                let material  = new THREE.LineBasicMaterial({ vertexColors: THREE.VertexColors });
                 let positions = [this.position.x, this.position.y, this.position.z];
                 let colors    = [1, 1, 1];
                 let tPosition = this.position.clone();
                 let tVelocity = this.velocity.clone();
-                let n         = 100;
-
-                for(let i = 1; i < n; i++) {
-                    let tAcceleration = AstronomicalObject.force(
-                            tPosition,
-                            this.mass,
-                            this.id,
-                            GameObjectManager.get())
-                        .divideScalar(this.mass);
-
-                    tPosition = tPosition.add(
-                        tVelocity.clone()
-                            .add(tAcceleration.multiplyScalar(8.3333))
-                    );
-
-                    positions.push(tPosition.x, tPosition.y, tPosition.z);
-
-                    let newAcceleration = AstronomicalObject.force(
-                            tPosition,
-                            this.mass,
-                            this.id, GameObjectManager.get())
-                        .divideScalar(this.mass);
-
-                    tVelocity = tVelocity.add(
-                        tAcceleration.add(newAcceleration).multiplyScalar(1000/60)
-                    );
-
-                    let col = 1 - (i / n / 2 + 0.5);
-                    colors.push(col, col, col);
-                }
 
                 geometry.addAttribute('position', new THREE.BufferAttribute(new Float32Array(positions), 3));
                 geometry.addAttribute('color',    new THREE.BufferAttribute(new Float32Array(colors),    3));
@@ -119,39 +90,42 @@ define(
 
             _updateTrajectory(deltaT, spaceObjects) {
                 if(this.trajectory) {
-                    let positions = [this.position.x, this.position.y, this.position.z];
-                    let colors    = [1, 1, 1];
-                    let tPosition = this.position.clone();
-                    let tVelocity = this.velocity.clone();
-                    let n         = 100;
+                    let positions   = [this.position.x, this.position.y, this.position.z];
+                    let colors      = [1, 1, 1];
+                    let tPosition   = this.position.clone();
+                    let tVelocity   = this.velocity.clone();
+                    let n           = 1000;
+                    let gameObjects = GameObjectManager.get();
 
                     for(let i = 1; i < n; i++) {
                         let tAcceleration = AstronomicalObject.force(
                                 tPosition,
                                 this.mass,
                                 this.id,
-                                GameObjectManager.get())
+                                gameObjects)
                             .divideScalar(this.mass);
 
                         tPosition = tPosition.add(
-                            tVelocity.clone()
-                                .add(tAcceleration.multiplyScalar(8.3333))
+                            tVelocity
+                                .add(tAcceleration.multiplyScalar(deltaT / 2))
                         );
-
-                        positions.push(tPosition.x, tPosition.y, tPosition.z);
 
                         let newAcceleration = AstronomicalObject.force(
                                 tPosition,
                                 this.mass,
-                                this.id, GameObjectManager.get())
+                                this.id, gameObjects)
                             .divideScalar(this.mass);
 
                         tVelocity = tVelocity.add(
-                            tAcceleration.add(newAcceleration).multiplyScalar(1000/60)
+                            tAcceleration.add(newAcceleration).multiplyScalar(deltaT)
                         );
 
                         let col = 1 - (i / n / 2 + 0.5);
-                        colors.push(col, col, col);
+
+                        if(i % 25 == 0) {
+                            positions.push(tPosition.x, tPosition.y, tPosition.z);
+                            colors.push(col, col, col);
+                        }
                     }
 
                     this.trajectory.geometry.attributes.position = new THREE.BufferAttribute(new Float32Array(positions), 3);
