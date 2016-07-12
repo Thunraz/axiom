@@ -53,8 +53,8 @@ define(
 
                 let geometry = new THREE.SphereGeometry(this.radius / 100, 32, 32);
                 let material = new THREE.MeshPhongMaterial({
-                    emissive: this.color,
-                    emissiveMap: perlinNoise.NoiseTexture(512, 512),
+                    emissive: this.color & 0x333333,
+                    emissiveMap: perlinNoise.NoiseTexture(32, 32),
                     //map: perlinNoise.NoiseTexture(256, 256)
                 });
                 
