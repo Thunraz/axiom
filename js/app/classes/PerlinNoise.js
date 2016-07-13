@@ -39,16 +39,16 @@ define(
 
             // ##############################################
 
-	        _lerp(t, a, b) {
+            _lerp(t, a, b) {
                 return a + t * (b - a);
             }
 
             // ##############################################
 
-	        _grad(hash, x, y, z) {
+            _grad(hash, x, y, z) {
                 let h = hash & 15;
-		        let u = h < 8 ? x : y, v = h < 4 ? y : h == 12 || h == 14 ? x : z;
-		        return ((h&1) == 0 ? u : -u) + ((h&2) == 0 ? v : -v);
+                let u = h < 8 ? x : y, v = h < 4 ? y : h == 12 || h == 14 ? x : z;
+                return ((h&1) == 0 ? u : -u) + ((h&2) == 0 ? v : -v);
             }
 
             // ##############################################
@@ -86,7 +86,7 @@ define(
                         this._lerp(u, this._grad(this.p[AB + 1], x, yMinus1, zMinus1),
                             this._grad(this.p[BB + 1], xMinus1, yMinus1, zMinus1))));
             }
-            
+
             // ##############################################
 
             _adjustContrast(imageData, contrast) {
@@ -97,8 +97,6 @@ define(
                     imageData.data[i    ] = factor * (imageData.data[i    ] - 128) + 128;
                     imageData.data[i + 1] = factor * (imageData.data[i + 1] - 128) + 128;
                     imageData.data[i + 2] = factor * (imageData.data[i + 2] - 128) + 128;
-
-                    if(imageData.data[i] > 255) console.log('uhoh');
                 }
                 return imageData;
             }
@@ -121,11 +119,6 @@ define(
                     for (let y = 0; y < h; y++) {
                         // Index of the pixel in the array
                         idx = (x + y * w) * 4;
-
-                        // The RGB values
-                        let r = imageData.data[idx + 0];
-                        let g = imageData.data[idx + 1];
-                        let b = imageData.data[idx + 2];
             
                         //let pixel = this.Noise(x, y);
 
@@ -151,6 +144,6 @@ define(
             }
 
             // ##############################################
-        }
+        };
     }
 );

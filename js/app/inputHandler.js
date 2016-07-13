@@ -112,8 +112,6 @@ define(['app/config'], function(config) {
     // # Public functions ###########################
     // ##############################################
 
-    var single = true;
-
     function checkInput(camera) {
         if(camera != undefined) cameraMovement(camera);
     }
