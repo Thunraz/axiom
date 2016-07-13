@@ -102,19 +102,71 @@ define(
             }
 
             // ##############################################
+
+            _convolve(imageData, width, matrix, divisor, offset) {
+                let m = [].concat(matrix[0], matrix[1], matrix[2]);
+                if(!divisor) {
+                    // No divisor? Sum up the matrix values
+                    divisor = m.reduce(function(a, b) { return a + b; }) || 1;
+                }
+
+                let oldData   = imageData,
+                    oldPixels = oldData.data;
+
+                let newData   = this.context.createImageData(oldData),
+                    newPixels = newData.data;
+
+                let len = newPixels.length,
+                    res = 0,
+                    w   = width;
+                
+                for (let i = 0; i < len; i++) {
+                    if ((i + 1) % 4 === 0) {
+                        newPixels[i] = oldPixels[i];
+                        continue;
+                    }
+                
+                    res = 0;
+                    var these = [
+                        oldPixels[i - w * 4 - 4] || oldPixels[i],
+                        oldPixels[i - w * 4]     || oldPixels[i],
+                        oldPixels[i - w * 4 + 4] || oldPixels[i],
+                        oldPixels[i - 4]         || oldPixels[i],
+                        oldPixels[i],
+                        oldPixels[i + 4]         || oldPixels[i],
+                        oldPixels[i + w * 4 - 4] || oldPixels[i],
+                        oldPixels[i + w * 4]     || oldPixels[i],
+                        oldPixels[i + w * 4 + 4] || oldPixels[i]
+                    ];
+
+                    for (var j = 0; j < 9; j++) {
+                        res += these[j] * m[j];
+                    }
+
+                    res /= divisor;
+                    if (offset) {
+                        res += offset;
+                    }
+                    newPixels[i] = res;
+                }
+
+                return newData;
+            }
+
+            // ##############################################
             // # Public functions ###########################
             // ##############################################
 
             NoiseTexture(w, h) {
-                let canvas    = document.createElement('canvas');
-                canvas.width  = w;
-                canvas.height = h;
+                this.canvas        = document.createElement('canvas');
+                this.canvas.width  = w;
+                this.canvas.height = h;
 
-                let context   = canvas.getContext('2d');
-                context.fillStyle = '#0000ff';
-                context.fillRect(0, 0, w, h);
+                this.context  = this.canvas.getContext('2d');
+                this.context.fillStyle = '#ffffff';
+                this.context.fillRect(0, 0, w, h);
+                let imageData = this.context.getImageData(0, 0, w, h);
 
-                let imageData = context.getImageData(0, 0, w, h);
                 for (let idx, x = 0; x < w; x++) {
                     for (let y = 0; y < h; y++) {
                         // Index of the pixel in the array
@@ -122,22 +174,26 @@ define(
             
                         //let pixel = this.Noise(x, y);
 
-                        let pixel = [
-                            this._noise(x, y, 0.8) * 255,
-                            this._noise(x, y, 0.8) * 255,
-                            this._noise(x, y, 0.8) * 255
-                        ];
+                        let noise = this._noise(x, y, 0) * 255;
 
-                        imageData.data[idx + 0] = pixel[0];
-                        imageData.data[idx + 1] = pixel[1];
-                        imageData.data[idx + 2] = pixel[2];
+                        imageData.data[idx + 0] = noise;
+                        imageData.data[idx + 1] = noise;
+                        imageData.data[idx + 2] = noise;
                     }
                 }
 
-                imageData = this._adjustContrast(imageData, 40);
-                context.putImageData(imageData, 0, 0);
+                //imageData = this._adjustContrast(imageData, 40);
+                let matrix = [
+                    [1, 2, 1],
+                    [2, 4, 2],
+                    [1, 2, 1]
+                ];
+                //imageData = this._convolve(imageData, w, matrix, 1/9, -255);
+                this.context.putImageData(imageData, 0, 0);
 
-                let texture         = new THREE.Texture(canvas);
+                document.getElementById('debugStuff').appendChild(this.canvas);
+
+                let texture         = new THREE.Texture(this.canvas);
                 texture.needsUpdate = true;
 
                 return texture;
