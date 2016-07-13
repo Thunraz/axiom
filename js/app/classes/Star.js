@@ -3,7 +3,7 @@ define(
     [
         'three',
         'app/classes/AstronomicalObject',
-        'app/classes/AstronomicalObjectType',
+        'app/enums/AstronomicalObjectType',
         'app/config',
         'app/classes/PerlinNoise'
     ],

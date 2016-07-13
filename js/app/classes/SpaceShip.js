@@ -5,7 +5,7 @@ define(
         'three',
         'app/classes/Debug',
         'app/classes/AstronomicalObject',
-        'app/classes/AstronomicalObjectType',
+        'app/enums/AstronomicalObjectType',
         'app/classes/GameObjectManager'
     ],
     function(config, THREE, Debug, AstronomicalObject, AstronomicalObjectType, GameObjectManager) {
