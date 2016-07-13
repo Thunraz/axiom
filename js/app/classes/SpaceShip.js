@@ -78,8 +78,6 @@ define(
                 let material  = new THREE.LineBasicMaterial({ vertexColors: THREE.VertexColors });
                 let positions = [this.position.x, this.position.y, this.position.z];
                 let colors    = [1, 1, 1];
-                let tPosition = this.position.clone();
-                let tVelocity = this.velocity.clone();
 
                 geometry.addAttribute('position', new THREE.BufferAttribute(new Float32Array(positions), 3));
                 geometry.addAttribute('color',    new THREE.BufferAttribute(new Float32Array(colors),    3));
@@ -90,7 +88,7 @@ define(
 
             // ##############################################
 
-            _updateTrajectory(deltaT, smoothDeltaT, spaceObjects) {
+            _updateTrajectory(deltaT, smoothDeltaT) {
                 if(this.trajectory) {
                     let positions   = [this.position.x, this.position.y, this.position.z];
                     let colors      = [1, 1, 1];

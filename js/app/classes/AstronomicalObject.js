@@ -1,7 +1,7 @@
 'use strict';
 define(
-    ['app/classes/SpaceObject', 'app/classes/Constants', 'app/config'],
-    function(SpaceObject, Constants, config) {
+    ['three', 'app/classes/SpaceObject', 'app/classes/Constants', 'app/config'],
+    function(THREE, SpaceObject, Constants, config) {
         return class AstronomicalObject extends SpaceObject {
 
             // ##############################################
