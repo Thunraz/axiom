@@ -5,9 +5,10 @@ define(
         'app/classes/AstronomicalObject',
         'app/enums/AstronomicalObjectType',
         'app/config',
-        'app/classes/PerlinNoise'
+        'app/classes/Graphics/Noise',
+        'app/enums/NoiseType'
     ],
-    function(THREE, AstronomicalObject, AstronomicalObjectType, config, PerlinNoise) {
+    function(THREE, AstronomicalObject, AstronomicalObjectType, config, Noise, NoiseType) {
         return class Star extends AstronomicalObject {
 
             // ##############################################
@@ -49,12 +50,12 @@ define(
             // ##############################################
             
             _createMesh() {
-                let perlinNoise = new PerlinNoise();
+                let perlinNoise = new Noise(256, 256, NoiseType.Simplex2D);
 
                 let geometry = new THREE.SphereGeometry(this.radius / 100, 32, 32);
                 let material = new THREE.MeshPhongMaterial({
                     emissive: this.color & 0x333333,
-                    emissiveMap: perlinNoise.NoiseTexture(256, 256),
+                    emissiveMap: perlinNoise.Texture,
                     //map: perlinNoise.NoiseTexture(256, 256)
                 });
                 
