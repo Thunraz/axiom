@@ -4,7 +4,7 @@ define(
         'app/config',
         'three',
         'stats',
-        'app/inputHandler',
+        'app/InputHandler',
         'app/classes/Debug',
         'app/classes/Camera',
         'app/classes/GameObjectManager',
