@@ -1,6 +1,6 @@
 'use strict';
 define(
-    ['three', 'app/classes/AstronomicalObject', 'app/classes/AstronomicalObjectType', 'app/classes/TrailParticle', 'app/config'],
+    ['three', 'app/classes/AstronomicalObject', 'app/enums/AstronomicalObjectType', 'app/classes/TrailParticle', 'app/config'],
     function(THREE, AstronomicalObject, AstronomicalObjectType, TrailParticle, config) {
         return class Planet extends AstronomicalObject {
 
