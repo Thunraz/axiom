@@ -8,7 +8,7 @@ define(
             // # Public functions ###########################
             // ##############################################
 
-            static convolve(imageData, width, matrix, divisor, offset) {
+            static convolve(imageData, context, width, matrix, divisor, offset) {
                 let m = [].concat(matrix[0], matrix[1], matrix[2]);
                 if(!divisor) {
                     // No divisor? Sum up the matrix values
@@ -18,7 +18,7 @@ define(
                 let oldData   = imageData,
                     oldPixels = oldData.data;
 
-                let newData   = this.context.createImageData(oldData),
+                let newData   = context.createImageData(oldData),
                     newPixels = newData.data;
 
                 let len = newPixels.length,
@@ -60,86 +60,86 @@ define(
 
             // ##############################################
 
-            static meanRemoval(imageData, width, divisor, offset) {
+            static meanRemoval(imageData, context, width, divisor, offset) {
                 let matrix = [
                     [-1, -1, -1],
                     [-1,  9, -1],
                     [-1, -1, -1]
                 ];
 
-                Convolution.convolve(imageData, width, matrix, divisor, offset || 0);
+                return Convolution.convolve(imageData, context, width, matrix, divisor, offset || 0);
             }
 
             // ##############################################
 
-            static sharpen(imageData, width, divisor, offset) {
+            static sharpen(imageData, context, width, divisor, offset) {
                 let matrix = [
                     [0,  -2,  0],
                     [-2, 11, -2],
                     [0,  -2,  0]
                 ];
 
-                Convolution.convolve(imageData, width, matrix, divisor, offset || 0);
+                return Convolution.convolve(imageData, context, width, matrix, divisor, offset || 0);
             }
 
             // ##############################################
 
-            static blur(imageData, width, divisor, offset) {
+            static blur(imageData, context, width, divisor, offset) {
                 let matrix = [
                     [1,  2,  1],
                     [2,  4,  2],
                     [1,  2,  1]
                 ];
 
-                Convolution.convolve(imageData, width, matrix, divisor, offset || 0);
+                return Convolution.convolve(imageData, context, width, matrix, divisor, offset || 0);
             }
 
             // ##############################################
 
-            static emboss(imageData, width, divisor, offset) {
+            static emboss(imageData, context, width, divisor, offset) {
                 let matrix = [
                     [2,  0,  0],
                     [0, -1,  0],
                     [0,  0, -1]
                 ];
 
-                Convolution.convolve(imageData, width, matrix, divisor, offset || 0);
+                return Convolution.convolve(imageData, context, width, matrix, divisor, offset || 0);
             }
 
             // ##############################################
 
-            static embossSubtle(imageData, width, divisor, offset) {
+            static embossSubtle(imageData, context, width, divisor, offset) {
                 let matrix = [
                     [1,  1, -1],
                     [1,  3, -1],
                     [1, -1, -1]
                 ];
 
-                Convolution.convolve(imageData, width, matrix, divisor, offset || 0);
+                return Convolution.convolve(imageData, context, width, matrix, divisor, offset || 0);
             }
 
             // ##############################################
 
-            static edgeDetect(imageData, width, divisor, offset) {
+            static edgeDetect(imageData, context, width, divisor, offset) {
                 let matrix = [
                     [1,  1,  1],
                     [1, -7,  1],
                     [1,  1,  1]
                 ];
 
-                Convolution.convolve(imageData, width, matrix, divisor, offset || 0);
+                return Convolution.convolve(imageData, context, width, matrix, divisor, offset || 0);
             }
 
             // ##############################################
 
-            static edgeDetect2(imageData, width, divisor, offset) {
+            static edgeDetect2(imageData, context, width, divisor, offset) {
                 let matrix = [
                     [-5, 0, 0],
                     [0,  0, 0],
                     [0,  0, 5]
                 ];
 
-                Convolution.convolve(imageData, width, matrix, divisor, offset || 0);
+                return Convolution.convolve(imageData, context, width, matrix, divisor, offset || 0);
             }
 
             // ##############################################

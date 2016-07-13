@@ -6,9 +6,10 @@ define(
         'app/enums/AstronomicalObjectType',
         'app/config',
         'app/classes/Graphics/Noise',
+        'app/classes/Graphics/Convolution',
         'app/enums/NoiseType'
     ],
-    function(THREE, AstronomicalObject, AstronomicalObjectType, config, Noise, NoiseType) {
+    function(THREE, AstronomicalObject, AstronomicalObjectType, config, Noise, Convolution, NoiseType) {
         return class Star extends AstronomicalObject {
 
             // ##############################################
