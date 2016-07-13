@@ -8,10 +8,11 @@ define(
             // # Constructor ################################
             // ##############################################
 
-            constructor(width, height, noiseType) {
-                this.width     = width;
-                this.height    = height;
-                this.noiseType = noiseType || NoiseType.Perlin2D;
+            constructor(width, height, noiseType, convolution) {
+                this.width       = width;
+                this.height      = height;
+                this.noiseType   = noiseType || NoiseType.Perlin2D;
+                this.convolution = convolution;
 
                 this.grad3 = [
                     new Grad(1,1,0),new Grad(-1,1,0),new Grad(1,-1,0),new Grad(-1,-1,0),
@@ -195,6 +196,10 @@ define(
                         imageData.data[index + 1] = noise;
                         imageData.data[index + 2] = noise;
                     }
+                }
+
+                if(this.convolution) {
+                    imageData = this.convolution(imageData, this.context, this.width, 1);
                 }
 
                 this.context.putImageData(imageData, 0, 0);
