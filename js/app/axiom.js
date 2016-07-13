@@ -13,7 +13,7 @@ define(
         'app/classes/SpaceShip',
         'app/classes/Grid'
     ],
-    function(config, THREE, Stats, inputHandler, Debug, Camera, GameObjectManager, Planet, Star, SpaceShip, Grid) {
+    function(config, THREE, Stats, InputHandler, Debug, Camera, GameObjectManager, Planet, Star, SpaceShip, Grid) {
         let stats = new Stats();
         stats.showPanel(0);
         document.body.appendChild(stats.dom);
@@ -78,7 +78,7 @@ define(
             smoothDeltaT = lastDeltaTValues.reduce(function(prev, cur) { return prev + cur;}) / lastDeltaTValues.length;
 
             // Handle user input            
-            inputHandler.checkInput(camera);
+            InputHandler.checkInput(camera);
 
             // Update all the objects' positions
             GameObjectManager.updatePositions(deltaT, smoothDeltaT);
