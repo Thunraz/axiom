@@ -37,7 +37,7 @@ define(
         scene.add(new THREE.AmbientLight( 0x101010 ));
 
         GameObjectManager.add([
-            new Grid(scene, 'grid', new THREE.Vector3(0, 0, 0), 75, 75, 6, true),
+            new Grid(scene, 'grid', new THREE.Vector3(0, 0, 0), 750, 750, 60, true),
 
             new Planet(scene,  'redPlanet',    3.301,   20, new THREE.Vector3( 0, 18, 0), true, 0xff3333),
             new Planet(scene, 'homePlanet',   48.690,  100, new THREE.Vector3(25,  0, 0), true, 0x33ff33),
@@ -55,6 +55,8 @@ define(
 
         GameObjectManager.get('player').velocity.setX(.2);
         GameObjectManager.get('player').velocity.setY(0);
+
+        config.maxAnisotropy = renderer.getMaxAnisotropy();
 
         let lastFrameTime    = 0;
         let lastDeltaTValues = [];
