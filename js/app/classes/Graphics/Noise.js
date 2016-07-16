@@ -1,7 +1,7 @@
 'use strict';
 define(
-    ['three', 'app/enums/NoiseType', 'app/classes/Graphics/Grad'],
-    function(THREE, NoiseType, Grad) {
+    ['three', 'app/config', 'app/enums/NoiseType', 'app/classes/Graphics/Grad'],
+    function(THREE, config, NoiseType, Grad) {
         return class Noise {
 
             // ##############################################
@@ -156,6 +156,20 @@ define(
                 return 70 * (n0 + n1 + n2);
             }
 
+            _adjustContrast(imageData, contrast) {
+                let data = imageData.data;
+                let factor = (259 * (contrast + 255)) / (255 * (259 - contrast));
+
+                for(let i = 0; i < data.length; i += 4)
+                {
+                    data[i    ] = factor * (data[i    ] - 128) + 128;
+                    data[i + 1] = factor * (data[i + 1] - 128) + 128;
+                    data[i + 2] = factor * (data[i + 2] - 128) + 128;
+                }
+
+                return imageData;
+            }
+
             // ##############################################
             // # Public functions ###########################
             // ##############################################
@@ -178,7 +192,7 @@ define(
                         // normalize
                         let x1    = x / this.width,
                             y1    = y / this.height;
-                        let size  = 2;  // pick a scaling value
+                        let size  = 15;  // pick a scaling value
                         let noise = Math.round((this._simplex2d(size * x1, size * y1) + 1) / 2 * 255);
                         
                         /*switch(this.noiseType) {
@@ -202,10 +216,13 @@ define(
                     imageData = this.convolution(imageData, this.context, this.width, 1);
                 }
 
+                imageData = this._adjustContrast(imageData, -200);
+
                 this.context.putImageData(imageData, 0, 0);
                 document.getElementById('debugStuff').appendChild(this.canvas);
 
                 let texture         = new THREE.Texture(this.canvas);
+                texture.anisotropy = config.maxAnisotropy;
                 texture.needsUpdate = true;
 
                 return texture;
