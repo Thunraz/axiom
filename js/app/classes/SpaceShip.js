@@ -128,8 +128,9 @@ define(
                         }
                     }
                     
-                    this.trajectory.geometry.removeAttribute('position');
-                    this.trajectory.geometry.removeAttribute('color');
+                    this.trajectory.geometry.dispose();
+                    this.trajectory.geometry = null;
+                    this.trajectory.geometry = new THREE.BufferGeometry();
                     
                     this.trajectory.geometry.attributes.position = new THREE.BufferAttribute(new Float32Array(positions), 3);
                     this.trajectory.geometry.attributes.color    = new THREE.BufferAttribute(new Float32Array(colors),    3);
