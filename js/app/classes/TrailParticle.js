@@ -49,11 +49,7 @@ define(
                 super.update(deltaT);
 
                 if(this.life <= this.lifetime) {
-                    this.mesh.rotation.set(
-                        this.scene.camera.pivot.rotation.x,
-                        this.scene.camera.pivot.rotation.y,
-                        this.scene.camera.pivot.rotation.z
-                    );
+                    this.mesh.lookAt(this.scene.camera.camera);
 
                     let factor = 1 - this.life / this.lifetime / 50;
 

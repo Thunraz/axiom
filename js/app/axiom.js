@@ -19,18 +19,20 @@ define(
         document.body.appendChild(stats.dom);
 
         let scene = new THREE.Scene();
+        window.scene = scene;
 
         let renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(config.canvasWidth, config.canvasHeight);
-        document.getElementById('game').appendChild( renderer.domElement );
+        document.getElementById('game').appendChild(renderer.domElement);
 
         let camera = new Camera(
             scene,
+            renderer,
             config.camera.fov,
             config.canvasWidth / config.canvasHeight,
             0.1,
             1000,
-            new THREE.Vector3(0, 0, 0),
+            new THREE.Vector3(0, 0, 50),
             new THREE.Vector3(0, 0, 0)
         );
 
@@ -69,7 +71,7 @@ define(
             let deltaT = currentFrameTime - lastFrameTime;
             lastFrameTime = currentFrameTime;
 
-            // Ugly hack to prevent "jumps" when the tab lost focus 
+            // Ugly hack to prevent "jumps" when the tab lost focus
             if(deltaT > 32) deltaT = 1000/60;
 
             // Smooth deltaT
@@ -79,7 +81,10 @@ define(
             lastDeltaTValues.push(deltaT);
             smoothDeltaT = lastDeltaTValues.reduce(function(prev, cur) { return prev + cur;}) / lastDeltaTValues.length;
 
-            // Handle user input            
+            // Update controls
+            camera.controls.update();
+
+            // Handle user input
             InputHandler.checkInput(camera);
 
             // Update all the objects' positions
