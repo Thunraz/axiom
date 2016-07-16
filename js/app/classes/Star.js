@@ -51,11 +51,11 @@ define(
             // ##############################################
             
             _createMesh() {
-                let perlinNoise = new Noise(256, 256, NoiseType.Simplex2D);
+                let perlinNoise = new Noise(256, 256, NoiseType.Simplex2D, Convolution.emboss);
 
                 let geometry = new THREE.SphereGeometry(this.radius / 100, 32, 32);
                 let material = new THREE.MeshPhongMaterial({
-                    emissive: this.color & 0x333333,
+                    emissive: this.color,
                     emissiveMap: perlinNoise.Texture,
                     //map: perlinNoise.NoiseTexture(256, 256)
                 });
