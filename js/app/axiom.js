@@ -19,7 +19,6 @@ define(
         document.body.appendChild(stats.dom);
 
         let scene = new THREE.Scene();
-        window.scene = scene;
 
         let renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(config.canvasWidth, config.canvasHeight);
