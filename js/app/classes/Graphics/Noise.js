@@ -10,9 +10,10 @@ define(
             // # Constructor ################################
             // ##############################################
 
-            constructor(width, height, noiseType) {
+            constructor(width, height, scale, noiseType) {
                 this.width     = width;
                 this.height    = height;
+                this.scale     = scale;
                 this.noiseType = noiseType || NoiseType.Perlin2D;
 
                 this.grad3 = [
@@ -50,6 +51,8 @@ define(
                 this._seed(0);
             }
 
+            // ##############################################
+
             _seed(seed) {
                 if(seed > 0 && seed < 1) {
                     // Scale the seed out
@@ -73,6 +76,20 @@ define(
                     this.gradP[i] = this.gradP[i + 256] = this.grad3[v % 12];
                 }
             }
+
+            // ##############################################
+
+            _fade(t) {
+                return t * t * t * (t * (t * 6 - 15) + 10);
+            }
+
+            // ##############################################
+
+            _lerp(a, b, t) {
+                return (1 - t) * a + t * b;
+            }
+
+            // ##############################################
 
             _simplex2d(xin, yin) {
                 // Noise contributions from the three corners
@@ -158,6 +175,37 @@ define(
             }
 
             // ##############################################
+
+            _perlin2d(x, y) {
+                // Find unit grid cell containing point
+                let X = Math.floor(x), Y = Math.floor(y);
+
+                // Get relative xy coordinates of point within that cell
+                x -= X;
+                y -= Y;
+
+                // Wrap the integer cells at 255 (smaller integer period can be introduced here)
+                X &= 255;
+                Y &= 255;
+
+                // Calculate noise contributions from each of the four corners
+                let n00 = this.gradP[X +     this.perm[Y    ]].dot2(x,     y    );
+                let n01 = this.gradP[X +     this.perm[Y + 1]].dot2(x,     y - 1);
+                let n10 = this.gradP[X + 1 + this.perm[Y    ]].dot2(x - 1, y    );
+                let n11 = this.gradP[X + 1 + this.perm[Y + 1]].dot2(x - 1, y - 1);
+
+                // Compute the fade curve value for x
+                let u = this._fade(x);
+
+                // Interpolate the four results
+                return this._lerp(
+                    this._lerp(n00, n10, u),
+                    this._lerp(n01, n11, u),
+                    this._fade(y)
+                );
+            }
+
+            // ##############################################
             // # Public functions ###########################
             // ##############################################
 
@@ -179,19 +227,21 @@ define(
                         // normalize
                         let x1    = x / this.width,
                             y1    = y / this.height;
-                        let size  = 2;  // pick a scaling value
-                        let noise = Math.round((this._simplex2d(size * x1, size * y1) + 1) / 2 * 255);
+                        let noise = 0;
+                        //let noise = Math.round((this._simplex2d(this.scale * x1, this.scale * y1) + 1) / 2 * 255);
                         
-                        /*switch(this.noiseType) {
-                        case NoiseType.Perlin2D:
-                            noise = this.perlin2d(x, y) * 255;
-                            break;
-                        case NoiseType.Simplex2D:
-                            noise = Math.round((this._simplex2d(x, y) + 1) / 2 * 255);
-                            break;
-                        default:
-                            break;
-                        }*/
+                        switch(this.noiseType) {
+                            case NoiseType.Perlin2D:
+                                noise = (this._perlin2d(this.scale * x1, this.scale * y1) + 1) / 2;
+                                break;
+                            case NoiseType.Simplex2D:
+                                noise = (this._simplex2d(this.scale * x1, this.scale * y1) + 1) / 2;
+                                break;
+                            default:
+                                break;
+                        }
+
+                        noise = Math.round(noise * 255);
 
                         imageData.data[index + 0] = noise;
                         imageData.data[index + 1] = noise;
