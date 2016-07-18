@@ -44,14 +44,14 @@ define(
             
             new Star(  scene, 'sol',        1.9984E8, 1400, new THREE.Vector3( 0,  0, 0),       0xffff00),
 
-            new SpaceShip(scene, 'player', 40.0, new THREE.Vector3(0, 0, 50))
+            new SpaceShip(scene, 'player', 40.0, new THREE.Vector3(0, 0, -50))
         ]);
 
         GameObjectManager.get('redPlanet').velocity.setX(0.2);
         GameObjectManager.get('redPlanet').velocity.setZ(0.3);
 
         GameObjectManager.get('homePlanet').velocity.setY(0.03);
-        GameObjectManager.get('homePlanet').velocity.setZ(-0.3);
+        GameObjectManager.get('homePlanet').velocity.setZ(0.3);
 
         GameObjectManager.get('player').velocity.setX(.2);
         GameObjectManager.get('player').velocity.setZ(0);
