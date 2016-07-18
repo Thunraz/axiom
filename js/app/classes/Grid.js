@@ -38,16 +38,16 @@ define(
                 let condition = (segments % 2 == 0) ? this.width / 2 + 1 : this.width / 2;
                 for(let x = -this.width / 2; x <= condition; x += this.width / segments) {
                     geometry.vertices.push(
-                        new THREE.Vector3(x, -this.height / 2, 0),
-                        new THREE.Vector3(x,  this.height / 2, 0)
+                        new THREE.Vector3(x, 0, -this.height / 2),
+                        new THREE.Vector3(x, 0,  this.height / 2)
                     );
                 }
                 
                 condition = (segments % 2 == 0) ? this.height / 2 + 1 : this.height / 2;
-                for(let y = -this.height / 2; y <= condition; y += this.height / segments) {
+                for(let z = -this.height / 2; z <= condition; z += this.height / segments) {
                     geometry.vertices.push(
-                        new THREE.Vector3(-this.width / 2, y, 0),
-                        new THREE.Vector3( this.width / 2, y, 0)
+                        new THREE.Vector3(-this.width / 2, 0, z),
+                        new THREE.Vector3( this.width / 2, 0, z)
                     );
                 }
 
@@ -69,8 +69,8 @@ define(
                 if(this.moveWithCamera) {
                     let roundedOffset = new THREE.Vector3(
                         (camera.position.x - this.cameraOffset.x) % (this.width  / this.segments),
-                        (camera.position.y - this.cameraOffset.y) % (this.height / this.segments),
-                        camera.position.z - this.cameraOffset.z
+                        camera.position.y  - this.cameraOffset.y,
+                        (camera.position.z - this.cameraOffset.z) % (this.height / this.segments)
                     );
 
                     let newPosition = camera.position

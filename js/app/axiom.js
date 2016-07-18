@@ -31,8 +31,7 @@ define(
             config.canvasWidth / config.canvasHeight,
             0.1,
             1000,
-            new THREE.Vector3(0, 0, 50),
-            new THREE.Vector3(0, 0, 0)
+            new THREE.Vector3(25, 50, 50)
         );
 
         scene.add(new THREE.AmbientLight( 0x101010 ));
@@ -40,22 +39,22 @@ define(
         GameObjectManager.add([
             new Grid(scene, 'grid', new THREE.Vector3(0, 0, 0), 750, 750, 60, true),
 
-            new Planet(scene, 'redPlanet',    3.301,   20, new THREE.Vector3( 0, 18, 0), true, 0xff3333),
-            new Planet(scene, 'homePlanet',   48.690,  100, new THREE.Vector3(25,  0, 0), true, 0x33ff33),
+            new Planet(scene, 'redPlanet',     3.301,   20, new THREE.Vector3( 0, 18, 0), true, 0xff3333),
+            new Planet(scene, 'homePlanet',   48.690,  100, new THREE.Vector3(25, 0,  0), true, 0x33ff33),
             
             new Star(  scene, 'sol',        1.9984E8, 1400, new THREE.Vector3( 0,  0, 0),       0xffff00),
 
-            new SpaceShip(scene, 'player', 40.0, new THREE.Vector3(0, 50, 0))
+            new SpaceShip(scene, 'player', 40.0, new THREE.Vector3(0, 0, 50))
         ]);
 
         GameObjectManager.get('redPlanet').velocity.setX(0.2);
         GameObjectManager.get('redPlanet').velocity.setZ(0.3);
 
-        GameObjectManager.get('homePlanet').velocity.setZ(0.03);
-        GameObjectManager.get('homePlanet').velocity.setY(-0.3);
+        GameObjectManager.get('homePlanet').velocity.setY(0.03);
+        GameObjectManager.get('homePlanet').velocity.setZ(-0.3);
 
         GameObjectManager.get('player').velocity.setX(.2);
-        GameObjectManager.get('player').velocity.setY(0);
+        GameObjectManager.get('player').velocity.setZ(0);
 
         config.maxAnisotropy = renderer.getMaxAnisotropy();
 

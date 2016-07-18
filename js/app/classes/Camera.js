@@ -8,18 +8,16 @@ define(
             // # Constructor ################################
             // ##############################################
 
-            constructor(scene, renderer, fov, aspectRatio, near, far, cameraPosition, targetPosition) {
+            constructor(scene, renderer, fov, aspectRatio, near, far, cameraPosition) {
                 this.scene = scene;
 
                 this.near           = near;
                 this.far            = far;
                 this.cameraPosition = cameraPosition;
-                this.targetPosition = targetPosition;
 
                 this.camera = new THREE.PerspectiveCamera(fov, aspectRatio, near, far);
                 this.camera.position.set(cameraPosition.x, cameraPosition.y, cameraPosition.z);
                 this.camera.zoom = 0.5;
-                //this.camera.rotation.z = Math.PI / 4;
                 this.camera.updateProjectionMatrix();
 
                 scene.camera = this;
