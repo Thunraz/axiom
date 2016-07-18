@@ -50,7 +50,7 @@ define(
             // ##############################################
             
             _createMesh() {
-                let perlinNoise = new Noise(256, 256, NoiseType.Simplex2D);
+                let perlinNoise = new Noise(256, 256, 6, NoiseType.Perlin2D);
 
                 let geometry = new THREE.SphereGeometry(this.radius / 100, 32, 32);
                 let material = new THREE.MeshPhongMaterial({
