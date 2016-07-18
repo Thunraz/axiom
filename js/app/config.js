@@ -13,5 +13,7 @@ define({
 
     showDirectionalVectors: false,
     
-    framesToSmoothDeltaT: 128
+    framesToSmoothDeltaT: 128,
+
+    maxAnisotropy:        0
 });
