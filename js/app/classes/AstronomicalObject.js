@@ -43,30 +43,81 @@ define(
 
             // ##############################################
 
-            _createZPosition() {
+            _createYPosition(scene, radius) {
+                // Create initial line to xz plane
                 let vertices = new Float32Array([
                     this.position.x, this.position.y, this.position.z,
-                    this.position.x, this.position.y, 0,
+                    this.position.x, 0, this.position.z
                 ]);
 
                 let colors = new Float32Array([
                     ((this.color & 0xff0000) >> 16) / 256, ((this.color & 0x00ff00) >> 8) / 256, (this.color & 0x0000ff) / 256,
-                    ((this.color & 0xff0000) >> 16) / 256, ((this.color & 0x00ff00) >> 8) / 256, (this.color & 0x0000ff) / 256,
+                    ((this.color & 0x330000) >> 16) / 256, ((this.color & 0x003300) >> 8) / 256, (this.color & 0x000033) / 256,
                 ]);
 
-                this.zPosition = new THREE.BufferGeometry();
-                this.zPosition.addAttribute('position', new THREE.BufferAttribute(vertices, 3));
-                this.zPosition.addAttribute('color',    new THREE.BufferAttribute(colors,   3));
+                let lineMaterial = new THREE.LineBasicMaterial({ vertexColors: THREE.VertexColors });
+                let lineGeometry = new THREE.BufferGeometry();
+                lineGeometry.attributes.position = new THREE.BufferAttribute(new Float32Array(vertices), 3);
+                lineGeometry.attributes.color    = new THREE.BufferAttribute(new Float32Array(colors),   3);
 
-                let material = new THREE.LineBasicMaterial({ vertexColors: THREE.VertexColors });
+                this.YPosition = new THREE.Line(lineGeometry, lineMaterial);
+                scene.add(this.YPosition);
 
-                return new THREE.Line(this.zPosition, material);
+                if(radius) {
+                    // Create circle
+                    let circleGeometry = new THREE.Geometry();
+                    let numberSegments = 16;
+                    let circleSegment  = 2 * Math.PI / numberSegments;
+                    radius *= .02;
+
+                    if(radius < 1) radius = 1;
+
+                    for(let i = 0; i <= numberSegments; i++) {
+                        let position = new THREE.Vector3(
+                            radius * Math.cos(i * circleSegment),
+                            0,
+                            radius * Math.sin(i * circleSegment)
+                        );
+
+                        circleGeometry.vertices.push(position);
+                    }
+
+                    let circleMaterial = new THREE.LineBasicMaterial({ color: this.color });
+                    this.YPositionCircle = new THREE.Line(circleGeometry, circleMaterial);
+                    scene.add(this.YPositionCircle);
+                }
             }
 
             // ##############################################
 
-            _updateZPosition() {
+            _updateYPosition() {
+                // Throw error if _createYPosition hasn't been called before
+                if(!this.YPosition) {
+                    throw new Error('yPosition hasn\'t been defined. (call _createYPosition first)');
+                }
 
+                let vertices = new Float32Array([
+                    this.position.x, this.position.y, this.position.z,
+                    this.position.x, 0, this.position.z
+                ]);
+
+                let colors = new Float32Array([
+                    ((this.color & 0xff0000) >> 16) / 256, ((this.color & 0x00ff00) >> 8) / 256, (this.color & 0x0000ff) / 256,
+                    ((this.color & 0x330000) >> 16) / 256, ((this.color & 0x003300) >> 8) / 256, (this.color & 0x000033) / 256,
+                ]);
+
+                // Clean up old geometry
+                this.YPosition.geometry.dispose();
+                this.YPosition.geometry = null;
+                this.YPosition.geometry = new THREE.BufferGeometry();
+
+                this.YPosition.geometry.attributes.position = new THREE.BufferAttribute(new Float32Array(vertices), 3);
+                this.YPosition.geometry.attributes.color    = new THREE.BufferAttribute(new Float32Array(colors),   3);
+
+                if(this.YPositionCircle) {
+                    // Move circle if it exists
+                    this.YPositionCircle.position.set(this.position.x, 0, this.position.z);
+                }
             }
 
             // ##############################################
@@ -121,8 +172,8 @@ define(
                     this.acceleration.add(newAcceleration).multiplyScalar(deltaT)
                 );
 
-                if(this.showZPosition) {
-                    this._updateZPosition();
+                if(this.showYPosition) {
+                    this._updateYPosition();
                 }
             }
 

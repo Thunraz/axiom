@@ -24,6 +24,7 @@ define(
                 this.frameCounter = 0;
                 
                 this._createMesh();
+                this._createYPosition(this.scene, this.radius);
                 
                 if(isSolid) {
                     this.astronomicalObjectType = AstronomicalObjectType.SOLID;
@@ -35,8 +36,6 @@ define(
                     this.arrowMesh = this._createDirectionalArrow();
                     this.scene.add(this.arrowMesh);
                 }
-
-                this.scene.add(this._createZPosition());
             }
 
             // ##############################################
@@ -64,6 +63,7 @@ define(
                 this.frameCounter++;
 
                 this.mesh.position.set(this.position.x, this.position.y, this.position.z);
+                this._updateYPosition();
 
                 if(this.frameCounter % 10 == 0) {
                     if(this.trail.length < 100) {

@@ -27,16 +27,17 @@ define(
 
                 this.avgDeltaT = [];
 
-                let that   = this;
+                let that = this;
 
                 let loader = new THREE.JSONLoader();
                 loader.load('assets/models/ship.json', function(shipGeometry, shipMaterials) {
                     let shipMaterial = new THREE.MultiMaterial(shipMaterials);
-                    that.shipMesh    = new THREE.Mesh(shipGeometry, shipMaterial);
-                    scene.add(that.shipMesh);
+                    that.mesh        = new THREE.Mesh(shipGeometry, shipMaterial);
+                    scene.add(that.mesh);
 
                     that._createPositionIndicator();
                     that._createInitialTrajectory();
+                    that._createYPosition(scene);
                 });
 
                 if(config.showDirectionalVectors) {
@@ -54,7 +55,7 @@ define(
                     
                 let numberSegments = 16;
                 let circleSegment = 2 * Math.PI / numberSegments;
-                let circleRadius = this.shipMesh.geometry.boundingSphere.radius;
+                let circleRadius = this.mesh.geometry.boundingSphere.radius * 1.1;
 
                 for(let i = 0; i <= numberSegments; i++) {
                     let vector = new THREE.Vector3(
@@ -146,10 +147,14 @@ define(
 
                 this._updateTrajectory(deltaT, smoothDeltaT, spaceObjects);
 
+                if(this.mesh) {
+                    this._updateYPosition();
+                }
+
                 let camera = this.scene.camera.camera;
 
-                if(this.shipMesh == null) return;
-                this.shipMesh.position.set(this.position.x, this.position.y, this.position.z);
+                if(this.mesh == null) return;
+                this.mesh.position.set(this.position.x, this.position.y, this.position.z);
                 this.positionIndicator.position.set(this.position.x, this.position.y, this.position.z);
                 this.positionIndicator.scale.set(
                     2 + 1 / camera.zoom,
