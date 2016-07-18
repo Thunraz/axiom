@@ -1,3 +1,3 @@
 #!/bin/sh
 
-cd .. && http-server -s -a localhost
+cd .. && http-server -a localhost
