@@ -35,6 +35,8 @@ define(
                     this.arrowMesh = this._createDirectionalArrow();
                     this.scene.add(this.arrowMesh);
                 }
+
+                this.scene.add(this._createZPosition());
             }
 
             // ##############################################

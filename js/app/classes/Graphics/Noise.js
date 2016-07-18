@@ -1,7 +1,7 @@
 'use strict';
 define(
-    ['three', 'app/enums/NoiseType', 'app/classes/Graphics/Grad'],
-    function(THREE, NoiseType, Grad) {
+    ['three', 'app/config', 'app/enums/NoiseType', 'app/classes/Graphics/Grad'],
+    function(THREE, config, NoiseType, Grad) {
         return class Noise {
 
             // Based on noisejs by Joseph Gentle (https://github.com/josephg/noisejs)
@@ -10,11 +10,12 @@ define(
             // # Constructor ################################
             // ##############################################
 
-            constructor(width, height, scale, noiseType) {
-                this.width     = width;
-                this.height    = height;
+            constructor(width, height, scale, noiseType, convolution) {
+                this.width       = width;
+                this.height      = height;
                 this.scale     = scale;
-                this.noiseType = noiseType || NoiseType.Perlin2D;
+                this.noiseType   = noiseType || NoiseType.Perlin2D;
+                this.convolution = convolution;
 
                 this.grad3 = [
                     new Grad(1,1,0),new Grad(-1,1,0),new Grad(1,-1,0),new Grad(-1,-1,0),
@@ -174,6 +175,20 @@ define(
                 return 70 * (n0 + n1 + n2);
             }
 
+            _adjustContrast(imageData, contrast) {
+                let data = imageData.data;
+                let factor = (259 * (contrast + 255)) / (255 * (259 - contrast));
+
+                for(let i = 0; i < data.length; i += 4)
+                {
+                    data[i    ] = factor * (data[i    ] - 128) + 128;
+                    data[i + 1] = factor * (data[i + 1] - 128) + 128;
+                    data[i + 2] = factor * (data[i + 2] - 128) + 128;
+                }
+
+                return imageData;
+            }
+
             // ##############################################
 
             _perlin2d(x, y) {
@@ -228,7 +243,6 @@ define(
                         let x1    = x / this.width,
                             y1    = y / this.height;
                         let noise = 0;
-                        //let noise = Math.round((this._simplex2d(this.scale * x1, this.scale * y1) + 1) / 2 * 255);
                         
                         switch(this.noiseType) {
                             case NoiseType.Perlin2D:
@@ -249,10 +263,17 @@ define(
                     }
                 }
 
+                if(this.convolution) {
+                    imageData = this.convolution(imageData, this.context, this.width, 1);
+                }
+
+                imageData = this._adjustContrast(imageData, -200);
+
                 this.context.putImageData(imageData, 0, 0);
                 document.getElementById('debugStuff').appendChild(this.canvas);
 
                 let texture         = new THREE.Texture(this.canvas);
+                texture.anisotropy = config.maxAnisotropy;
                 texture.needsUpdate = true;
 
                 return texture;

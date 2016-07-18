@@ -33,10 +33,10 @@ define(['app/config'], function(config) {
         /* S */ 83: 'down',
         /* D */ 68: 'right',
          
-        /* ↑ */ 38: 'up',
-        /* ← */ 40: 'down',
-        /* ↓ */ 37: 'left',
-        /* → */ 39: 'right',
+        /* ↑ */ 38: 'cameraUp',
+        /* ← */ 40: 'cameraDown',
+        /* ↓ */ 37: 'cameraLeft',
+        /* → */ 39: 'cameraRight',
 
         /* Q */ 81: 'rotateLeft',
         /* E */ 69: 'rotateRight',
@@ -67,26 +67,25 @@ define(['app/config'], function(config) {
 
     function cameraMovement(cameraObject) {
         let camera = cameraObject.camera;
-        let pivot  = cameraObject.pivot;
 
-        if(controls.up && !controls.down) {
-            pivot.position.x += -Math.sin(pivot.rotation.z) * 1 / camera.zoom * config.camera.movementSpeed;
-            pivot.position.y += Math.cos(pivot.rotation.z)  * 1 / camera.zoom * config.camera.movementSpeed;
+        if(controls.cameraUp && !controls.cameraDown) {
+            camera.position.x += -Math.sin(camera.rotation.z) * 1 / camera.zoom * config.camera.movementSpeed;
+            camera.position.y += Math.cos(camera.rotation.z)  * 1 / camera.zoom * config.camera.movementSpeed;
         }
         
-        if(controls.down && !controls.up) {
-            pivot.position.x -= -Math.sin(pivot.rotation.z) * 1 / camera.zoom * config.camera.movementSpeed;
-            pivot.position.y -= Math.cos(pivot.rotation.z)  * 1 / camera.zoom * config.camera.movementSpeed;
+        if(controls.cameraDown && !controls.cameraUp) {
+            camera.position.x -= -Math.sin(camera.rotation.z) * 1 / camera.zoom * config.camera.movementSpeed;
+            camera.position.y -= Math.cos(camera.rotation.z)  * 1 / camera.zoom * config.camera.movementSpeed;
         }
 
-        if(controls.left && !controls.right) {
-            pivot.position.x -= Math.cos(pivot.rotation.z) * 1 / camera.zoom * config.camera.movementSpeed;
-            pivot.position.y -= Math.sin(pivot.rotation.z)  * 1 / camera.zoom * config.camera.movementSpeed;
+        if(controls.cameraLeft && !controls.cameraRight) {
+            camera.position.x -= Math.cos(camera.rotation.z) * 1 / camera.zoom * config.camera.movementSpeed;
+            camera.position.y -= Math.sin(camera.rotation.z)  * 1 / camera.zoom * config.camera.movementSpeed;
         }
         
-        if(controls.right && !controls.left) {
-            pivot.position.x += Math.cos(pivot.rotation.z) * 1 / camera.zoom * config.camera.movementSpeed;
-            pivot.position.y += Math.sin(pivot.rotation.z)  * 1 / camera.zoom * config.camera.movementSpeed;
+        if(controls.cameraRight && !controls.cameraLeft) {
+            camera.position.x += Math.cos(camera.rotation.z) * 1 / camera.zoom * config.camera.movementSpeed;
+            camera.position.y += Math.sin(camera.rotation.z)  * 1 / camera.zoom * config.camera.movementSpeed;
         }
 
         if(controls.zoomIn && !controls.zoomOut) {

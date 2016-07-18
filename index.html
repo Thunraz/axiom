@@ -46,6 +46,14 @@
 
                 color: #aaa;
             }
+
+            div#version {
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                text-align: left;
+                color: #333;
+            }
         </style>
     </head>
     <body>
@@ -60,6 +68,8 @@
             </label>
             <pre id="debugOutput"></pre>
         </div>
+
+        <div id="version">%Git-Version%</div>
         
         <script data-main="js/bootstrap.js" src="js/lib/require.min.js" async></script>
     </body>

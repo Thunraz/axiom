@@ -34,11 +34,39 @@ define(
                 ]);
 
                 this.arrowGeometry.addAttribute('position', new THREE.BufferAttribute(vertices, 3));
-                this.arrowGeometry.addAttribute('color', new THREE.BufferAttribute(colors, 3));
+                this.arrowGeometry.addAttribute('color',    new THREE.BufferAttribute(colors,   3));
 
                 let material = new THREE.LineBasicMaterial({ vertexColors: THREE.VertexColors });
 
                 return new THREE.Line(this.arrowGeometry, material);
+            }
+
+            // ##############################################
+
+            _createZPosition() {
+                let vertices = new Float32Array([
+                    this.position.x, this.position.y, this.position.z,
+                    this.position.x, this.position.y, 0,
+                ]);
+
+                let colors = new Float32Array([
+                    ((this.color & 0xff0000) >> 16) / 256, ((this.color & 0x00ff00) >> 8) / 256, (this.color & 0x0000ff) / 256,
+                    ((this.color & 0xff0000) >> 16) / 256, ((this.color & 0x00ff00) >> 8) / 256, (this.color & 0x0000ff) / 256,
+                ]);
+
+                this.zPosition = new THREE.BufferGeometry();
+                this.zPosition.addAttribute('position', new THREE.BufferAttribute(vertices, 3));
+                this.zPosition.addAttribute('color',    new THREE.BufferAttribute(colors,   3));
+
+                let material = new THREE.LineBasicMaterial({ vertexColors: THREE.VertexColors });
+
+                return new THREE.Line(this.zPosition, material);
+            }
+
+            // ##############################################
+
+            _updateZPosition() {
+
             }
 
             // ##############################################
@@ -92,6 +120,10 @@ define(
                 this.velocity = this.velocity.add(
                     this.acceleration.add(newAcceleration).multiplyScalar(deltaT)
                 );
+
+                if(this.showZPosition) {
+                    this._updateZPosition();
+                }
             }
 
             // ##############################################
