@@ -4,6 +4,8 @@ define(
     function(THREE, NoiseType, Grad) {
         return class Noise {
 
+            // Based on noisejs by Joseph Gentle (https://github.com/josephg/noisejs)
+
             // ##############################################
             // # Constructor ################################
             // ##############################################
