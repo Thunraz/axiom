@@ -59,8 +59,8 @@ define(
                 for(let i = 0; i <= numberSegments; i++) {
                     let vector = new THREE.Vector3(
                         circleRadius * Math.cos(i * circleSegment),
-                        circleRadius * Math.sin(i * circleSegment),
-                        0
+                        0,
+                        circleRadius * Math.sin(i * circleSegment)
                     );
 
                     positionIndicatorGeometry.vertices.push(vector);
