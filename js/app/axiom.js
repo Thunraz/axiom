@@ -18,12 +18,15 @@ define(
         stats.showPanel(0);
         document.body.appendChild(stats.dom);
 
-        let scene = new THREE.Scene();
-
         let renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(config.canvasWidth, config.canvasHeight);
         document.getElementById('game').appendChild(renderer.domElement);
+        
+        config.maxAnisotropy = renderer.getMaxAnisotropy();
 
+        let scene = new THREE.Scene();
+
+        // Create camera
         let camera = new Camera(
             scene,
             renderer,
@@ -36,6 +39,7 @@ define(
 
         scene.add(new THREE.AmbientLight( 0x101010 ));
 
+        // Add objects
         GameObjectManager.add([
             new Grid(scene, 'grid', new THREE.Vector3(0, 0, 0), 750, 750, 60, true),
 
@@ -47,6 +51,8 @@ define(
             new SpaceShip(scene, 'player', 40.0, new THREE.Vector3(0, 0, -50))
         ]);
 
+        // Give objects a speed so they won't
+        // just plunge back into the sun
         GameObjectManager.get('redPlanet').velocity.setX(0.2);
         GameObjectManager.get('redPlanet').velocity.setZ(0.3);
 
@@ -56,8 +62,7 @@ define(
         GameObjectManager.get('player').velocity.setX(.2);
         GameObjectManager.get('player').velocity.setZ(0);
 
-        config.maxAnisotropy = renderer.getMaxAnisotropy();
-
+        // Inititiate
         let lastFrameTime    = 0;
         let lastDeltaTValues = [];
         let smoothDeltaT     = 0;
