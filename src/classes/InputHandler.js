@@ -2,41 +2,38 @@
 define(['config'], function(config) {
 
     // ##############################################
-    // # Add event listeners ########################
-    // ##############################################
-
-    document.addEventListener('keydown', onKeyDown, false);
-    document.addEventListener('keyup', onKeyUp, false);
-
-    document.getElementById('ShowDirectionalVectors').addEventListener('change', showDirectionalVectors, false);
-
-    // ##############################################
     // # Private functions ##########################
     // ##############################################
 
     let controls = {
-        up: false,
-        right: false,
-        down: false,
-        left: false,
+        playerAccelerate: false,
+        playerDecelerate: false,
+        playerTurnLeft  : false,
+        playerTurnRight : false,
 
-        rotateLeft: false,
+        rotateLeft : false,
         rotateRight: false,
 
-        zoomIn: false,
+        zoomIn : false,
         zoomOut: false
     };
 
     let mapping = {
-        /* W */ 87: 'up',
-        /* A */ 65: 'left',
-        /* S */ 83: 'down',
-        /* D */ 68: 'right',
+        /* W */ 87: 'playerAccelerate',
+        /* S */ 83: 'playerDecelerate',
+        /* A */ 65: 'playerTurnLeft',
+        /* D */ 68: 'playerTurnRight',
          
         /* ↑ */ 38: 'cameraUp',
         /* ← */ 40: 'cameraDown',
         /* ↓ */ 37: 'cameraLeft',
-        /* → */ 39: 'cameraRight'
+        /* → */ 39: 'cameraRight',
+        
+        /* Q */ 81: null,
+        /* E */ 69: null,
+
+        /* R */ 82: null,
+        /* F */ 70: null
     };
 
     function onKeyDown(event) {
@@ -59,7 +56,7 @@ define(['config'], function(config) {
 
     // ##############################################
 
-    function cameraMovement(cameraObject) {
+    function _cameraMovement(cameraObject) {
         // Shorthands
         let rotation      = cameraObject.camera.rotation;
         let position      = cameraObject.camera.position;
@@ -100,16 +97,61 @@ define(['config'], function(config) {
     }
 
     // ##############################################
-    // # Public functions ###########################
-    // ##############################################
 
-    function checkInput(camera) {
-        if(camera != undefined) cameraMovement(camera);
+    function _playerMovement(player) {
+        if(controls.playerAccelerate && !controls.playerDecelerate) {
+            player.accelerate();
+        }
+
+        if(controls.playerDecelerate && !controls.playerAccelerate) {
+            player.decelerate();
+        }
+
+        if(controls.playerTurnLeft && !controls.playerTurnRight) {
+            player.turnLeft();
+        }
+
+        if(controls.playerTurnRight && !controls.playerTurnLeft) {
+            player.turnRight();           
+        }
     }
 
     // ##############################################
 
-    return {
-        checkInput: checkInput
-    };
+    let inputHandlerClass = class {
+
+        // ##############################################
+        // # Constructor ################################
+        // ##############################################
+
+        constructor(scene, camera, player) {
+            this.scene  = scene;
+            this.camera = camera;
+            this.player = player;
+            
+            // Add event listeners
+            document.addEventListener('keydown', onKeyDown, false);
+            document.addEventListener('keyup', onKeyUp, false);
+            
+            document.getElementById('ShowDirectionalVectors')
+                .addEventListener('change', showDirectionalVectors, false);
+        }
+        
+
+        // ##############################################
+        // # Public functions ###########################
+        // ##############################################
+
+        checkInput() {
+            if(this.camera) {
+                _cameraMovement(this.camera);
+            }
+
+            if(this.player) {
+                _playerMovement(this.player);
+            }
+        }
+    }
+
+    return inputHandlerClass;
 });
