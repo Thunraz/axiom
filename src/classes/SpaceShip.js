@@ -99,7 +99,7 @@ define(
                     let gameObjects = GameObjectManager.get();
 
                     for(let i = 1; i < n; i++) {
-                        let tAcceleration = AstronomicalObject.force(
+                        let tAcceleration = this.force(
                                 tPosition,
                                 this.mass,
                                 this.id,
@@ -111,7 +111,7 @@ define(
                                 .add(tAcceleration.multiplyScalar(smoothDeltaT / 2))
                         );
 
-                        let newAcceleration = AstronomicalObject.force(
+                        let newAcceleration = this.force(
                                 tPosition,
                                 this.mass,
                                 this.id, gameObjects)
