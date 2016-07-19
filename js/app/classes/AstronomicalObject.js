@@ -52,7 +52,7 @@ define(
 
                 let colors = new Float32Array([
                     ((this.color & 0xff0000) >> 16) / 256, ((this.color & 0x00ff00) >> 8) / 256, (this.color & 0x0000ff) / 256,
-                    ((this.color & 0x330000) >> 16) / 256, ((this.color & 0x003300) >> 8) / 256, (this.color & 0x000033) / 256,
+                    ((this.color & 0xff0000) >> 16) / 256, ((this.color & 0x00ff00) >> 8) / 256, (this.color & 0x0000ff) / 256,
                 ]);
 
                 let lineMaterial = new THREE.LineBasicMaterial({ vertexColors: THREE.VertexColors });
@@ -103,7 +103,7 @@ define(
 
                 let colors = new Float32Array([
                     ((this.color & 0xff0000) >> 16) / 256, ((this.color & 0x00ff00) >> 8) / 256, (this.color & 0x0000ff) / 256,
-                    ((this.color & 0x330000) >> 16) / 256, ((this.color & 0x003300) >> 8) / 256, (this.color & 0x000033) / 256,
+                    ((this.color & 0xff0000) >> 16) / 256, ((this.color & 0x00ff00) >> 8) / 256, (this.color & 0x0000ff) / 256,
                 ]);
 
                 // Clean up old geometry
