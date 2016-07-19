@@ -44,7 +44,7 @@
         "complexity": "error",
         "computed-property-spacing": "off",
         "consistent-return": "error",
-        "consistent-this": "error",
+        "consistent-this": ["error", "scope"],
         "curly": "off",
         "default-case": "error",
         "dot-location": [
