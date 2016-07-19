@@ -1,12 +1,12 @@
 'use strict';
 define(
     [
-        'app/config',
+        'config',
         'three',
-        'app/classes/Debug',
-        'app/classes/AstronomicalObject',
-        'app/enums/AstronomicalObjectType',
-        'app/classes/GameObjectManager'
+        'Debug',
+        'AstronomicalObject',
+        'enums/AstronomicalObjectType',
+        'GameObjectManager'
     ],
     function(config, THREE, Debug, AstronomicalObject, AstronomicalObjectType, GameObjectManager) {
         return class SpaceShip extends AstronomicalObject {
