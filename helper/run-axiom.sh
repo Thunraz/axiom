@@ -1,3 +1,5 @@
 #!/bin/sh
 
-cd .. && http-server -a localhost
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+cd $DIR/..
+http-server -a localhost
