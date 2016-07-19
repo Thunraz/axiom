@@ -63,7 +63,8 @@ define(
         GameObjectManager.get('player').velocity.setX(.2);
         GameObjectManager.get('player').velocity.setZ(0);
 
-        // Inititiate
+        // Define variables to calculate deltaT
+        // and smoothed deltaT
         let lastFrameTime    = 0;
         let lastDeltaTValues = [];
         let smoothDeltaT     = 0;
