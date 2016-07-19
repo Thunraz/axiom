@@ -8,12 +8,13 @@ define(
         'app/classes/Debug',
         'app/classes/Camera',
         'app/classes/GameObjectManager',
+        'app/classes/Grid',
         'app/classes/Planet',
         'app/classes/Star',
         'app/classes/SpaceShip',
-        'app/classes/Grid'
+        'app/classes/Player'
     ],
-    function(config, THREE, Stats, InputHandler, Debug, Camera, GameObjectManager, Planet, Star, SpaceShip, Grid) {
+    function(config, THREE, Stats, InputHandler, Debug, Camera, GameObjectManager, Grid, Planet, Star, SpaceShip, Player) {
         let stats = new Stats();
         stats.showPanel(0);
         document.body.appendChild(stats.dom);
@@ -49,7 +50,7 @@ define(
             
             new Star(  scene, 'sol',        1.9984E8, 1400, new THREE.Vector3( 0,  0, 0),       0xffff00),
 
-            new SpaceShip(scene, 'player', 40.0, new THREE.Vector3(0, 0, -50))
+            new Player(scene, 'player', 40.0, new THREE.Vector3(0, 0, -50))
         ]);
 
         // Give objects a speed so they won't

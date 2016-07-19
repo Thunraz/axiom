@@ -15,7 +15,7 @@ define(
             // # Constructor ################################
             // ##############################################
 
-            constructor(scene, name, mass, position) {
+            constructor(scene, name, mass, position, model) {
                 super();
 
                 this.scene    = scene;
@@ -30,7 +30,7 @@ define(
                 let that = this;
 
                 let loader = new THREE.JSONLoader();
-                loader.load('assets/models/ship.json', function(shipGeometry, shipMaterials) {
+                loader.load(model, function(shipGeometry, shipMaterials) {
                     let shipMaterial = new THREE.MultiMaterial(shipMaterials);
                     that.mesh        = new THREE.Mesh(shipGeometry, shipMaterial);
                     scene.add(that.mesh);
