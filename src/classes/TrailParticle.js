@@ -49,7 +49,7 @@ define(
                 super.update(deltaT);
 
                 if(this.life <= this.lifetime) {
-                    this.mesh.lookAt(this.scene.camera.camera);
+                    this.mesh.lookAt(this.scene.camera.camera.position);
 
                     let factor = 1 - this.life / this.lifetime / 50;
 
