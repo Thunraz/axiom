@@ -1,6 +1,6 @@
 'use strict';
 define(
-    ['three', 'app/classes/SpaceObject'],
+    ['three', 'SpaceObject'],
     function(THREE, SpaceObject) {
         return class Grid extends SpaceObject {
 

@@ -1,6 +1,6 @@
 'use strict';
 define(
-    ['three', 'app/classes/SpaceObject', 'app/enums/Constants', 'app/config'],
+    ['three', 'SpaceObject', 'enums/Constants', 'config'],
     function(THREE, SpaceObject, Constants, config) {
         return class AstronomicalObject extends SpaceObject {
 

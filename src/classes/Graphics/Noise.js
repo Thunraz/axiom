@@ -1,6 +1,6 @@
 'use strict';
 define(
-    ['three', 'app/config', 'app/enums/NoiseType', 'app/classes/Graphics/Grad'],
+    ['three', 'config', 'enums/NoiseType', 'Graphics/Grad'],
     function(THREE, config, NoiseType, Grad) {
         return class Noise {
 
