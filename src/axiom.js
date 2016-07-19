@@ -4,7 +4,7 @@ define(
         'config',
         'three',
         'stats',
-        'inputHandler',
+        'InputHandler',
         'Debug',
         'Camera',
         'GameObjectManager',
@@ -70,6 +70,8 @@ define(
         let lastDeltaTValues = [];
         let smoothDeltaT     = 0;
 
+        let inputHandler = new InputHandler(scene, camera, GameObjectManager.get('player'));
+
         function update(currentFrameTime) {
             stats.begin();
             Debug.clear();
@@ -91,7 +93,7 @@ define(
             camera.controls.update();
 
             // Handle user input
-            InputHandler.checkInput(camera);
+            inputHandler.checkInput();
 
             // Update all the objects' positions
             GameObjectManager.updatePositions(deltaT, smoothDeltaT);

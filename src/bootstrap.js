@@ -8,7 +8,6 @@
             'OrbitControls' : '../../lib/OrbitControls',
             'stats'         : '../../lib/stats.min',
             'config'        : '../config',
-            'inputHandler'  : '../InputHandler',
 
             'enums/Constants'               : '../enums/Constants',
             'enums/AstronomicalObjectType'  : '../enums/AstronomicalObjectType',
