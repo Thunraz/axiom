@@ -10,7 +10,7 @@ define(
 
             constructor() {
                 this.id       = SpaceObject.NEXT_ID;
-                this.position = new THREE.Vector3(0.0, 0.0, 0.0);
+                this.position = new THREE.Vector3(0, 0, 0);
             }
 
             // ##############################################
