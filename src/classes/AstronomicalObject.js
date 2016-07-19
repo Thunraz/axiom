@@ -125,7 +125,7 @@ define(
             // ##############################################
 
             updatePosition(deltaT, smoothDeltaT, gameObjects) {
-                this.acceleration = AstronomicalObject.force(
+                this.acceleration = this.force(
                         this.position,
                         this.mass,
                         this.id,
@@ -161,7 +161,7 @@ define(
             update(deltaT, smoothDeltaT, gameObjects) {
                 super.update(deltaT);
 
-                let newAcceleration = AstronomicalObject.force(
+                let newAcceleration = this.force(
                         this.position,
                         this.mass,
                         this.id,
@@ -181,7 +181,7 @@ define(
             // # Static functions ###########################
             // ##############################################
 
-            static force(position, mass, id, gameObjects) {
+            force(position, mass, id, gameObjects) {
                 let vec = new THREE.Vector3(0, 0, 0);
 
                 for(let i = 0; i < gameObjects.length; i++) {
