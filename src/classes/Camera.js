@@ -28,6 +28,7 @@ define(
                 this.controls.enableZoom    = true;
                 this.controls.rotateSpeed   = 0.15;
                 this.controls.enableKeys    = false;
+                this.controls.mouseButtons  = { ORBIT: THREE.MOUSE.RIGHT, PAN: THREE.MOUSE.LEFT };
             }
         }
     }
