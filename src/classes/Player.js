@@ -14,6 +14,8 @@ define(
 
             constructor(scene, name, mass, position) {
                 super(scene, name, mass, position, 'assets/models/ship.json');
+
+                this.accelerationChange = new THREE.Vector3(0, 0, 0);
             }
             
             // ##############################################
@@ -21,13 +23,13 @@ define(
             // ##############################################
 
             accelerate() {
-                this.acceleration.x += 1;
+                this.accelerationChange.x = .0001;
             }
 
             // ##############################################
 
             decelerate() {
-
+                this.accelerationChange.x = -.0001;
             }
 
             // ##############################################
@@ -47,7 +49,23 @@ define(
             update(deltaT, smoothDeltaT, spaceObjects) {
                 super.update(deltaT, smoothDeltaT, spaceObjects);
 
-                Debug.log(this.acceleration);
+                Debug.log(
+                    Math.round(this.acceleration.x * 10000) / 10000 + ' ' +
+                    Math.round(this.acceleration.y * 10000) / 10000 + ' ' +
+                    Math.round(this.acceleration.z * 10000) / 10000
+                );
+            }
+
+            // ##############################################
+
+            force(position, mass, id, gameObjects) {
+                let vec = super.force(position, mass, id, gameObjects);
+
+                vec.x += this.accelerationChange.x;
+
+                this.accelerationChange.set(0, 0, 0);
+
+                return vec;
             }
         }
     }
