@@ -25,19 +25,19 @@ define(
                 this.position = position;
                 this.color    = 0x7fffd4;
 
-                this.avgDeltaT = [];
+                this.orientation = new THREE.Vector3(1, 0, 0);
 
-                let that = this;
+                let scope = this;
 
                 let loader = new THREE.JSONLoader();
                 loader.load(model, function(shipGeometry, shipMaterials) {
                     let shipMaterial = new THREE.MultiMaterial(shipMaterials);
-                    that.mesh        = new THREE.Mesh(shipGeometry, shipMaterial);
-                    scene.add(that.mesh);
+                    scope.mesh        = new THREE.Mesh(shipGeometry, shipMaterial);
+                    scene.add(scope.mesh);
 
-                    that._createPositionIndicator();
-                    that._createInitialTrajectory();
-                    that._createYPosition(scene);
+                    scope._createPositionIndicator();
+                    scope._createInitialTrajectory();
+                    scope._createYPosition(scene);
                 });
 
                 if(config.showDirectionalVectors) {
