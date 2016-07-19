@@ -36,13 +36,7 @@ define(['app/config'], function(config) {
         /* ↑ */ 38: 'cameraUp',
         /* ← */ 40: 'cameraDown',
         /* ↓ */ 37: 'cameraLeft',
-        /* → */ 39: 'cameraRight',
-
-        /* Q */ 81: 'rotateLeft',
-        /* E */ 69: 'rotateRight',
-
-        /* R */ 82: 'zoomIn',
-        /* F */ 70: 'zoomOut'
+        /* → */ 39: 'cameraRight'
     };
 
     function onKeyDown(event) {
@@ -66,44 +60,42 @@ define(['app/config'], function(config) {
     // ##############################################
 
     function cameraMovement(cameraObject) {
-        let camera = cameraObject.camera;
+        // Shorthands
+        let rotation      = cameraObject.camera.rotation;
+        let position      = cameraObject.camera.position;
+        let target        = cameraObject.controls.target;
+        let movementSpeed = config.camera.movementSpeed;
 
         if(controls.cameraUp && !controls.cameraDown) {
-            camera.position.x += -Math.sin(camera.rotation.z) * 1 / camera.zoom * config.camera.movementSpeed;
-            camera.position.y += Math.cos(camera.rotation.z)  * 1 / camera.zoom * config.camera.movementSpeed;
+            position.x -= Math.sin(rotation.z) * movementSpeed;
+            target.x   -= Math.sin(rotation.z) * movementSpeed;
+
+            position.z -= Math.cos(rotation.z) * movementSpeed;
+            target.z   -= Math.cos(rotation.z) * movementSpeed;
         }
         
         if(controls.cameraDown && !controls.cameraUp) {
-            camera.position.x -= -Math.sin(camera.rotation.z) * 1 / camera.zoom * config.camera.movementSpeed;
-            camera.position.y -= Math.cos(camera.rotation.z)  * 1 / camera.zoom * config.camera.movementSpeed;
+            position.x += Math.sin(rotation.z) * movementSpeed;
+            target.x   += Math.sin(rotation.z) * movementSpeed;
+
+            position.z += Math.cos(rotation.z) * movementSpeed;
+            target.z   += Math.cos(rotation.z) * movementSpeed;
         }
 
         if(controls.cameraLeft && !controls.cameraRight) {
-            camera.position.x -= Math.cos(camera.rotation.z) * 1 / camera.zoom * config.camera.movementSpeed;
-            camera.position.y -= Math.sin(camera.rotation.z)  * 1 / camera.zoom * config.camera.movementSpeed;
+            position.x -=  Math.cos(rotation.z) * movementSpeed;
+            target.x   -=  Math.cos(rotation.z) * movementSpeed;
+
+            position.z -= -Math.sin(rotation.z) * movementSpeed;
+            target.z   -= -Math.sin(rotation.z) * movementSpeed;
         }
         
         if(controls.cameraRight && !controls.cameraLeft) {
-            camera.position.x += Math.cos(camera.rotation.z) * 1 / camera.zoom * config.camera.movementSpeed;
-            camera.position.y += Math.sin(camera.rotation.z)  * 1 / camera.zoom * config.camera.movementSpeed;
-        }
+            position.x +=  Math.cos(rotation.z) * movementSpeed;
+            target.x   +=  Math.cos(rotation.z) * movementSpeed;
 
-        if(controls.zoomIn && !controls.zoomOut) {
-            camera.zoom *= 1 + config.camera.zoomFactor;
-            camera.updateProjectionMatrix();
-        }
-
-        if(controls.zoomOut && !controls.zoomIn) {
-            camera.zoom *= 1 - config.camera.zoomFactor;
-            camera.updateProjectionMatrix();
-        }
-
-        if(controls.rotateLeft && !controls.rotateRight) {
-            pivot.rotation.z += config.camera.rotationSpeed;
-        }
-
-        if(controls.rotateRight && !controls.rotateLeft) {
-            pivot.rotation.z -= config.camera.rotationSpeed;
+            position.z += -Math.sin(rotation.z) * movementSpeed;
+            target.z   += -Math.sin(rotation.z) * movementSpeed;
         }
     }
 

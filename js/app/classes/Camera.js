@@ -27,6 +27,7 @@ define(
                 this.controls.dampingFactor = 0.125;
                 this.controls.enableZoom    = true;
                 this.controls.rotateSpeed   = 0.15;
+                this.controls.enableKeys    = false;
             }
         }
     }
