@@ -12,8 +12,14 @@ define(
             // # Constructor ################################
             // ##############################################
 
-            constructor(scene, name, mass, position) {
-                super(scene, name, mass, position, 'assets/models/ship.json');
+            constructor(scene, name, options) {
+                if(!scene || !name || !options) {
+                    throw new Error('Star has not been initialized properly.');
+                }
+
+                options.model = 'assets/models/ship.json';
+
+                super(scene, name, options);
 
                 this.accelerationChange = new THREE.Vector3(0, 0, 0);
             }
