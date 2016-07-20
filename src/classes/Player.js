@@ -13,8 +13,8 @@ define(
             // ##############################################
 
             constructor(scene, name, options) {
-                if(!scene || !name || !options) {
-                    throw new Error('Star has not been initialized properly.');
+                if(!scene || !name || !options || typeof(options) !== 'object') {
+                    throw new Error('Player has not been initialized properly.');
                 }
 
                 options.model = 'assets/models/ship.json';
