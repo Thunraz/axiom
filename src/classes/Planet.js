@@ -8,25 +8,29 @@ define(
             // # Constructor ################################
             // ##############################################
             
-            constructor(scene, name, mass, radius, position, isSolid, color) {
+            constructor(scene, name, options) {
                 super();
+
+                if(!scene || !name || !options) {
+                    throw new Error('Planet has not been initialized properly.');
+                }
 
                 this.scene        = scene;
 
                 this.name         = name;
-                this.mass         = mass;
-                this.radius       = radius;
-                this.position     = position;
-                this.color        = color;
+                this.mass         = options.mass     || 50;
+                this.radius       = options.radius   || 100;
+                this.position     = options.position || new THREE.Vector3();
+                this.color        = options.color    || Math.round(Math.random() * 0xffffff / 2 + 0xffffff / 2);
 
-                this.trail        = [];
+                this.trail = [];
 
                 this.frameCounter = 0;
                 
                 this._createMesh();
                 this._createYPosition(this.scene, this.radius);
                 
-                if(isSolid) {
+                if(options.isSolid) {
                     this.astronomicalObjectType = AstronomicalObjectType.SOLID;
                 } else {
                     this.astronomicalObjectType = AstronomicalObjectType.GAS;

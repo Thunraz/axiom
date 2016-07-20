@@ -17,16 +17,20 @@ define(
             // # Constructor ################################
             // ##############################################
 
-            constructor(scene, name, mass, radius, position, color) {
+            constructor(scene, name, options) {
                 super();
+                
+                if(!scene || !name || !options) {
+                    throw new Error('Star has not been initialized properly.');
+                }
 
                 this.scene    = scene;
 
                 this.name     = name;
-                this.mass     = mass;
-                this.radius   = radius;
-                this.position = position;
-                this.color    = color;
+                this.mass     = options.mass     || 1E8;
+                this.radius   = options.radius   || 1000;
+                this.position = options.position || new THREE.Vector3();
+                this.color    = options.color    || Math.round(Math.random() * 0xffffff / 2 + 0xffffff / 2);
                 
                 this.astronomicalObjectType = AstronomicalObjectType.STAR;
 

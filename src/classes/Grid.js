@@ -8,23 +8,23 @@ define(
             // # Constructor ################################
             // ##############################################
 
-            constructor(scene, name, position, width, height, segments, moveWithCamera) {
+            constructor(scene, name, options) {
                 super();
 
-                this.scene  = scene;
-                
-                this.name           = name;
-                this.position       = position;
-                this.width          = width;
-                this.height         = height;
-                this.segments       = segments;
-                this.moveWithCamera = moveWithCamera || false;
+                this.scene = scene;
+                this.name  = name;
 
-                if(moveWithCamera) {
+                this.position       = options.position       || new THREE.Vector3();
+                this.width          = options.width          || 750;
+                this.height         = options.height         || 750;
+                this.segments       = options.segments       || 60;
+                this.moveWithCamera = options.moveWithCamera || false;
+
+                if(this.moveWithCamera) {
                     this.cameraOffset = this.position.clone().add(this.scene.camera.camera.position);
                 }
 
-                this._createMesh(segments);
+                this._createMesh();
                 this.scene.add(this.mesh);
             }
 
@@ -32,19 +32,20 @@ define(
             // # Private functions ##########################
             // ##############################################
 
-            _createMesh(segments) {
+            _createMesh() {
                 let geometry = new THREE.Geometry();
 
-                let condition = (segments % 2 == 0) ? this.width / 2 + 1 : this.width / 2;
-                for(let x = -this.width / 2; x <= condition; x += this.width / segments) {
+                // Loop end condition has to accomodate for even/odd number of segments
+                let condition = (this.segments % 2 == 0) ? this.width / 2 + 1 : this.width / 2;
+                for(let x = -this.width / 2; x <= condition; x += this.width / this.segments) {
                     geometry.vertices.push(
                         new THREE.Vector3(x, 0, -this.height / 2),
                         new THREE.Vector3(x, 0,  this.height / 2)
                     );
                 }
                 
-                condition = (segments % 2 == 0) ? this.height / 2 + 1 : this.height / 2;
-                for(let z = -this.height / 2; z <= condition; z += this.height / segments) {
+                condition = (this.segments % 2 == 0) ? this.height / 2 + 1 : this.height / 2;
+                for(let z = -this.height / 2; z <= condition; z += this.height / this.segments) {
                     geometry.vertices.push(
                         new THREE.Vector3(-this.width / 2, 0, z),
                         new THREE.Vector3( this.width / 2, 0, z)

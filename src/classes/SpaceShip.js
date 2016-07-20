@@ -15,22 +15,22 @@ define(
             // # Constructor ################################
             // ##############################################
 
-            constructor(scene, name, mass, position, model) {
+            constructor(scene, name, options) {
                 super();
 
                 this.scene    = scene;
 
                 this.name     = name;
-                this.mass     = mass;
-                this.position = position;
-                this.color    = 0x7fffd4;
+                this.mass     = options.mass     || 5;
+                this.position = options.position || new THREE.Vector3();
+                this.color    = options.color    || 0x7fffd4;
 
                 this.orientation = new THREE.Vector3(1, 0, 0);
 
                 let scope = this;
 
                 let loader = new THREE.JSONLoader();
-                loader.load(model, function(shipGeometry, shipMaterials) {
+                loader.load(options.model, function(shipGeometry, shipMaterials) {
                     let shipMaterial = new THREE.MultiMaterial(shipMaterials);
                     scope.mesh        = new THREE.Mesh(shipGeometry, shipMaterial);
                     scene.add(scope.mesh);

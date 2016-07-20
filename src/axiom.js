@@ -36,21 +36,41 @@ define(
             config.canvasWidth / config.canvasHeight,
             0.1,
             1000,
-            new THREE.Vector3(25, 50, 50)
+            new THREE.Vector3(25, 75, 75)
         );
 
         scene.add(new THREE.AmbientLight( 0x101010 ));
 
         // Add objects
         GameObjectManager.add([
-            new Grid(scene, 'grid', new THREE.Vector3(0, 0, 0), 750, 750, 60, true),
+            new Grid(scene, 'xz_grid', { moveWithCamera: true }),
 
-            new Planet(scene, 'redPlanet',     3.301,   20, new THREE.Vector3( 0, 18, 0), true, 0xff3333),
-            new Planet(scene, 'homePlanet',   48.690,  100, new THREE.Vector3(25, 0,  0), true, 0x33ff33),
+            new Planet(scene, 'redPlanet', {
+                radius:   50,
+                mass:     3.301,
+                position: new THREE.Vector3(0, 18, 0),
+                isSolid:  true,
+                color:    0xff3333
+            }),
+
+            new Planet(scene, 'homePlanet', {
+                mass:     48.690,
+                radius:   150,
+                position: new THREE.Vector3(75, 0, 0),
+                isSolid:  true,
+                color:    0x33ff33
+            }),
             
-            new Star(  scene, 'sol',        1.9984E8, 1400, new THREE.Vector3( 0,  0, 0),       0xffff00),
+            new Star(scene, 'sol', {
+                mass:     1.9984E8,
+                radius:   1400,
+                color:    0xffff00
+            }),
 
-            new Player(scene, 'player', 40.0, new THREE.Vector3(0, 0, -50))
+            new Player(scene, 'player', {
+                mass:     4.0,
+                position: new THREE.Vector3(0, 0, -50)
+            })
         ]);
 
         // Give objects a speed so they won't
@@ -59,7 +79,7 @@ define(
         GameObjectManager.get('redPlanet').velocity.setZ(0.3);
 
         GameObjectManager.get('homePlanet').velocity.setY(0.03);
-        GameObjectManager.get('homePlanet').velocity.setZ(0.3);
+        GameObjectManager.get('homePlanet').velocity.setZ(0.2);
 
         GameObjectManager.get('player').velocity.setX(.2);
         GameObjectManager.get('player').velocity.setZ(0);
