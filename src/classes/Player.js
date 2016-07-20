@@ -22,6 +22,28 @@ define(
                 super(scene, name, options);
 
                 this.accelerationChange = new THREE.Vector3(0, 0, 0);
+
+                this._createOrientationArrow();
+            }
+
+            // ##############################################
+            // # Private functions ##########################
+            // ##############################################
+
+            _createOrientationArrow() {
+                let arrowGeometry = new THREE.Geometry();
+
+                // Push vertices for the arrow
+                arrowGeometry.vertices.push(new THREE.Vector3(0, 0, 6));
+                arrowGeometry.vertices.push(new THREE.Vector3(3, 0, 0));
+                arrowGeometry.vertices.push(new THREE.Vector3(6, 0, 6));
+                arrowGeometry.vertices.push(new THREE.Vector3(3, 0, 4));
+                arrowGeometry.vertices.push(new THREE.Vector3(0, 0, 6));
+                
+                let arrowMaterial = new THREE.LineBasicMaterial({ color: 0x7fffd4 });
+                this.arrow        = new THREE.Line(arrowGeometry, arrowMaterial);
+                this.arrow.position.set(this.position.x, this.position.y, this.position.z);
+                this.scene.add(this.arrow);
             }
             
             // ##############################################
@@ -64,6 +86,8 @@ define(
 
             update(deltaT, smoothDeltaT, spaceObjects) {
                 super.update(deltaT, smoothDeltaT, spaceObjects);
+
+                this.arrow.position.set(this.position.x, this.position.y, this.position.z);
 
                 Debug.log(this.orientation);
 
