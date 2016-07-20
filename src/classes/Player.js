@@ -41,19 +41,31 @@ define(
             // ##############################################
 
             turnLeft() {
-                
+                // Get the angle in radians so we can add to it
+                let angle = Math.atan2(this.orientation.y, this.orientation.x);                
+                angle += 180 / Math.PI / 360 / 30;
+
+                this.orientation.x = Math.cos(angle);
+                this.orientation.y = Math.sin(angle);
             }
 
             // ##############################################
 
             turnRight() {
-                
+                // Get the angle in radians so we can add to it
+                let angle = Math.atan2(this.orientation.y, this.orientation.x);                
+                angle -= 180 / Math.PI / 360 / 30;
+
+                this.orientation.x = Math.cos(angle);
+                this.orientation.y = Math.sin(angle);
             }
 
             // ##############################################
 
             update(deltaT, smoothDeltaT, spaceObjects) {
                 super.update(deltaT, smoothDeltaT, spaceObjects);
+
+                Debug.log(this.orientation);
 
                 Debug.log(
                     Math.round(this.acceleration.x * 10000) / 10000 + ' ' +
@@ -67,7 +79,7 @@ define(
             force(position, mass, id, gameObjects) {
                 let vec = super.force(position, mass, id, gameObjects);
 
-                vec.x += this.accelerationChange.x;
+                vec.add(this.accelerationChange.multiply(this.orientation));
 
                 this.accelerationChange.set(0, 0, 0);
 
