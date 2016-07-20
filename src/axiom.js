@@ -46,15 +46,15 @@ define(
             new Grid(scene, 'xz_grid', { moveWithCamera: true }),
 
             new Planet(scene, 'redPlanet', {
+                mass:     33.18,
                 radius:   50,
-                mass:     3.301,
                 position: new THREE.Vector3(0, 18, 0),
                 isSolid:  true,
                 color:    0xff3333
             }),
 
             new Planet(scene, 'homePlanet', {
-                mass:     48.690,
+                mass:     120000,
                 radius:   150,
                 position: new THREE.Vector3(75, 0, 0),
                 isSolid:  true,
@@ -68,7 +68,7 @@ define(
             }),
 
             new Player(scene, 'player', {
-                mass:     4.0,
+                mass:     3.42E-19,
                 position: new THREE.Vector3(0, 0, -50)
             })
         ]);
