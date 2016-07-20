@@ -29,13 +29,13 @@ define(
             // ##############################################
 
             accelerate() {
-                this.accelerationChange.x = .0001;
+                this.accelerationChange.x = 2E-24;
             }
 
             // ##############################################
 
             decelerate() {
-                this.accelerationChange.x = -.0001;
+                this.accelerationChange.x = -2E-24;
             }
 
             // ##############################################
