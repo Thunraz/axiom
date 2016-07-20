@@ -155,7 +155,7 @@ define(
 
                 if(this.mesh == null) return;
                 this.mesh.position.set(this.position.x, this.position.y, this.position.z);
-                this.positionIndicator.position.set(this.position.x, this.position.y, this.position.z);
+                this.positionIndicator.position.set(this.position.x, 0, this.position.z);
                 this.positionIndicator.scale.set(
                     2 + 1 / camera.zoom,
                     2 + 1 / camera.zoom,
