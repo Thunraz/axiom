@@ -53,35 +53,25 @@ define(
             // ##############################################
 
             accelerate() {
-                this.accelerationChange.x = 2E-24;
+                this.accelerationChange.set(2E-24, 2E-24);
             }
 
             // ##############################################
 
             decelerate() {
-                this.accelerationChange.x = -2E-24;
+                this.accelerationChange.set(2E-24, 2E-24);
             }
 
             // ##############################################
 
             turnLeft() {
-                // Get the angle in radians so we can add to it
-                let angle = Math.atan2(this.orientation.y, this.orientation.x);
-                angle += Math.PI / 60;
-
-                this.orientation.x = Math.cos(angle);
-                this.orientation.y = Math.sin(angle);
+                this.mesh.rotation.y += Math.PI / 60;
             }
 
             // ##############################################
 
             turnRight() {
-                // Get the angle in radians so we can add to it
-                let angle = Math.atan2(this.orientation.y, this.orientation.x);
-                angle -= Math.PI / 60;
-
-                this.orientation.x = Math.cos(angle);
-                this.orientation.y = Math.sin(angle);
+                this.mesh.rotation.y -= Math.PI / 60;
             }
 
             // ##############################################
@@ -89,8 +79,15 @@ define(
             update(deltaT, smoothDeltaT, spaceObjects) {
                 super.update(deltaT, smoothDeltaT, spaceObjects);
 
+                Debug.log(this.mesh ? this.mesh.rotation : '');
+
                 if(this.positionIndicator) {
-                    this.positionIndicator.rotation.y = Math.atan2(this.orientation.y, this.orientation.x) - Math.PI / 2;
+
+                    this.positionIndicator.rotation.set(
+                        this.mesh.rotation.x,
+                        this.mesh.rotation.y - Math.PI / 2,
+                        this.mesh.rotation.z
+                    );
                 }
             }
 
@@ -99,7 +96,13 @@ define(
             force(position, mass, id, gameObjects) {
                 let vec = super.force(position, mass, id, gameObjects);
 
-                vec.add(this.accelerationChange.multiply(this.orientation));
+                let orientation = new THREE.Vector3(
+                    Math.cos(this.mesh ? this.mesh.rotation.y : 0),
+                    0,
+                    Math.sin(this.mesh ? this.mesh.rotation.y : 0)
+                );
+
+                vec.add(this.accelerationChange.multiply(orientation));
 
                 this.accelerationChange.set(0, 0, 0);
 

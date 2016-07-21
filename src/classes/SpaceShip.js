@@ -24,8 +24,6 @@ define(
                 this.mass     = options.mass     || 5;
                 this.position = options.position || new THREE.Vector3();
                 this.color    = options.color    || 0x7fffd4;
-
-                this.orientation = new THREE.Vector3(1, 0, 0);
                 
                 this.positionIndicatorScale = 3;
 
