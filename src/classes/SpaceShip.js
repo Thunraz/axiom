@@ -26,6 +26,8 @@ define(
                 this.color    = options.color    || 0x7fffd4;
 
                 this.orientation = new THREE.Vector3(1, 0, 0);
+                
+                this.positionIndicatorScale = 3;
 
                 let scope = this;
 
@@ -151,22 +153,19 @@ define(
                     this._updateYPosition();
                 }
 
-                let camera = this.scene.camera.camera;
-
                 if(this.mesh == null) return;
                 this.mesh.position.set(this.position.x, this.position.y, this.position.z);
                 this.positionIndicator.position.set(this.position.x, 0, this.position.z);
-                this.positionIndicator.scale.set(
-                    2 + 1 / camera.zoom,
-                    2 + 1 / camera.zoom,
-                    2 + 1 / camera.zoom
-                );
 
-                if(camera.zoom >= 25) {
-                    this.positionIndicator.visible = false;
-                } else {
-                    this.positionIndicator.visible = true;
-                }
+                let controls = this.scene.camera.controls;
+                let camera = this.scene.camera.camera;
+
+                let zoomFactor = controls.target.clone().sub(camera.position).length() / 100;
+                this.positionIndicator.scale.set(
+                    this.positionIndicatorScale * zoomFactor,
+                    this.positionIndicatorScale * zoomFactor,
+                    this.positionIndicatorScale * zoomFactor
+                );
 
                 if(config.showDirectionalVectors && !this.arrowMesh) {
                     this.arrowMesh = this._createDirectionalArrow();
