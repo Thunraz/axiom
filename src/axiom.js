@@ -39,6 +39,20 @@ define(
             new THREE.Vector3(25, 75, 75)
         );
 
+        // Create cube map
+        let baseUrl = '/assets/textures/cubemap_';
+        let urls = [
+            baseUrl + 'left.png',
+            baseUrl + 'right.png',
+            baseUrl + 'top.png',
+            baseUrl + 'bottom.png',
+            baseUrl + 'front.png',
+            baseUrl + 'back.png',
+        ];
+        var cube = new THREE.CubeTextureLoader().load(urls);
+        cube.format = THREE.RGBFormat;
+        scene.background = cube;
+
         scene.add(new THREE.AmbientLight( 0x101010 ));
 
         // Add objects
