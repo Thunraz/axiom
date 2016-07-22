@@ -270,7 +270,6 @@ define(
                 imageData = this._adjustContrast(imageData, -200);
 
                 this.context.putImageData(imageData, 0, 0);
-                document.getElementById('debugStuff').appendChild(this.canvas);
 
                 let texture         = new THREE.Texture(this.canvas);
                 texture.anisotropy = config.maxAnisotropy;
