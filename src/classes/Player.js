@@ -53,13 +53,25 @@ define(
             // ##############################################
 
             accelerate() {
-                this.accelerationChange.set(2E-24, 2E-24);
+                this.accelerationChange.set(
+                    Math.cos(this.mesh.rotation.y),
+                    0,
+                    -Math.sin(this.mesh.rotation.y)
+                );
+
+                this.accelerationChange.multiplyScalar(2E-24);
             }
 
             // ##############################################
 
             decelerate() {
-                this.accelerationChange.set(2E-24, 2E-24);
+                this.accelerationChange.set(
+                    -Math.cos(this.mesh.rotation.y),
+                    0,
+                    Math.sin(this.mesh.rotation.y)
+                );
+
+                this.accelerationChange.multiplyScalar(2E-24);
             }
 
             // ##############################################
@@ -96,13 +108,7 @@ define(
             force(position, mass, id, gameObjects) {
                 let vec = super.force(position, mass, id, gameObjects);
 
-                let orientation = new THREE.Vector3(
-                    Math.cos(this.mesh ? this.mesh.rotation.y : 0),
-                    0,
-                    Math.sin(this.mesh ? this.mesh.rotation.y : 0)
-                );
-
-                vec.add(this.accelerationChange.multiply(orientation));
+                vec.add(this.accelerationChange);
 
                 this.accelerationChange.set(0, 0, 0);
 
