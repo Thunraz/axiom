@@ -23,6 +23,11 @@ define(
                 this.positionIndicatorScale = 1;
 
                 this.thrust = 0.0;
+
+                this.elements = {
+                    thrust: document.getElementById('thrust'),
+                    speed:  document.getElementById('playerSpeed')
+                };
             }
 
             // ##############################################
@@ -92,6 +97,9 @@ define(
                         this.mesh.rotation.z
                     );
                 }
+
+                this.elements.thrust.style.height = this.thrust * 100 + '%';
+                this.elements.speed.innerText = 'current velocity: ' + Math.round(this.velocity.length() * 1000);
             }
 
             // ##############################################
