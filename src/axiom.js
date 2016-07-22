@@ -45,20 +45,20 @@ define(
         GameObjectManager.add([
             new Grid(scene, 'xz_grid', { moveWithCamera: true }),
 
+            new Planet(scene, 'homePlanet', {
+                mass:     1.2E7,
+                radius:   150,
+                position: new THREE.Vector3(75, 0, 0),
+                isSolid:  true,
+                color:    0x33ff33
+            }),
+
             new Planet(scene, 'redPlanet', {
                 mass:     33.18,
                 radius:   50,
                 position: new THREE.Vector3(0, 18, 0),
                 isSolid:  true,
                 color:    0xff3333
-            }),
-
-            new Planet(scene, 'homePlanet', {
-                mass:     120000,
-                radius:   150,
-                position: new THREE.Vector3(75, 0, 0),
-                isSolid:  true,
-                color:    0x33ff33
             }),
             
             new Star(scene, 'sol', {
