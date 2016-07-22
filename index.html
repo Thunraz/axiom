@@ -4,6 +4,8 @@
         <meta charset=utf-8>
         <title>Axiom</title>
         <style>
+            @import url(https://fonts.googleapis.com/css?family=Changa);
+
             body, html {
                 margin: 0;
                 height: 100%;
@@ -28,10 +30,27 @@
                 width: 800px;
                 height: 600px;
 
+                position: relative;
+
                 margin-left: auto;
                 margin-right: auto;
 
+                font-family: 'Changa';
+                color: white;
+
                 border: 10px solid #111;
+            }
+
+            #game > div {
+                position: absolute;
+            }
+
+            #game #thrust {
+                right: 0;
+                bottom: 0;
+
+                width: 10px;
+                background-color: green;
             }
 
             #game canvas {
@@ -58,7 +77,10 @@
     </head>
     <body>
         <div id="gameContainer">
-            <div id="game"></div>
+            <div id="game">
+                <div id="thrust"></div>
+                <div id="playerSpeed"></div>
+            </div>
         </div>
         <div id="debugStuff">
             <h3>Debug stuff</h3>
