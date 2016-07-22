@@ -22,7 +22,7 @@ define(
                 super(scene, name, options);
                 this.positionIndicatorScale = 1;
 
-                this.accelerationChange = new THREE.Vector3(0, 0, 0);
+                this.thrust = 0.0;
             }
 
             // ##############################################
@@ -53,25 +53,17 @@ define(
             // ##############################################
 
             accelerate() {
-                this.accelerationChange.set(
-                    Math.cos(this.mesh.rotation.y),
-                    0,
-                    -Math.sin(this.mesh.rotation.y)
-                );
-
-                this.accelerationChange.multiplyScalar(2E-24);
+                this.thrust += 0.01;
+                if(this.thrust > 1.0)
+                    this.thrust = 1.0;
             }
 
             // ##############################################
 
             decelerate() {
-                this.accelerationChange.set(
-                    -Math.cos(this.mesh.rotation.y),
-                    0,
-                    Math.sin(this.mesh.rotation.y)
-                );
-
-                this.accelerationChange.multiplyScalar(2E-24);
+                this.thrust -= 0.01;
+                if(this.thrust < 0.0)
+                    this.thrust = 0.0;
             }
 
             // ##############################################
@@ -91,7 +83,6 @@ define(
             update(deltaT, smoothDeltaT, spaceObjects) {
                 super.update(deltaT, smoothDeltaT, spaceObjects);
 
-                Debug.log(this.mesh ? this.mesh.rotation : '');
 
                 if(this.positionIndicator) {
 
@@ -108,9 +99,17 @@ define(
             force(position, mass, id, gameObjects) {
                 let vec = super.force(position, mass, id, gameObjects);
 
-                vec.add(this.accelerationChange);
+                if(!this.mesh) return vec;
+                
+                let accelerationChange = new THREE.Vector3(0, 0, 0);
+                accelerationChange.set(
+                    Math.cos(this.mesh.rotation.y),
+                    0,
+                    -Math.sin(this.mesh.rotation.y)
+                );
 
-                this.accelerationChange.set(0, 0, 0);
+                accelerationChange.multiplyScalar(this.thrust * 2E-24);
+                vec.add(accelerationChange);
 
                 return vec;
             }
