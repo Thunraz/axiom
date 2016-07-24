@@ -42,14 +42,12 @@ define(
         );
 
         // Create cube map
-        let baseUrl = '/assets/textures/cubemap_';
+        let baseUrl = '/assets/textures/';
+        let format = '.png';
         let urls = [
-            baseUrl + 'left.png',
-            baseUrl + 'right.png',
-            baseUrl + 'top.png',
-            baseUrl + 'bottom.png',
-            baseUrl + 'front.png',
-            baseUrl + 'back.png',
+            baseUrl + 'px' + format, baseUrl + 'nx' + format,
+            baseUrl + 'py' + format, baseUrl + 'ny' + format,
+            baseUrl + 'pz' + format, baseUrl + 'nz' + format
         ];
         var cube = new THREE.CubeTextureLoader().load(urls);
         cube.format = THREE.RGBFormat;
