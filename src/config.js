@@ -1,7 +1,7 @@
 'use strict';
 define({
-    canvasWidth: 800,
-    canvasHeight: 600,
+    canvasWidth:  window.innerWidth,
+    canvasHeight: window.innerHeight,
 
     camera: {
         movementSpeed: 1.0,
