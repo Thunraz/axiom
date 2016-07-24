@@ -8,7 +8,7 @@ define({
         zoomFactor:    0.05,
         rotationSpeed: 0.05,
 
-        fov:           45
+        fov:           60
     },
 
     showDirectionalVectors: false,
