@@ -23,6 +23,8 @@ define(
         renderer.setSize(config.canvasWidth, config.canvasHeight);
         document.getElementById('game').appendChild(renderer.domElement);
         
+        window.addEventListener('resize', onWindowResize, false);
+        
         config.maxAnisotropy = renderer.getMaxAnisotropy();
 
         let scene = new THREE.Scene();
@@ -143,5 +145,12 @@ define(
         }
 
         requestAnimationFrame(update);
+
+        function onWindowResize() {
+            camera.camera.aspect = window.innerWidth / window.innerHeight;
+            camera.camera.updateProjectionMatrix();
+
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
     }
 );
