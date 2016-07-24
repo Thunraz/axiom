@@ -26,7 +26,7 @@ define(
         config.maxAnisotropy = renderer.getMaxAnisotropy();
 
         let scene = new THREE.Scene();
-        scene.fog = new THREE.Fog(0x000000, 100, 300);
+        scene.fog = new THREE.Fog(0x000000, 100, 1000);
 
         // Create camera
         let camera = new Camera(
