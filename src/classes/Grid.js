@@ -15,10 +15,12 @@ define(
                 this.name  = name;
 
                 this.position       = options.position       || new THREE.Vector3();
-                this.width          = options.width          || 750;
-                this.height         = options.height         || 750;
-                this.segments       = options.segments       || 60;
+                this.width          = options.width          || 7500;
+                this.height         = options.height         || 7500;
+                this.segments       = options.segments       || 600;
                 this.moveWithCamera = options.moveWithCamera || false;
+                this.opacity        = options.opacity        || 0.1;
+                this.color          = options.color          || 0xffffff;
 
                 if(this.moveWithCamera) {
                     this.cameraOffset = this.position.clone().add(this.scene.camera.camera.position);
@@ -52,7 +54,8 @@ define(
                     );
                 }
 
-                let material = new THREE.LineBasicMaterial({ color:0x333333 });
+                let material = new THREE.LineBasicMaterial({ color: this.color, transparent: true });
+                material.opacity = this.opacity;
                 
                 this.mesh = new THREE.LineSegments(geometry, material);
                 this.mesh.position.set(this.position.x, this.position.y, this.position.z);
