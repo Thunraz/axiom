@@ -1,8 +1,18 @@
 #!/usr/bin/env python
 
-import cv2
 import argparse
 import os
+
+import cv2
+
+def write_image(i, f, p, o):
+    'writes image to file with prefix'
+    file_name = "%s%s.png" % (p, f)
+    cv2.imwrite(os.path.join(o, file_name), i)
+
+def is_power2(num):
+    'states if a number is a power of two'
+    return num != 0 and ((num & (num - 1)) == 0)
 
 parser = argparse.ArgumentParser(description='Cut up a panoramic image into single images')
 parser.add_argument('-i', help='The input file')
@@ -14,30 +24,32 @@ prefix = args.p or ''
 output_dir = args.o or '.'
 
 img = cv2.imread(args.i)
+height, width, channels = img.shape
 
-def write_image(f, img):
-    file_name = "%s%s.png" % (prefix, f)
-    cv2.imwrite(os.path.join(output_dir, file_name), img)
+size = height / 3
+if width / 4 != size:
+    raise ValueError('Wrong image format: expected aspect ratio 4/3')
+
+if not is_power2(size):
+    raise ValueError('Wrong image format: face size must be power of two')
+
+
 
 # Top
-py = img[   0:1024, 1024:2048]
-write_image("py", py)
+py = img[0:size, size:size * 2]
+write_image(py, "py", prefix, output_dir)
 # Bottom
-ny = img[2048:3072, 1024:2048]
-write_image("ny", ny)
+ny = img[size * 2:size * 3, size:size * 2]
+write_image(ny, "ny", prefix, output_dir)
 # Left
-nx = img[1024:2048,    0:1024]
-write_image("nx", nx)
+nx = img[size:size * 2, 0:size]
+write_image(nx, "nx", prefix, output_dir)
 # Front
-pz = img[1024:2048, 1024:2048]
-write_image("pz", pz)
+pz = img[size:size * 2, size:size * 2]
+write_image(pz, "pz", prefix, output_dir)
 # Right
-px = img[1024:2048, 2048:3072]
-write_image("px", px)
+px = img[size:size * 2, size * 2:size * 3]
+write_image(px, "px", prefix, output_dir)
 # Back
-nz = img[1024:2048, 3072:4096]
-write_image("nz", nz)
-
-#print "%snz.png" % prefix
-
-#imwrite(
+nz = img[size:size * 2, size * 3:size * 4]
+write_image(nz, "nz", prefix, output_dir)
