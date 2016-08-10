@@ -8,12 +8,11 @@ define(
             // # Constructor ################################
             // ##############################################
 
-            constructor(scene, parent, position, size, lifetime) {
+            constructor(scene, parent, position, oldPosition, lifetime) {
                 super();
 
                 this.scene    = scene;
 
-                this.size     = size;
                 this.position = position;
                 this.color    = parent.color;
 
@@ -22,7 +21,7 @@ define(
                 this.alive    = this.life < this.lifetime;
                 
                 this.mesh     = null;
-                this._createMesh();
+                this._createMesh(position, oldPosition);
                 this.scene.add(this.mesh);
             }
 
@@ -30,15 +29,13 @@ define(
             // # Private functions ##########################
             // ##############################################
 
-            _createMesh() {
-                let size = this.size;
-                if(size < 0.5) size = 0.5;
+            _createMesh(newPos, oldPos) {
+                let material = new THREE.LineBasicMaterial({color: this.color, transparent: true});
 
-                let geometry = new THREE.PlaneGeometry(size, size, 1, 1);
-                let material = new THREE.MeshBasicMaterial({color: this.color, transparent: true});
+                let geometry = new THREE.Geometry();
+                geometry.vertices.push(oldPos, newPos);
                 
-                this.mesh = new THREE.Mesh(geometry, material);
-                this.mesh.position.set(this.position.x, this.position.y, this.position.z);
+                this.mesh = new THREE.Line(geometry, material);
             }
 
             // ##############################################
@@ -49,7 +46,6 @@ define(
                 super.update(deltaT);
 
                 if(this.life <= this.lifetime) {
-                    this.mesh.lookAt(this.scene.camera.camera.position);
 
                     let factor = 1 - this.life / this.lifetime / 50;
 
@@ -66,7 +62,7 @@ define(
                     this.scene.remove(this.mesh);
                     this.mesh.material.dispose();
                     this.mesh.geometry.dispose();
-                    this.mesh  = null;
+                    this.mesh = null;
                 }
             }
 

@@ -70,8 +70,16 @@ define(
                 this._updateYPosition();
 
                 if(this.frameCounter % 10 == 0) {
+                    if(!this.oldTrailPosition) this.oldTrailPosition = this.position.clone();
                     if(this.trail.length < 100) {
-                        this.trail.push(new TrailParticle(this.scene, this, this.position, this.radius / 200, 10));
+                        this.trail.push(new TrailParticle(
+                            this.scene,
+                            this,
+                            this.position,
+                            this.oldTrailPosition,
+                            10
+                        ));
+                        this.oldTrailPosition = this.position.clone();
                     }
                 }
 
