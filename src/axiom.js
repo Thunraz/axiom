@@ -42,7 +42,7 @@ define(
         );
 
         // Create cube map
-        let baseUrl = '/assets/textures/';
+        let baseUrl = 'assets/textures/';
         let format = '.png';
         let urls = [
             baseUrl + 'px' + format, baseUrl + 'nx' + format,
