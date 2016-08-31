@@ -7,7 +7,7 @@ Right now there is not much gameplay (if at all) while I'm still working on the 
 
 How?
 ----
-Technology used: HTML5/WebGL with the help of [three.js](http://threejs.org/). Some ES6 features (especially classes) are also used.
+Technology used: HTML5/WebGL with the help of [three.js](http://threejs.org/). Some ES2015 features (especially classes) are also used.
 Everything is being put together using [require.js](http://requirejs.org/).
 
 Where is it going?
