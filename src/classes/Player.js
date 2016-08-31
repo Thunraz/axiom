@@ -2,10 +2,9 @@
 define(
     [
         'three',
-        'SpaceShip',
-        'Debug'
+        'SpaceShip'
     ],
-    function(THREE, SpaceShip, Debug) {
+    function(THREE, SpaceShip) {
         return class Player extends SpaceShip {
             
             // ##############################################
