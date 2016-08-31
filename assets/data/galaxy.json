@@ -1,0 +1,39 @@
+{
+    "player": {
+        "mass":             3.42E-19,
+        "position":         { "x": 0, "y": 0, "z": -50 },
+        "initialVelocity":  { "x": 0.2, "y": 0, "z": 0 }
+    },
+
+    "planets": [
+        {
+            "name":             "homePlanet",
+            "mass":             1.2E7,
+            "radius":           150,
+            "position":         { "x": 75, "y": 0, "z": 0 },
+            "isSolid":          true,
+            "color":            "0x33ff33",
+            "initialVelocity":  { "x": 0, "y": 0.03, "z": 0.2 }
+        },
+        {
+            "name":             "redPlanet",
+            "mass":             33.18,
+            "radius":           50,
+            "position":         { "x": 0, "y": 18, "z": 0 },
+            "isSolid":          true,
+            "color":            "0xff3333",
+            "initialVelocity":  { "x": 0.2, "y": 0, "z": 0.3 }
+        }
+    ],
+
+    "stars": [
+        {
+            "name":             "sol",
+            "mass":             1.9984E8,
+            "radius":           1400,
+            "color":            "0xffff00",
+            "position":         { "x": 0, "y": 0, "z": 0 },
+            "initialVelocity":  { "x": 0, "y": 0, "z": 0 }
+        }
+    ]
+}

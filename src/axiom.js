@@ -8,13 +8,9 @@ define(
         'Debug',
         'Camera',
         'GameObjectManager',
-        'Grid',
-        'Planet',
-        'Star',
-        'SpaceShip',
-        'Player'
+        'Grid'
     ],
-    function(config, THREE, Stats, InputHandler, Debug, Camera, GameObjectManager, Grid, Planet, Star, SpaceShip, Player) {
+    function(config, THREE, Stats, InputHandler, Debug, Camera, GameObjectManager, Grid) {
         let stats = new Stats();
         stats.showPanel(0);
         document.body.appendChild(stats.dom);
@@ -55,56 +51,24 @@ define(
 
         scene.add(new THREE.AmbientLight( 0x101010 ));
 
-        // Add objects
-        GameObjectManager.add([
-            new Grid(scene, 'xz_grid', { moveWithCamera: true }),
-
-            new Planet(scene, 'homePlanet', {
-                mass:     1.2E7,
-                radius:   150,
-                position: new THREE.Vector3(75, 0, 0),
-                isSolid:  true,
-                color:    0x33ff33
-            }),
-
-            new Planet(scene, 'redPlanet', {
-                mass:     33.18,
-                radius:   50,
-                position: new THREE.Vector3(0, 18, 0),
-                isSolid:  true,
-                color:    0xff3333
-            }),
-            
-            new Star(scene, 'sol', {
-                mass:     1.9984E8,
-                radius:   1400,
-                color:    0xffff00
-            }),
-
-            new Player(scene, 'player', {
-                mass:     3.42E-19,
-                position: new THREE.Vector3(0, 0, -50)
-            })
-        ]);
-
-        // Give objects a speed so they won't
-        // just plunge back into the sun
-        GameObjectManager.get('redPlanet').velocity.setX(0.2);
-        GameObjectManager.get('redPlanet').velocity.setZ(0.3);
-
-        GameObjectManager.get('homePlanet').velocity.setY(0.03);
-        GameObjectManager.get('homePlanet').velocity.setZ(0.2);
-
-        GameObjectManager.get('player').velocity.setX(.2);
-        GameObjectManager.get('player').velocity.setZ(0);
+        GameObjectManager.add(new Grid(scene, 'xz_grid', { moveWithCamera: true }));
+        GameObjectManager.load('assets/data/galaxy.json', scene, beginGame);
 
         // Define variables to calculate deltaT
         // and smoothed deltaT
         let lastFrameTime    = 0;
         let lastDeltaTValues = [];
         let smoothDeltaT     = 0;
+        let inputHandler     = null;
 
-        let inputHandler = new InputHandler(scene, camera, GameObjectManager.get('player'));
+        // #############################################################################################################
+
+        function beginGame() {
+            requestAnimationFrame(update);
+            inputHandler = new InputHandler(scene, camera, GameObjectManager.get('player'));
+        }
+
+        // #############################################################################################################
 
         function update(currentFrameTime) {
             stats.begin();
@@ -142,7 +106,7 @@ define(
             requestAnimationFrame(update);
         }
 
-        requestAnimationFrame(update);
+        // #############################################################################################################
 
         function onWindowResize() {
             camera.camera.aspect = window.innerWidth / window.innerHeight;
@@ -150,5 +114,7 @@ define(
 
             renderer.setSize(window.innerWidth, window.innerHeight);
         }
+
+        // #############################################################################################################
     }
 );
