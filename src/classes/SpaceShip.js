@@ -4,11 +4,9 @@ define(
         'config',
         'three',
         'Debug',
-        'AstronomicalObject',
-        'enums/AstronomicalObjectType',
-        'GameObjectManager'
+        'AstronomicalObject'
     ],
-    function(config, THREE, Debug, AstronomicalObject, AstronomicalObjectType, GameObjectManager) {
+    function(config, THREE, Debug, AstronomicalObject) {
         return class SpaceShip extends AstronomicalObject {
 
             // ##############################################
@@ -89,22 +87,21 @@ define(
 
             // ##############################################
 
-            _updateTrajectory(deltaT, smoothDeltaT) {
+            _updateTrajectory(deltaT, smoothDeltaT, gameObjects) {
                 if(this.trajectory) {
                     let positions   = [this.position.x, this.position.y, this.position.z];
                     let colors      = [1, 1, 1];
                     let tPosition   = this.position.clone();
                     let tVelocity   = this.velocity.clone();
                     let n           = 1000;
-                    let gameObjects = GameObjectManager.get();
 
                     for(let i = 1; i < n; i++) {
                         let tAcceleration = this.force(
-                                tPosition,
-                                this.mass,
-                                this.id,
-                                gameObjects)
-                            .divideScalar(this.mass);
+                            tPosition,
+                            this.mass,
+                            this.id,
+                            gameObjects
+                        ).divideScalar(this.mass);
 
                         tPosition = tPosition.add(
                             tVelocity
@@ -112,10 +109,11 @@ define(
                         );
 
                         let newAcceleration = this.force(
-                                tPosition,
-                                this.mass,
-                                this.id, gameObjects)
-                            .divideScalar(this.mass);
+                            tPosition,
+                            this.mass,
+                            this.id,
+                            gameObjects
+                        ).divideScalar(this.mass);
 
                         tVelocity = tVelocity.add(
                             tAcceleration.add(newAcceleration).multiplyScalar(smoothDeltaT)
