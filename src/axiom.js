@@ -11,18 +11,20 @@ define(
         'Grid'
     ],
     function(config, THREE, Stats, InputHandler, Debug, Camera, GameObjectManager, Grid) {
+        window.addEventListener('resize', onWindowResize, false);
+
+        // Initialize stats
         let stats = new Stats();
         stats.showPanel(0);
         document.body.appendChild(stats.dom);
 
+        // Create & initialize renderer
         let renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(config.canvasWidth, config.canvasHeight);
         document.getElementById('game').appendChild(renderer.domElement);
-        
-        window.addEventListener('resize', onWindowResize, false);
-        
         config.maxAnisotropy = renderer.getMaxAnisotropy();
 
+        // Create scene
         let scene = new THREE.Scene();
         scene.fog = new THREE.Fog(0x000000, 100, 1000);
 
@@ -32,34 +34,45 @@ define(
             renderer,
             config.camera.fov,
             config.canvasWidth / config.canvasHeight,
-            0.1,
-            1000,
-            new THREE.Vector3(25, 75, 75)
+            config.camera.near,
+            config.camera.far,
+            new THREE.Vector3(
+                config.camera.initialPosition.x,
+                config.camera.initialPosition.y,
+                config.camera.initialPosition.z
+            )
         );
 
-        // Create cube map
-        let baseUrl = 'assets/textures/';
-        let format = '.png';
-        let urls = [
-            baseUrl + 'px' + format, baseUrl + 'nx' + format,
-            baseUrl + 'py' + format, baseUrl + 'ny' + format,
-            baseUrl + 'pz' + format, baseUrl + 'nz' + format
-        ];
-        var cube = new THREE.CubeTextureLoader().load(urls);
-        cube.format = THREE.RGBFormat;
-        scene.background = cube;
-
-        scene.add(new THREE.AmbientLight( 0x101010 ));
+        scene.background = createCubeMap();
+        scene.add(new THREE.AmbientLight(0x101010));
 
         GameObjectManager.add(new Grid(scene, 'xz_grid', { moveWithCamera: true }));
         GameObjectManager.load('assets/data/galaxy.json', scene, beginGame);
 
-        // Define variables to calculate deltaT
+        // Declare variables to calculate deltaT
         // and smoothed deltaT
         let lastFrameTime    = 0;
         let lastDeltaTValues = [];
         let smoothDeltaT     = 0;
         let inputHandler     = null;
+
+        // #############################################################################################################
+
+        function createCubeMap() {
+            // Create cube map
+            let baseUrl = 'assets/textures/';
+            let format = '.png';
+            let urls = [
+                baseUrl + 'px' + format, baseUrl + 'nx' + format,
+                baseUrl + 'py' + format, baseUrl + 'ny' + format,
+                baseUrl + 'pz' + format, baseUrl + 'nz' + format
+            ];
+
+            var cube = new THREE.CubeTextureLoader().load(urls);
+            cube.format = THREE.RGBFormat;
+
+            return cube;
+        }
 
         // #############################################################################################################
 
