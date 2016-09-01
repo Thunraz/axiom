@@ -4,15 +4,14 @@ define(
         'config',
         'three',
         'stats',
+        'Hud',
         'InputHandler',
         'Debug',
         'Camera',
         'GameObjectManager',
         'Grid'
     ],
-    function(config, THREE, Stats, InputHandler, Debug, Camera, GameObjectManager, Grid) {
-        window.addEventListener('resize', onWindowResize, false);
-
+    function(config, THREE, Stats, Hud, InputHandler, Debug, Camera, GameObjectManager, Grid) {
         // Initialize stats
         let stats = new Stats();
         stats.showPanel(0);
@@ -23,10 +22,14 @@ define(
         renderer.setSize(config.canvasWidth, config.canvasHeight);
         document.getElementById('game').appendChild(renderer.domElement);
         config.maxAnisotropy = renderer.getMaxAnisotropy();
+        window.addEventListener('resize', onWindowResize, false);
 
         // Create scene
         let scene = new THREE.Scene();
         scene.fog = new THREE.Fog(0x000000, 100, 1000);
+
+        // Create HUD
+        let hud = new Hud();
 
         // Create camera
         let camera = new Camera(
@@ -68,7 +71,7 @@ define(
                 baseUrl + 'pz' + format, baseUrl + 'nz' + format
             ];
 
-            var cube = new THREE.CubeTextureLoader().load(urls);
+            let cube = new THREE.CubeTextureLoader().load(urls);
             cube.format = THREE.RGBFormat;
 
             return cube;
@@ -111,9 +114,15 @@ define(
 
             // Update all the objects
             GameObjectManager.update(deltaT, smoothDeltaT);
+
+            // Update HUD
+            hud.update();
             
             // Render the scene
             renderer.render(scene, camera.camera);
+
+            // Render HUD
+            renderer.render(hud.scene, hud.camera);
 
             stats.end();
             requestAnimationFrame(update);
