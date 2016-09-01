@@ -72,7 +72,7 @@ define(
                             json.player.position.z
                         );
 
-                        var player = new Player(scene, 'player', json.player);
+                        let player = new Player(scene, 'player', json.player);
                         GameObjectManager.add(player);
 
                         GameObjectManager.get('player').velocity.setX(json.player.initialVelocity.x);
@@ -89,7 +89,7 @@ define(
                                 planetOptions.position.z
                             );
 
-                            var planet = new Planet(scene, planetOptions.name, planetOptions);
+                            let planet = new Planet(scene, planetOptions.name, planetOptions);
                             GameObjectManager.add(planet);
 
                             GameObjectManager.get(planetOptions.name).velocity.set(
@@ -109,7 +109,7 @@ define(
                                 starOptions.position.z
                             );
 
-                            var star = new Star(scene, starOptions.name, starOptions);
+                            let star = new Star(scene, starOptions.name, starOptions);
                             GameObjectManager.add(star);
 
                             GameObjectManager.get(starOptions.name).velocity.set(
