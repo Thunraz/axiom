@@ -3,6 +3,11 @@ html
     head
         meta(charset="utf-8")
         title Axiom
+        if css
+            style.
+                !{css}
+        else
+            link(rel="stylesheet", href="./main.css")
     body
         #game
             #thrust
@@ -17,4 +22,8 @@ html
 
         #version %Git-Version%
         
-        script(src="./axiom.js" async)
+        if js
+            script.
+                !{js}
+        else
+            script(src="./main.js", async)

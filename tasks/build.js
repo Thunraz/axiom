@@ -21,7 +21,7 @@ module.exports = () => {
                 format: 'iife',
                 sourceMap: true
             }),
-            source('axiom.js', './src'),
+            source('main.js', './src'),
             buffer(),
             srcmaps.init({ loadMaps: true }),
             srcmaps.write('./') ,
@@ -32,7 +32,7 @@ module.exports = () => {
     });
 
     gulp.task('build-min', ['build-full'], () => {
-        return gulp.src('./dist/main.js')
+        return gulp.src('./dist/axiom.js')
             .pipe(babel({
                 presets: ['es2015']
             }))
