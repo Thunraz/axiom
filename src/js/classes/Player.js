@@ -1,6 +1,6 @@
 import * as THREE from '../lib/three';
 
-import SpaceShip  from './SpaceShip';
+import SpaceShip from './SpaceShip';
 export class Player extends SpaceShip {
             
     // ##############################################

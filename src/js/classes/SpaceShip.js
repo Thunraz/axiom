@@ -1,8 +1,8 @@
-import * as THREE         from '../lib/three';
+import * as THREE from '../lib/three';
 
 import AstronomicalObject from './AstronomicalObject';
 
-import config             from '../config';
+import config from '../config';
 
 export class SpaceShip extends AstronomicalObject {
 
