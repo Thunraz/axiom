@@ -1,35 +1,33 @@
-'use strict';
-define(
-    ['three', 'OrbitControls'],
-    function(THREE) {
-        return class Camera {
-            
-            // ##############################################
-            // # Constructor ################################
-            // ##############################################
+import * as THREE from '../lib/three';
 
-            constructor(scene, renderer, fov, aspectRatio, near, far, cameraPosition) {
-                this.scene = scene;
+export class Camera {
+    
+    // ##############################################
+    // # Constructor ################################
+    // ##############################################
 
-                this.near           = near;
-                this.far            = far;
-                this.cameraPosition = cameraPosition;
+    constructor(scene, renderer, fov, aspectRatio, near, far, cameraPosition) {
+        this.scene = scene;
 
-                this.camera = new THREE.PerspectiveCamera(fov, aspectRatio, near, far);
-                this.camera.position.set(cameraPosition.x, cameraPosition.y, cameraPosition.z);
-                this.camera.zoom = 0.5;
-                this.camera.updateProjectionMatrix();
+        this.near           = near;
+        this.far            = far;
+        this.cameraPosition = cameraPosition;
 
-                scene.camera = this;
+        this.camera = new THREE.PerspectiveCamera(fov, aspectRatio, near, far);
+        this.camera.position.set(cameraPosition.x, cameraPosition.y, cameraPosition.z);
+        this.camera.zoom = 0.5;
+        this.camera.updateProjectionMatrix();
 
-                this.controls = new THREE.OrbitControls(this.camera, renderer.domElement);
-                this.controls.enableDamping = true;
-                this.controls.dampingFactor = 0.125;
-                this.controls.enableZoom    = true;
-                this.controls.rotateSpeed   = 0.15;
-                this.controls.enableKeys    = false;
-                this.controls.mouseButtons  = { ORBIT: THREE.MOUSE.RIGHT, PAN: THREE.MOUSE.LEFT };
-            }
-        }
+        scene.camera = this;
+
+        this.controls = new THREE.OrbitControls(this.camera, renderer.domElement);
+        this.controls.enableDamping = true;
+        this.controls.dampingFactor = 0.125;
+        this.controls.enableZoom    = true;
+        this.controls.rotateSpeed   = 0.15;
+        this.controls.enableKeys    = false;
+        this.controls.mouseButtons  = { ORBIT: THREE.MOUSE.RIGHT, PAN: THREE.MOUSE.LEFT };
     }
-);
+}
+
+export default Camera;
