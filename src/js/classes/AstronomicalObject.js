@@ -1,9 +1,9 @@
-import * as THREE  from '../lib/three';
+import * as THREE from '../lib/three';
 
 import Constants   from '../enums/Constants';
 import SpaceObject from './SpaceObject';
 
-import config      from '../config';
+import config from '../config';
 
 export class AstronomicalObject extends SpaceObject {
 

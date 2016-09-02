@@ -1,9 +1,9 @@
 import * as THREE from '../../lib/three';
 
-import Grad       from './Grad';
-import NoiseType  from '../../enums/NoiseType';
+import Grad      from './Grad';
+import NoiseType from '../../enums/NoiseType';
 
-import config     from '../../config';
+import config from '../../config';
 
 export class Noise {
 
