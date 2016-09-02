@@ -1,5 +1,4 @@
-'use strict';
-define({
+export let config = {
     canvasWidth:  window.innerWidth,
     canvasHeight: window.innerHeight,
 
@@ -19,4 +18,6 @@ define({
     framesToSmoothDeltaT: 128,
 
     maxAnisotropy:        0
-});
+};
+
+export default config;

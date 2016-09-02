@@ -1,0 +1,20 @@
+doctype html
+html
+    head
+        meta(charset="utf-8")
+        title Axiom
+    body
+        #game
+            #thrust
+            #playerInfo
+                #playerSpeed
+        #debugStuff
+            h3 Debug stuff
+            label
+                input#ShowDirectionalVectors(type="checkbox")
+                |Show directional vectors
+            pre#debugOutput
+
+        #version %Git-Version%
+        
+        script(src="./axiom.js" async)
