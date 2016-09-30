@@ -1,42 +1,77 @@
 'use strict';
 
-let babel      = require('gulp-babel'),
-    buffer     = require('vinyl-buffer'),
-    gulp       = require('gulp'),
-    livereload = require('gulp-livereload'),
-    pump       = require('pump'),
-    rename     = require('gulp-rename'),
-    rollup     = require('rollup-stream'),
-    source     = require('vinyl-source-stream'),
-    srcmaps    = require('gulp-sourcemaps'),
-    uglify     = require('gulp-uglify');
+let babel       = require('gulp-babel'),
+    fs          = require('fs'),
+    gulp        = require('gulp'),
+    pkg         = require('../package.json'),
+    rename      = require('gulp-rename'),
+    rollup      = require('rollup').rollup;
 
 module.exports = () => {
     gulp.task('build', ['build-min']);
+    
+    gulp.task('create-electron-package-json', () => {
+        fs.writeFile(
+            './dist/package.json',
+            JSON.stringify({
+                name:    pkg.name,
+                version: pkg.version,
+                description: pkg.description,
+                author: pkg.author,
+                main: 'app.js',
+                devDependencies: {
+                    electron: '^1.4.1'
+                },
+                build: {
+                    appId: pkg.name,
+                    mac: {
+                        category: 'public.app-category.action-games'
+                    },
+                    win: {
+                        iconUrl: 'https://runvs.io/favicon.png',
+                        target: 'nsis'
+                    },
+                    nsis: {
+                        oneClick: false
+                    }
+                },
+                scripts: {
+                    pack: 'build --dir',
+                    dist: 'build'
+                }
+            })
+        );
+    });
+    
+    gulp.task('copy-libs', ['create-electron-package-json'], () => {
+        return gulp
+            .src([
+                './node_modules/three/build/three.js',
+                './src/electron/app.js'
+            ])
+            .pipe(gulp.dest('./dist/'))
+    });
 
-    gulp.task('build-full', (callback) => {
-        pump([
-            rollup({
-                entry: 'src/js/axiom.js',
+    gulp.task('build-full', ['copy-libs'], (callback) => {
+        return rollup({
+            entry: 'src/js/axiom.js',
+            sourceMap: true
+        }).then(function(bundle) {
+            return bundle.write({
+                dest:  'dist/main.js',
                 format: 'iife',
-                sourceMap: true
-            }),
-            source('main.js', './src'),
-            buffer(),
-            srcmaps.init({ loadMaps: true }),
-            srcmaps.write('./') ,
-            gulp.dest('./dist'),
-            livereload()
-        ],
-        callback);
+                globals: {
+                    three: 'THREE'
+                },
+            });
+        });
     });
 
     gulp.task('build-min', ['build-full'], () => {
-        return gulp.src('./dist/axiom.js')
+        return gulp.src('./dist/main.js')
             .pipe(babel({
-                presets: ['es2015']
+                presets: ['babili']
             }))
-            .pipe(uglify())
             .pipe(rename('main.min.js'))
             .pipe(gulp.dest('./dist'));
     });

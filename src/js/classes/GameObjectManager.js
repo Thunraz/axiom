@@ -1,4 +1,4 @@
-import * as THREE from '../lib/three';
+import * as THREE from 'three';
 
 import Planet from './Planet';
 import Player from './Player';
