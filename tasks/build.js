@@ -47,6 +47,7 @@ module.exports = () => {
         return gulp
             .src([
                 './node_modules/three/build/three.js',
+                './node_modules/three/examples/js/controls/OrbitControls.js',
                 './src/electron/app.js'
             ])
             .pipe(gulp.dest('./dist/'))
