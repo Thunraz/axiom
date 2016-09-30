@@ -2,17 +2,14 @@
 
 let gulp       = require('gulp'),
     http       = require('http'),
-    livereload = require('gulp-livereload'),
     path       = require('path'),
     st         = require('st');
 
 module.exports = () => {
     gulp.task('watch', ['server'], () => {
-        livereload.listen();
-
         return gulp.watch(
-            ['src/js/**/*.js', 'src/css/**/*.css', 'src/index.pug', 'src/assets/*.*'],
-            ['build', 'css', 'template']
+            ['src/js/**/*.js', 'src/sass/**/*.s?ss', 'src/index.pug', 'src/assets/*.*'],
+            ['build', 'css', 'template', 'assets']
         );
     });
 

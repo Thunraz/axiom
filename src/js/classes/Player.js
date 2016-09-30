@@ -1,4 +1,4 @@
-import * as THREE from '../lib/three';
+import * as THREE from 'three';
 
 import SpaceShip from './SpaceShip';
 export class Player extends SpaceShip {

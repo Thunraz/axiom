@@ -1,6 +1,6 @@
 'use strict';
 
-import * as THREE        from './lib/three';
+import * as THREE from 'three';
 
 import Camera            from './classes/Camera';
 import GameObjectManager from './classes/GameObjectManager';

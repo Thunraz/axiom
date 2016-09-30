@@ -1,4 +1,4 @@
-import * as THREE from '../lib/three';
+import * as THREE from 'three';
 
 import config from '../config';
 
