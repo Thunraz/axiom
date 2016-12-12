@@ -3,6 +3,7 @@
 let babel       = require('gulp-babel'),
     fs          = require('fs'),
     gulp        = require('gulp'),
+    gutil       = require('gulp-util'),
     pkg         = require('../package.json'),
     rename      = require('gulp-rename'),
     rollup      = require('rollup').rollup;
@@ -11,36 +12,40 @@ module.exports = () => {
     gulp.task('build', ['build-min']);
     
     gulp.task('create-electron-package-json', () => {
-        fs.writeFile(
-            './dist/package.json',
-            JSON.stringify({
-                name:    pkg.name,
-                version: pkg.version,
-                description: pkg.description,
-                author: pkg.author,
-                main: 'app.js',
-                devDependencies: {
-                    electron: '^1.4.1'
-                },
-                build: {
-                    appId: pkg.name,
-                    mac: {
-                        category: 'public.app-category.action-games'
+        fs.mkdir('./dist/', (err) => {
+            if(err) gutil.log(err.message);
+            
+            fs.writeFile(
+                './dist/package.json',
+                JSON.stringify({
+                    name:    pkg.name,
+                    version: pkg.version,
+                    description: pkg.description,
+                    author: pkg.author,
+                    main: 'app.js',
+                    devDependencies: {
+                        electron: '^1.4.1'
                     },
-                    win: {
-                        iconUrl: 'https://runvs.io/favicon.png',
-                        target: 'nsis'
+                    build: {
+                        appId: pkg.name,
+                        mac: {
+                            category: 'public.app-category.action-games'
+                        },
+                        win: {
+                            iconUrl: 'https://runvs.io/favicon.png',
+                            target: 'nsis'
+                        },
+                        nsis: {
+                            oneClick: false
+                        }
                     },
-                    nsis: {
-                        oneClick: false
+                    scripts: {
+                        pack: 'build --dir',
+                        dist: 'build'
                     }
-                },
-                scripts: {
-                    pack: 'build --dir',
-                    dist: 'build'
-                }
-            })
-        );
+                })
+            );
+        });
     });
     
     gulp.task('copy-libs', ['create-electron-package-json'], () => {
