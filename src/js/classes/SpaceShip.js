@@ -19,6 +19,7 @@ export class SpaceShip extends AstronomicalObject {
         this.mass     = options.mass     || 5;
         this.position = options.position || new THREE.Vector3();
         this.color    = options.color    || 0x7fffd4;
+        options.model = options.model    || 'assets/models/ship.json';
         
         this.positionIndicatorScale = 3;
 
