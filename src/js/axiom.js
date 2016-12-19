@@ -3,6 +3,7 @@
 import * as THREE from 'three';
 
 import Camera            from './classes/Camera';
+import Debug             from './classes/Debug';
 import GameObjectManager from './classes/GameObjectManager';
 import Grid              from './classes/Grid';
 import Hud               from './classes/Hud';
