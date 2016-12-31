@@ -12,7 +12,15 @@
   },
   "homepage": "https://github.com/Thunraz/axiom#readme",
   "dependencies": {
-    "three": "^0.81.2"
+    "babel-preset-babili": "0.0.9",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.0.0",
+    "pug": "^2.0.0-beta6",
+    "rollup": "^0.39.2",
+    "st": "^1.2.0",
+    "three": "^0.83.0"
   },
   "devDependencies": {
     "babel-preset-babili": "^0.0.3",
