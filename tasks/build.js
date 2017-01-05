@@ -58,10 +58,13 @@ module.exports = () => {
             .pipe(gulp.dest('./dist/'))
     });
 
-    gulp.task('build-full', ['copy-libs'], (callback) => {
+    gulp.task('build-full', ['copy-libs'], () => {
         return rollup({
             entry: 'src/js/axiom.js',
-            sourceMap: true
+            sourceMap: true,
+            external: [
+                'three'
+            ]
         }).then(function(bundle) {
             return bundle.write({
                 dest:  'dist/main.js',
