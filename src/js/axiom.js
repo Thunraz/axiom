@@ -122,7 +122,7 @@ function update(currentFrameTime) {
     renderer.render(scene, camera.camera);
 
     // Render HUD
-    renderer.render(hud.scene, hud.camera);
+    //renderer.render(hud.scene, hud.camera);
 
     stats.end();
     requestAnimationFrame(update);
