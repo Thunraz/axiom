@@ -118,4 +118,4 @@ export class Player extends SpaceShip {
     }
 }
 
-export default SpaceShip;
+export default Player;
