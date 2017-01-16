@@ -9,11 +9,11 @@ export class Hud {
     // ##############################################
 
     constructor() {
-        this.canvas    = document.createElement('canvas');
+        this.canvas = document.createElement('canvas');
         this.canvas.width  = 1024;
         this.canvas.height = 1024;
 
-        this.bitmap      = this.canvas.getContext('2d');
+        this.bitmap           = this.canvas.getContext('2d');
         this.bitmap.font      = 'Normal 40px Changa';
         this.bitmap.textAlign = 'center';
         this.bitmap.fillStyle = 'rgba(245, 245, 245, 0.7)';
