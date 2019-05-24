@@ -1,21 +1,8 @@
-'use strict';
+import gulp from 'gulp';
 
-let gulp       = require('gulp'),
-    http       = require('http'),
-    path       = require('path'),
-    st         = require('st');
+function clearTerminal(done) {
+    process.stdout.write('\x1B[2J\x1B[0f\u001b[0;0H');
+    done();
+}
 
-module.exports = () => {
-    gulp.task('watch', ['server'], () => {
-        return gulp.watch(
-            ['src/js/**/*.js', 'src/sass/**/*.s?ss', 'src/index.pug', 'src/assets/*.*'],
-            ['build', 'css', 'template', 'assets']
-        );
-    });
-
-    gulp.task('server', (done) => {
-        http.createServer(
-            st({ path: path.join(__dirname, '..', 'dist'), index: 'index.html', cache: false })
-        ).listen(8080, done);
-    });
-};
+export default () => gulp.watch(['src/*', 'src/**/*'], gulp.series(clearTerminal, 'compile'));
