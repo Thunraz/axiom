@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 
-export class Camera {
-    
+class Camera {
     // ##############################################
     // # Constructor ################################
     // ##############################################
@@ -18,7 +17,7 @@ export class Camera {
         this.camera.zoom = 0.5;
         this.camera.updateProjectionMatrix();
 
-        scene.camera = this;
+        this.scene.camera = this;
 
         this.controls = new THREE.OrbitControls(this.camera, renderer.domElement);
         this.controls.enableDamping = true;

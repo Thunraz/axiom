@@ -1,54 +1,51 @@
-export class Convolution {
-
+class Convolution {
     // ##############################################
     // # Public functions ###########################
     // ##############################################
 
     static convolve(imageData, context, width, matrix, divisor, offset) {
-        let m = [].concat(matrix[0], matrix[1], matrix[2]);
-        if(!divisor) {
-            // No divisor? Sum up the matrix values
-            divisor = m.reduce(function(a, b) { return a + b; }) || 1;
-        }
+        const m = [].concat(matrix[0], matrix[1], matrix[2]);
+        
+        // No divisor? Sum up the matrix values
+        const div = divisor || m.reduce((a, b) => a + b) || 1;
 
-        let oldData   = imageData,
-            oldPixels = oldData.data;
+        const oldData   = imageData;
+        const oldPixels = oldData.data;
 
-        let newData   = context.createImageData(oldData),
-            newPixels = newData.data;
+        const newData   = context.createImageData(oldData);
+        const newPixels = newData.data;
 
-        let len = newPixels.length,
-            res = 0,
-            w   = width;
+        const len = newPixels.length;
+        let   res = 0;
+        const w   = width;
         
         for (let i = 0; i < len; i++) {
             if ((i + 1) % 4 === 0) {
                 newPixels[i] = oldPixels[i];
-                continue;
-            }
-        
-            res = 0;
-            var these = [
-                oldPixels[i - w * 4 - 4] || oldPixels[i],
-                oldPixels[i - w * 4]     || oldPixels[i],
-                oldPixels[i - w * 4 + 4] || oldPixels[i],
-                oldPixels[i - 4]         || oldPixels[i],
-                oldPixels[i],
-                oldPixels[i + 4]         || oldPixels[i],
-                oldPixels[i + w * 4 - 4] || oldPixels[i],
-                oldPixels[i + w * 4]     || oldPixels[i],
-                oldPixels[i + w * 4 + 4] || oldPixels[i]
-            ];
+            } else {
+                res = 0;
+                const these = [
+                    oldPixels[i - w * 4 - 4] || oldPixels[i],
+                    oldPixels[i - w * 4]     || oldPixels[i],
+                    oldPixels[i - w * 4 + 4] || oldPixels[i],
+                    oldPixels[i - 4]         || oldPixels[i],
+                    oldPixels[i],
+                    oldPixels[i + 4]         || oldPixels[i],
+                    oldPixels[i + w * 4 - 4] || oldPixels[i],
+                    oldPixels[i + w * 4]     || oldPixels[i],
+                    oldPixels[i + w * 4 + 4] || oldPixels[i],
+                ];
 
-            for (var j = 0; j < 9; j++) {
-                res += these[j] * m[j];
-            }
+                for (let j = 0; j < 9; j++) {
+                    res += these[j] * m[j];
+                }
 
-            res /= divisor;
-            if (offset) {
-                res += offset;
+                res /= div;
+                if (offset) {
+                    res += offset;
+                }
+                newPixels[i] = res;
             }
-            newPixels[i] = res;
         }
 
         return newData;
@@ -57,10 +54,10 @@ export class Convolution {
     // ##############################################
 
     static meanRemoval(imageData, context, width, divisor, offset) {
-        let matrix = [
+        const matrix = [
             [-1, -1, -1],
             [-1,  9, -1],
-            [-1, -1, -1]
+            [-1, -1, -1],
         ];
 
         return Convolution.convolve(imageData, context, width, matrix, divisor, offset || 0);
@@ -69,10 +66,10 @@ export class Convolution {
     // ##############################################
 
     static sharpen(imageData, context, width, divisor, offset) {
-        let matrix = [
+        const matrix = [
             [0,  -2,  0],
             [-2, 11, -2],
-            [0,  -2,  0]
+            [0,  -2,  0],
         ];
 
         return Convolution.convolve(imageData, context, width, matrix, divisor, offset || 0);
@@ -81,10 +78,10 @@ export class Convolution {
     // ##############################################
 
     static blur(imageData, context, width, divisor, offset) {
-        let matrix = [
+        const matrix = [
             [1,  2,  1],
             [2,  4,  2],
-            [1,  2,  1]
+            [1,  2,  1],
         ];
 
         return Convolution.convolve(imageData, context, width, matrix, divisor, offset || 0);
@@ -93,10 +90,10 @@ export class Convolution {
     // ##############################################
 
     static emboss(imageData, context, width, divisor, offset) {
-        let matrix = [
+        const matrix = [
             [2,  0,  0],
             [0, -1,  0],
-            [0,  0, -1]
+            [0,  0, -1],
         ];
 
         return Convolution.convolve(imageData, context, width, matrix, divisor, offset || 0);
@@ -105,10 +102,10 @@ export class Convolution {
     // ##############################################
 
     static embossSubtle(imageData, context, width, divisor, offset) {
-        let matrix = [
+        const matrix = [
             [1,  1, -1],
             [1,  3, -1],
-            [1, -1, -1]
+            [1, -1, -1],
         ];
 
         return Convolution.convolve(imageData, context, width, matrix, divisor, offset || 0);
@@ -117,10 +114,10 @@ export class Convolution {
     // ##############################################
 
     static edgeDetect(imageData, context, width, divisor, offset) {
-        let matrix = [
+        const matrix = [
             [1,  1,  1],
             [1, -7,  1],
-            [1,  1,  1]
+            [1,  1,  1],
         ];
 
         return Convolution.convolve(imageData, context, width, matrix, divisor, offset || 0);
@@ -129,10 +126,10 @@ export class Convolution {
     // ##############################################
 
     static edgeDetect2(imageData, context, width, divisor, offset) {
-        let matrix = [
+        const matrix = [
             [-5, 0, 0],
             [0,  0, 0],
-            [0,  0, 5]
+            [0,  0, 5],
         ];
 
         return Convolution.convolve(imageData, context, width, matrix, divisor, offset || 0);

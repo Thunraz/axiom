@@ -2,8 +2,7 @@ import * as THREE from 'three';
 
 import SpaceObject from './SpaceObject';
 
-export class Grid extends SpaceObject {
-
+class Grid extends SpaceObject {
     // ##############################################
     // # Constructor ################################
     // ##############################################
@@ -22,11 +21,11 @@ export class Grid extends SpaceObject {
         this.opacity        = options.opacity        || 0.1;
         this.color          = options.color          || 0xffffff;
 
-        if(this.moveWithCamera) {
+        if (this.moveWithCamera) {
             this.cameraOffset = this.position.clone().add(this.scene.camera.camera.position);
         }
 
-        this._createMesh();
+        this.createMesh();
         this.scene.add(this.mesh);
     }
 
@@ -34,27 +33,27 @@ export class Grid extends SpaceObject {
     // # Private functions ##########################
     // ##############################################
 
-    _createMesh() {
-        let geometry = new THREE.Geometry();
+    createMesh() {
+        const geometry = new THREE.Geometry();
 
         // Loop end condition has to accomodate for even/odd number of segments
-        let condition = (this.segments % 2 == 0) ? this.width / 2 + 1 : this.width / 2;
-        for(let x = -this.width / 2; x <= condition; x += this.width / this.segments) {
+        let condition = (this.segments % 2 === 0) ? this.width / 2 + 1 : this.width / 2;
+        for (let x = -this.width / 2; x <= condition; x += this.width / this.segments) {
             geometry.vertices.push(
                 new THREE.Vector3(x, 0, -this.height / 2),
-                new THREE.Vector3(x, 0,  this.height / 2)
+                new THREE.Vector3(x, 0,  this.height / 2),
             );
         }
         
-        condition = (this.segments % 2 == 0) ? this.height / 2 + 1 : this.height / 2;
-        for(let z = -this.height / 2; z <= condition; z += this.height / this.segments) {
+        condition = (this.segments % 2 === 0) ? this.height / 2 + 1 : this.height / 2;
+        for (let z = -this.height / 2; z <= condition; z += this.height / this.segments) {
             geometry.vertices.push(
                 new THREE.Vector3(-this.width / 2, 0, z),
-                new THREE.Vector3( this.width / 2, 0, z)
+                new THREE.Vector3(this.width  / 2, 0, z),
             );
         }
 
-        let material = new THREE.LineBasicMaterial({ color: this.color, transparent: true });
+        const material = new THREE.LineBasicMaterial({ color: this.color, transparent: true });
         material.opacity = this.opacity;
         
         this.mesh = new THREE.LineSegments(geometry, material);
@@ -68,16 +67,16 @@ export class Grid extends SpaceObject {
     update(deltaT) {
         super.update(deltaT);
 
-        let camera = this.scene.camera.camera;
+        const [camera] = this.scene.camera.camera;
 
-        if(this.moveWithCamera) {
-            let roundedOffset = new THREE.Vector3(
+        if (this.moveWithCamera) {
+            const roundedOffset = new THREE.Vector3(
                 (camera.position.x - this.cameraOffset.x) % (this.width  / this.segments),
                 camera.position.y  - this.cameraOffset.y,
-                (camera.position.z - this.cameraOffset.z) % (this.height / this.segments)
+                (camera.position.z - this.cameraOffset.z) % (this.height / this.segments),
             );
 
-            let newPosition = camera.position
+            const newPosition = camera.position
                 .clone()
                 .sub(this.cameraOffset)
                 .sub(roundedOffset);
@@ -85,15 +84,12 @@ export class Grid extends SpaceObject {
             this.position.set(
                 newPosition.x,
                 newPosition.y,
-                newPosition.z
+                newPosition.z,
             );
 
             this.mesh.position.set(this.position.x, this.position.y, this.position.z);
         }
     }
-
-    // ##############################################
-
 } // class
 
 export default Grid;

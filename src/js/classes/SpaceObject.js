@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 
-export class SpaceObject {
-
+class SpaceObject {
     // ##############################################
     // # Constructor ################################
     // ##############################################
@@ -31,9 +30,6 @@ export class SpaceObject {
 
         return val;
     }
-
-    // ##############################################
-
 } // class
 
 export default SpaceObject;

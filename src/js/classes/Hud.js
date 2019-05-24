@@ -2,8 +2,7 @@ import * as THREE from 'three';
 
 import config from '../config';
 
-export class Hud {
-            
+export default class Hud {
     // ##############################################
     // # Constructor ################################
     // ##############################################
@@ -46,5 +45,3 @@ export class Hud {
         this.texture.needsUpdate = true;
     }
 }
-
-export default Hud;

@@ -7,8 +7,7 @@ import NoiseType              from '../enums/NoiseType';
 
 import config from '../config';
 
-export class Star extends AstronomicalObject {
-
+class Star extends AstronomicalObject {
     // ##############################################
     // # Constructor ################################
     // ##############################################
@@ -87,7 +86,6 @@ export class Star extends AstronomicalObject {
     }
 
     // ##############################################
-
 } // class
 
 export default Star;
