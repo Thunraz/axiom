@@ -14,6 +14,7 @@ class SpaceObject {
     // # Public functions ###########################
     // ##############################################
 
+    // eslint-disable-next-line class-methods-use-this
     update() { }
 
     // ##############################################
@@ -21,12 +22,12 @@ class SpaceObject {
     // ##############################################
     
     static get NEXT_ID() {
-        if(this._NEXT_ID == undefined) {
-            this._NEXT_ID = 0;
+        if (!this.NEXT_ID) {
+            this.NEXT_ID = 0;
         }
 
-        let val = this._NEXT_ID;
-        this._NEXT_ID++;
+        const val = this.NEXT_ID;
+        this.NEXT_ID += 1;
 
         return val;
     }
