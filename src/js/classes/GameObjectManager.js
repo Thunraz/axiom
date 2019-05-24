@@ -4,7 +4,7 @@ import Planet from './Planet';
 import Player from './Player';
 import Star   from './Star';
 
-export default class GameObjectManager {
+class GameObjectManager {
     static get(index) {
         if (GameObjectManager.GameObjects == null) {
             GameObjectManager.GameObjects = [];
@@ -129,3 +129,5 @@ export default class GameObjectManager {
         xhr.send();
     }
 }
+
+export default GameObjectManager;
