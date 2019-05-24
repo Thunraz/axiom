@@ -1,28 +1,29 @@
-export class Debug {
-
+class Debug {
     // ##############################################
     // # Public functions ###########################
     // ##############################################
 
     static clear() {
-        Debug._checkDebugElement();
+        Debug.checkDebugElement();
 
         this.debugElement.innerHTML = '';
     }
 
     static log(message) {
-        Debug._checkDebugElement();
+        Debug.checkDebugElement();
 
-        if(typeof(message) == 'object') {
-            this.debugElement.innerHTML += '\n' + JSON.stringify(message);
+        if (typeof message === 'object') {
+            this.debugElement.innerHTML += `\n${JSON.stringify(message)}`;
         } else {
-            this.debugElement.innerHTML += '\n' + message;
+            this.debugElement.innerHTML += `\n${message}`;
         }
     }
 
-    static _checkDebugElement() {
-        if(!this.debugElement) this.debugElement = document.getElementById('debugOutput');
+    static checkDebugElement() {
+        if (!this.debugElement) {
+            this.debugElement = document.getElementById('debugOutput');
+        }
     }
 }
-        
+
 export default Debug;

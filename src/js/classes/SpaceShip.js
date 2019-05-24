@@ -4,8 +4,7 @@ import AstronomicalObject from './AstronomicalObject';
 
 import config from '../config';
 
-export class SpaceShip extends AstronomicalObject {
-
+class SpaceShip extends AstronomicalObject {
     // ##############################################
     // # Constructor ################################
     // ##############################################

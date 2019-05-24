@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 
 import SpaceShip from './SpaceShip';
-export class Player extends SpaceShip {
-            
+
+class Player extends SpaceShip {
     // ##############################################
     // # Constructor ################################
     // ##############################################

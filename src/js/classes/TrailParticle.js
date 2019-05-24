@@ -2,8 +2,7 @@ import * as THREE from 'three';
 
 import SpaceObject from './SpaceObject';
 
-export class TrailParticle extends SpaceObject {
-
+class TrailParticle extends SpaceObject {
     // ##############################################
     // # Constructor ################################
     // ##############################################
@@ -67,7 +66,6 @@ export class TrailParticle extends SpaceObject {
     }
 
     // ##############################################
-
 } // class
 
 export default TrailParticle;

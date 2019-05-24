@@ -117,7 +117,7 @@ function _playerMovement(player) {
 
 // ##############################################
 
-export class InputHandler {
+export default class InputHandler {
 
     // ##############################################
     // # Constructor ################################
@@ -151,5 +151,3 @@ export class InputHandler {
         }
     }
 }
-
-export default InputHandler;
