@@ -157,8 +157,7 @@ class SpaceShip extends AstronomicalObject {
         this.mesh.position.set(this.position.x, this.position.y, this.position.z);
         this.positionIndicator.position.set(this.position.x, 0, this.position.z);
 
-        const [controls] = this.scene.camera.controls;
-        const [camera] = this.scene.camera.camera;
+        const { controls, camera } = this.scene.camera;
 
         const zoomFactor = controls.target.clone().sub(camera.position).length() / 100;
         this.positionIndicator.scale.set(

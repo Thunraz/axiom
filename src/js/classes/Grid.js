@@ -67,7 +67,7 @@ class Grid extends SpaceObject {
     update(deltaT) {
         super.update(deltaT);
 
-        const [camera] = this.scene.camera.camera;
+        const { camera } = this.scene.camera;
 
         if (this.moveWithCamera) {
             const roundedOffset = new THREE.Vector3(
