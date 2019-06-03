@@ -57,10 +57,9 @@ function showDirectionalVectors(event) {
 
 function cameraMovement(cameraObject) {
     // Shorthands
-    const [rotation]      = cameraObject.camera.rotation;
-    const [position]      = cameraObject.camera.position;
-    const [target]        = cameraObject.controls.target;
-    const [movementSpeed] = config.camera.movementSpeed;
+    const { rotation, position } = cameraObject.camera;
+    const { target }             = cameraObject.controls;
+    const { movementSpeed }      = config.camera;
 
     if (controls.cameraUp && !controls.cameraDown) {
         position.x -= Math.sin(rotation.z) * movementSpeed;
