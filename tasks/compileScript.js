@@ -29,7 +29,7 @@ function build() {
             'three',
         ],
     }).then(bundle => bundle.write({
-        file:      'dist/app.js',
+        file:      'dist/main.js',
         sourcemap: true,
         format:    'iife',
         globals:   {
