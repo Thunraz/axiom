@@ -8,7 +8,7 @@ const zip     = require('gulp-zip');
 
 function minifyJS() {
     return gulp
-        .src('dist/app.js')
+        .src('dist/main.js')
         .pipe(uglify())
         .pipe(gulp.dest('dist/temp'));
 }
