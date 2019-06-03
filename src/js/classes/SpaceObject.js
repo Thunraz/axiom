@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 
+let SPACEOBJECT_ID = 0;
+
 class SpaceObject {
     // ##############################################
     // # Constructor ################################
@@ -7,6 +9,7 @@ class SpaceObject {
 
     constructor() {
         this.id       = SpaceObject.NEXT_ID;
+
         this.position = new THREE.Vector3(0, 0, 0);
     }
 
@@ -22,12 +25,8 @@ class SpaceObject {
     // ##############################################
     
     static get NEXT_ID() {
-        if (!this.NEXT_ID) {
-            this.NEXT_ID = 0;
-        }
-
-        const val = this.NEXT_ID;
-        this.NEXT_ID += 1;
+        const val = SPACEOBJECT_ID;
+        SPACEOBJECT_ID += 1;
 
         return val;
     }
