@@ -24,10 +24,10 @@ class SpaceShip extends AstronomicalObject {
 
         const scope = this;
 
-        const loader = new THREE.JSONLoader();
+        const loader = new THREE.GLTFLoader();
         loader.load(options.model, (shipGeometry, shipMaterials) => {
             const shipMaterial = new THREE.MultiMaterial(shipMaterials);
-            scope.mesh        = new THREE.Mesh(shipGeometry, shipMaterial);
+            scope.mesh         = new THREE.Mesh(shipGeometry, shipMaterial);
             scene.add(scope.mesh);
 
             scope.createPositionIndicator();

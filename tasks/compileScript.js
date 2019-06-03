@@ -9,6 +9,7 @@ function copyDependencies(done) {
     const dependencies = [
         './node_modules/three/build/three.js',
         './node_modules/three/examples/js/controls/OrbitControls.js',
+        './node_modules/three/examples/js/loaders/GLTFLoader.js',
     ];
 
     if (dependencies.length === 0) {
