@@ -4,20 +4,20 @@ import config from '../config';
 // # Private functions ##########################
 // ##############################################
 
-let controls = {
+const controls = {
     playerAccelerate: false,
     playerDecelerate: false,
-    playerTurnLeft  : false,
-    playerTurnRight : false,
+    playerTurnLeft:   false,
+    playerTurnRight:  false,
 
-    rotateLeft : false,
+    rotateLeft:  false,
     rotateRight: false,
 
-    zoomIn : false,
-    zoomOut: false
+    zoomIn:  false,
+    zoomOut: false,
 };
 
-let mapping = {
+const mapping = {
     /* W */ 87: 'playerAccelerate',
     /* S */ 83: 'playerDecelerate',
     /* A */ 65: 'playerTurnLeft',
@@ -32,18 +32,18 @@ let mapping = {
     /* E */ 69: null,
 
     /* R */ 82: null,
-    /* F */ 70: null
+    /* F */ 70: null,
 };
 
 function onKeyDown(event) {
-    if(!mapping[event.keyCode]) return;
+    if (!mapping[event.keyCode]) return;
     controls[mapping[event.keyCode]] = true;
 }
 
 // ##############################################
 
 function onKeyUp(event) {
-    if(!mapping[event.keyCode]) return;
+    if (!mapping[event.keyCode]) return;
     controls[mapping[event.keyCode]] = false;
 }
 
@@ -55,14 +55,13 @@ function showDirectionalVectors(event) {
 
 // ##############################################
 
-function _cameraMovement(cameraObject) {
+function cameraMovement(cameraObject) {
     // Shorthands
-    let rotation      = cameraObject.camera.rotation;
-    let position      = cameraObject.camera.position;
-    let target        = cameraObject.controls.target;
-    let movementSpeed = config.camera.movementSpeed;
+    const { rotation, position } = cameraObject.camera;
+    const { target }             = cameraObject.controls;
+    const { movementSpeed }      = config.camera;
 
-    if(controls.cameraUp && !controls.cameraDown) {
+    if (controls.cameraUp && !controls.cameraDown) {
         position.x -= Math.sin(rotation.z) * movementSpeed;
         target.x   -= Math.sin(rotation.z) * movementSpeed;
 
@@ -70,7 +69,7 @@ function _cameraMovement(cameraObject) {
         target.z   -= Math.cos(rotation.z) * movementSpeed;
     }
     
-    if(controls.cameraDown && !controls.cameraUp) {
+    if (controls.cameraDown && !controls.cameraUp) {
         position.x += Math.sin(rotation.z) * movementSpeed;
         target.x   += Math.sin(rotation.z) * movementSpeed;
 
@@ -78,7 +77,7 @@ function _cameraMovement(cameraObject) {
         target.z   += Math.cos(rotation.z) * movementSpeed;
     }
 
-    if(controls.cameraLeft && !controls.cameraRight) {
+    if (controls.cameraLeft && !controls.cameraRight) {
         position.x -=  Math.cos(rotation.z) * movementSpeed;
         target.x   -=  Math.cos(rotation.z) * movementSpeed;
 
@@ -86,7 +85,7 @@ function _cameraMovement(cameraObject) {
         target.z   -= -Math.sin(rotation.z) * movementSpeed;
     }
     
-    if(controls.cameraRight && !controls.cameraLeft) {
+    if (controls.cameraRight && !controls.cameraLeft) {
         position.x +=  Math.cos(rotation.z) * movementSpeed;
         target.x   +=  Math.cos(rotation.z) * movementSpeed;
 
@@ -97,28 +96,27 @@ function _cameraMovement(cameraObject) {
 
 // ##############################################
 
-function _playerMovement(player) {
-    if(controls.playerAccelerate && !controls.playerDecelerate) {
+function playerMovement(player) {
+    if (controls.playerAccelerate && !controls.playerDecelerate) {
         player.accelerate();
     }
 
-    if(controls.playerDecelerate && !controls.playerAccelerate) {
+    if (controls.playerDecelerate && !controls.playerAccelerate) {
         player.decelerate();
     }
 
-    if(controls.playerTurnLeft && !controls.playerTurnRight) {
+    if (controls.playerTurnLeft && !controls.playerTurnRight) {
         player.turnLeft();
     }
 
-    if(controls.playerTurnRight && !controls.playerTurnLeft) {
-        player.turnRight();           
+    if (controls.playerTurnRight && !controls.playerTurnLeft) {
+        player.turnRight();
     }
 }
 
 // ##############################################
 
-export class InputHandler {
-
+class InputHandler {
     // ##############################################
     // # Constructor ################################
     // ##############################################
@@ -142,12 +140,12 @@ export class InputHandler {
     // ##############################################
 
     checkInput() {
-        if(this.camera) {
-            _cameraMovement(this.camera);
+        if (this.camera) {
+            cameraMovement(this.camera);
         }
 
-        if(this.player) {
-            _playerMovement(this.player);
+        if (this.player) {
+            playerMovement(this.player);
         }
     }
 }

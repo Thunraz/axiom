@@ -1,14 +1,14 @@
 import * as THREE from 'three';
 
 import SpaceShip from './SpaceShip';
-export class Player extends SpaceShip {
-            
+
+class Player extends SpaceShip {
     // ##############################################
     // # Constructor ################################
     // ##############################################
 
     constructor(scene, name, options) {
-        if(!scene || !name || !options || typeof(options) !== 'object') {
+        if (!scene || !name || !options || typeof options !== 'object') {
             throw new Error('Player has not been initialized properly.');
         }
 
@@ -21,7 +21,7 @@ export class Player extends SpaceShip {
 
         this.elements = {
             thrust: document.getElementById('thrust'),
-            speed:  document.getElementById('playerSpeed')
+            speed:  document.getElementById('playerSpeed'),
         };
     }
 
@@ -30,10 +30,10 @@ export class Player extends SpaceShip {
     // ##############################################
 
     _createPositionIndicator() {
-        let arrowGeometry = new THREE.Geometry();
+        const arrowGeometry = new THREE.Geometry();
 
-        let xOffset = 3;
-        let zOffset = 3;
+        const xOffset = 3;
+        const zOffset = 3;
 
         // Push vertices for the arrow
         arrowGeometry.vertices.push(new THREE.Vector3(0 - xOffset, 0, 6 - zOffset));
@@ -42,7 +42,7 @@ export class Player extends SpaceShip {
         arrowGeometry.vertices.push(new THREE.Vector3(3 - xOffset, 0, 4 - zOffset));
         arrowGeometry.vertices.push(new THREE.Vector3(0 - xOffset, 0, 6 - zOffset));
         
-        let arrowMaterial      = new THREE.LineBasicMaterial({ color: 0x7fffd4 });
+        const arrowMaterial      = new THREE.LineBasicMaterial({ color: 0x7fffd4 });
         this.positionIndicator = new THREE.Line(arrowGeometry, arrowMaterial);
         this.positionIndicator.position.set(this.position.x, this.position.y, this.position.z);
         this.scene.add(this.positionIndicator);
@@ -54,16 +54,18 @@ export class Player extends SpaceShip {
 
     accelerate() {
         this.thrust += 0.01;
-        if(this.thrust > 1.0)
+        if (this.thrust > 1.0) {
             this.thrust = 1.0;
+        }
     }
 
     // ##############################################
 
     decelerate() {
         this.thrust -= 0.01;
-        if(this.thrust < 0.0)
+        if (this.thrust < 0.0) {
             this.thrust = 0.0;
+        }
     }
 
     // ##############################################
@@ -83,32 +85,30 @@ export class Player extends SpaceShip {
     update(deltaT, smoothDeltaT, spaceObjects) {
         super.update(deltaT, smoothDeltaT, spaceObjects);
 
-
-        if(this.positionIndicator) {
-
+        if (this.positionIndicator) {
             this.positionIndicator.rotation.set(
                 this.mesh.rotation.x,
                 this.mesh.rotation.y - Math.PI / 2,
-                this.mesh.rotation.z
+                this.mesh.rotation.z,
             );
         }
 
-        this.elements.thrust.style.height = this.thrust * 100 + '%';
-        this.elements.speed.innerText = 'current velocity: ' + Math.round(this.velocity.length() * 1000);
+        this.elements.thrust.style.height = `${this.thrust * 100}%`;
+        this.elements.speed.innerText = `current velocity: ${Math.round(this.velocity.length() * 1000)}`;
     }
 
     // ##############################################
 
     force(position, mass, id, gameObjects) {
-        let vec = super.force(position, mass, id, gameObjects);
+        const vec = super.force(position, mass, id, gameObjects);
 
-        if(!this.mesh) return vec;
+        if (!this.mesh) return vec;
         
-        let accelerationChange = new THREE.Vector3(0, 0, 0);
+        const accelerationChange = new THREE.Vector3(0, 0, 0);
         accelerationChange.set(
             Math.cos(this.mesh.rotation.y),
             0,
-            -Math.sin(this.mesh.rotation.y)
+            -Math.sin(this.mesh.rotation.y),
         );
 
         accelerationChange.multiplyScalar(this.thrust * 2E-24);

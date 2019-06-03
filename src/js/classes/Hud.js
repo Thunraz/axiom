@@ -2,8 +2,7 @@ import * as THREE from 'three';
 
 import config from '../config';
 
-export class Hud {
-            
+class Hud {
     // ##############################################
     // # Constructor ################################
     // ##############################################
@@ -22,17 +21,17 @@ export class Hud {
         this.camera = new THREE.OrthographicCamera(
             -config.canvasWidth / 2, config.canvasWidth / 2,
             config.canvasHeight / 2, -config.canvasHeight / 2,
-            0, 300
+            0, 300,
         );
 
         this.scene   = new THREE.Scene();
-        this.texture = new THREE.Texture(this.canvas)
+        this.texture = new THREE.Texture(this.canvas);
         this.texture.needsUpdate = true;
-        let material = new THREE.MeshBasicMaterial({map: this.texture });
+        const material = new THREE.MeshBasicMaterial({ map: this.texture });
         material.transparent = true;
 
-        let planeGeometry = new THREE.PlaneGeometry(config.canvasWidth, config.canvasHeight);
-        let plane         = new THREE.Mesh(planeGeometry, material);
+        const planeGeometry = new THREE.PlaneGeometry(config.canvasWidth, config.canvasHeight);
+        const plane         = new THREE.Mesh(planeGeometry, material);
         this.scene.add(plane);
     }
 

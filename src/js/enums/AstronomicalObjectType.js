@@ -1,4 +1,4 @@
-export class AstronomicalObjectType {
+class AstronomicalObjectType {
     static get NONE()  { return 0; }
     static get STAR()  { return 1; }
     static get SOLID() { return 2; }

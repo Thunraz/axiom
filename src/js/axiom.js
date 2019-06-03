@@ -1,5 +1,3 @@
-'use strict';
-
 import * as THREE from 'three';
 
 import Camera            from './classes/Camera';
@@ -12,79 +10,40 @@ import Stats             from './lib/stats';
 
 import config from './config';
 
-// Initialize stats
-let stats = new Stats();
-stats.showPanel(0);
-document.body.appendChild(stats.dom);
+// ################################################################################################
 
-// Create & initialize renderer
-let renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(config.canvasWidth, config.canvasHeight);
-document.getElementById('game').appendChild(renderer.domElement);
-config.maxAnisotropy = renderer.getMaxAnisotropy();
-window.addEventListener('resize', onWindowResize, false);
-
-// Create scene
-let scene = new THREE.Scene();
-scene.fog = new THREE.Fog(0x000000, 100, 1000);
-
-// Create HUD
-let hud = new Hud();
-
-// Create camera
-let camera = new Camera(
-    scene,
-    renderer,
-    config.camera.fov,
-    config.canvasWidth / config.canvasHeight,
-    config.camera.near,
-    config.camera.far,
-    new THREE.Vector3(
-        config.camera.initialPosition.x,
-        config.camera.initialPosition.y,
-        config.camera.initialPosition.z
-    )
-);
-
-scene.background = createCubeMap();
-scene.add(new THREE.AmbientLight(0x101010));
-
-GameObjectManager.add(new Grid(scene, 'xz_grid', { moveWithCamera: true }));
-GameObjectManager.load('assets/data/galaxy.json', scene, beginGame);
+let stats;
+let camera;
+let hud;
+let renderer;
+let scene;
 
 // Declare variables to calculate deltaT
 // and smoothed deltaT
-let lastFrameTime    = 0;
-let lastDeltaTValues = [];
-let smoothDeltaT     = 0;
-let inputHandler     = null;
+let   lastFrameTime    = 0;
+const lastDeltaTValues = [];
+let   smoothDeltaT     = 0;
+let   inputHandler     = null;
 
-// #############################################################################################################
+// ################################################################################################
 
 function createCubeMap() {
     // Create cube map
-    let baseUrl = 'assets/textures/';
-    let format = '.png';
-    let urls = [
-        baseUrl + 'px' + format, baseUrl + 'nx' + format,
-        baseUrl + 'py' + format, baseUrl + 'ny' + format,
-        baseUrl + 'pz' + format, baseUrl + 'nz' + format
+    const baseUrl = 'assets/textures/';
+    const format = '.png';
+    const urls = [
+        `${baseUrl}px${format}`, `${baseUrl}nx${format}`,
+        `${baseUrl}py${format}`, `${baseUrl}ny${format}`,
+        `${baseUrl}pz${format}`, `${baseUrl}nz${format}`,
     ];
 
-    let cube = new THREE.CubeTextureLoader().load(urls);
+    const cube = new THREE.CubeTextureLoader().load(urls);
     cube.format = THREE.RGBFormat;
 
     return cube;
 }
 
-// #############################################################################################################
-
-function beginGame() {
-    requestAnimationFrame(update);
-    inputHandler = new InputHandler(scene, camera, GameObjectManager.get('player'));
-}
-
-// #############################################################################################################
+// ################################################################################################
 
 function update(currentFrameTime) {
     stats.begin();
@@ -94,14 +53,14 @@ function update(currentFrameTime) {
     lastFrameTime = currentFrameTime;
 
     // Ugly hack to prevent "jumps" when the tab lost focus
-    if(deltaT > 32) deltaT = 1000/60;
+    if (deltaT > 32) deltaT = 1000 / 60;
 
     // Smooth deltaT
-    while(lastDeltaTValues.length >= config.framesToSmoothDeltaT) {
+    while (lastDeltaTValues.length >= config.framesToSmoothDeltaT) {
         lastDeltaTValues.splice(0, 1);
     }
     lastDeltaTValues.push(deltaT);
-    smoothDeltaT = lastDeltaTValues.reduce(function(prev, cur) { return prev + cur;}) / lastDeltaTValues.length;
+    smoothDeltaT = lastDeltaTValues.reduce((prev, cur) => prev + cur) / lastDeltaTValues.length;
 
     // Update controls
     camera.controls.update();
@@ -122,13 +81,20 @@ function update(currentFrameTime) {
     renderer.render(scene, camera.camera);
 
     // Render HUD
-    //renderer.render(hud.scene, hud.camera);
+    // renderer.render(hud.scene, hud.camera);
 
     stats.end();
     requestAnimationFrame(update);
 }
 
-// #############################################################################################################
+// ################################################################################################
+
+function beginGame() {
+    requestAnimationFrame(update);
+    inputHandler = new InputHandler(scene, camera, GameObjectManager.get('player'));
+}
+
+// ################################################################################################
 
 function onWindowResize() {
     camera.camera.aspect = window.innerWidth / window.innerHeight;
@@ -137,4 +103,48 @@ function onWindowResize() {
     renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
-// #############################################################################################################
+// ################################################################################################
+
+function init() {
+    // Initialize stats
+    stats = new Stats();
+    stats.showPanel(0);
+    document.body.appendChild(stats.dom);
+
+    // Create & initialize renderer
+    renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(config.canvasWidth, config.canvasHeight);
+    document.getElementById('game').appendChild(renderer.domElement);
+    config.maxAnisotropy = renderer.getMaxAnisotropy();
+    window.addEventListener('resize', onWindowResize, false);
+
+    // Create scene
+    scene = new THREE.Scene();
+    scene.fog = new THREE.Fog(0x000000, 100, 1000);
+
+    // Create HUD
+    hud = new Hud();
+
+    // Create camera
+    camera = new Camera(
+        scene,
+        renderer,
+        config.camera.fov,
+        config.canvasWidth / config.canvasHeight,
+        config.camera.near,
+        config.camera.far,
+        new THREE.Vector3(
+            config.camera.initialPosition.x,
+            config.camera.initialPosition.y,
+            config.camera.initialPosition.z,
+        ),
+    );
+
+    scene.background = createCubeMap();
+    scene.add(new THREE.AmbientLight(0x101010));
+
+    GameObjectManager.add(new Grid(scene, 'xz_grid', { moveWithCamera: true }));
+    GameObjectManager.load('assets/data/galaxy.json', scene, beginGame);
+}
+
+init();
