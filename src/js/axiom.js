@@ -115,7 +115,7 @@ function init() {
     renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(config.canvasWidth, config.canvasHeight);
     document.getElementById('game').appendChild(renderer.domElement);
-    config.maxAnisotropy = renderer.getMaxAnisotropy();
+    config.maxAnisotropy = renderer.capabilities.getMaxAnisotropy();
     window.addEventListener('resize', onWindowResize, false);
 
     // Create scene
