@@ -1,4 +1,4 @@
-export class NoiseType {
+class NoiseType {
     static get Perlin2D()  { return 0; }
     static get Perlin3D()  { return 1; }
     static get Simplex2D() { return 2; }

@@ -7,8 +7,7 @@ import NoiseType              from '../enums/NoiseType';
 
 import config from '../config';
 
-export class Star extends AstronomicalObject {
-
+class Star extends AstronomicalObject {
     // ##############################################
     // # Constructor ################################
     // ##############################################
@@ -16,7 +15,7 @@ export class Star extends AstronomicalObject {
     constructor(scene, name, options) {
         super();
         
-        if(!scene || !name || !options) {
+        if (!scene || !name || !options) {
             throw new Error('Star has not been initialized properly.');
         }
 
@@ -30,11 +29,11 @@ export class Star extends AstronomicalObject {
         
         this.astronomicalObjectType = AstronomicalObjectType.STAR;
 
-        this._createLight();
-        this._createMesh();
+        this.createLight();
+        this.createMesh();
 
-        if(config.showDirectionalVectors) {
-            this.arrowMesh = this._createDirectionalArrow();
+        if (config.showDirectionalVectors) {
+            this.arrowMesh = this.createDirectionalArrow();
             this.scene.add(this.arrowMesh);
         }
     }
@@ -43,22 +42,22 @@ export class Star extends AstronomicalObject {
     // # Private functions ##########################
     // ##############################################
 
-    _createLight() {
-        this.light = new THREE.PointLight( 0x111111, 4 * Math.PI, 100 );
+    createLight() {
+        this.light = new THREE.PointLight(0x111111, 4 * Math.PI, 100);
         this.light.position.set(this.position.x, this.position.y, this.position.z);
         this.scene.add(this.light);
     }
 
     // ##############################################
     
-    _createMesh() {
-        let perlinNoise = new Noise(256, 256, 6, NoiseType.Perlin2D);
+    createMesh() {
+        const perlinNoise = new Noise(256, 256, 6, NoiseType.Perlin2D);
 
-        let geometry = new THREE.SphereGeometry(this.radius / 100, 32, 32);
-        let material = new THREE.MeshPhongMaterial({
-            emissive: this.color,
+        const geometry = new THREE.SphereGeometry(this.radius / 100, 32, 32);
+        const material = new THREE.MeshPhongMaterial({
+            emissive:    this.color,
             emissiveMap: perlinNoise.Texture,
-            //map: perlinNoise.NoiseTexture(256, 256)
+            // map: perlinNoise.NoiseTexture(256, 256)
         });
         
         this.mesh = new THREE.Mesh(geometry, material);
@@ -76,18 +75,17 @@ export class Star extends AstronomicalObject {
         this.mesh.position.set(this.position.x, this.position.y, this.position.z);
         this.light.position.set(this.position.x, this.position.y, this.position.z);
 
-        if(config.showDirectionalVectors && this.arrowMesh == null) {
-            this.arrowMesh = this._createDirectionalArrow();
+        if (config.showDirectionalVectors && this.arrowMesh == null) {
+            this.arrowMesh = this.createDirectionalArrow();
             this.scene.add(this.arrowMesh);
         }
 
-        if(this.arrowMesh != null) {
+        if (this.arrowMesh != null) {
             this.arrowMesh.visible = config.showDirectionalVectors;
         }
     }
 
     // ##############################################
-
 } // class
 
 export default Star;

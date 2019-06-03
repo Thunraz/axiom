@@ -2,8 +2,7 @@ import * as THREE from 'three';
 
 import SpaceObject from './SpaceObject';
 
-export class TrailParticle extends SpaceObject {
-
+class TrailParticle extends SpaceObject {
     // ##############################################
     // # Constructor ################################
     // ##############################################
@@ -21,7 +20,7 @@ export class TrailParticle extends SpaceObject {
         this.alive    = this.life < this.lifetime;
         
         this.mesh     = null;
-        this._createMesh(position, oldPosition);
+        this.createMesh(position, oldPosition);
         this.scene.add(this.mesh);
     }
 
@@ -29,10 +28,10 @@ export class TrailParticle extends SpaceObject {
     // # Private functions ##########################
     // ##############################################
 
-    _createMesh(newPos, oldPos) {
-        let material = new THREE.LineBasicMaterial({color: this.color, transparent: true});
+    createMesh(newPos, oldPos) {
+        const material = new THREE.LineBasicMaterial({ color: this.color, transparent: true });
 
-        let geometry = new THREE.Geometry();
+        const geometry = new THREE.Geometry();
         geometry.vertices.push(oldPos, newPos);
         
         this.mesh = new THREE.Line(geometry, material);
@@ -45,9 +44,8 @@ export class TrailParticle extends SpaceObject {
     update(deltaT) {
         super.update(deltaT);
 
-        if(this.life <= this.lifetime) {
-
-            let factor = 1 - this.life / this.lifetime / 50;
+        if (this.life <= this.lifetime) {
+            const factor = 1 - this.life / this.lifetime / 50;
 
             // Fade to black (alpha not available)
             this.mesh.material.color.r *= factor;
@@ -67,7 +65,6 @@ export class TrailParticle extends SpaceObject {
     }
 
     // ##############################################
-
 } // class
 
 export default TrailParticle;

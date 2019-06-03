@@ -4,32 +4,28 @@ import Planet from './Planet';
 import Player from './Player';
 import Star   from './Star';
 
-export class GameObjectManager {
+class GameObjectManager {
     static get(index) {
-        if(GameObjectManager.GameObjects == null) {
+        if (GameObjectManager.GameObjects == null) {
             GameObjectManager.GameObjects = [];
         }
 
-        if(!isNaN(index)) {
-            return GameObjectManager.GameObjects[index]; 
-        } else {
-            let found = GameObjectManager.GameObjects.find(function(o) {
-                return o.name == index;
-            });
-
-            if(found == null) return GameObjectManager.GameObjects;
-
-            return found;
+        if (typeof index === 'number') {
+            return GameObjectManager.GameObjects[index];
         }
+
+        const found = GameObjectManager.GameObjects.find(o => o.name === index);
+
+        return found || GameObjectManager.GameObjects;
     }
 
     static add(gameObject) {
-        if(GameObjectManager.GameObjects == null) {
+        if (GameObjectManager.GameObjects == null) {
             GameObjectManager.GameObjects = [];
         }
 
-        if(Array.isArray(gameObject)) {
-            gameObject.forEach(function(current) {
+        if (Array.isArray(gameObject)) {
+            gameObject.forEach((current) => {
                 GameObjectManager.GameObjects.push(current);
             });
         } else {
@@ -38,22 +34,22 @@ export class GameObjectManager {
     }
 
     static update(deltaT, smoothDeltaT) {
-        if(GameObjectManager.GameObjects == null) {
+        if (GameObjectManager.GameObjects == null) {
             GameObjectManager.GameObjects = [];
         }
 
-        GameObjectManager.GameObjects.forEach(function(gameObject) {
+        GameObjectManager.GameObjects.forEach((gameObject) => {
             gameObject.update(deltaT, smoothDeltaT, GameObjectManager.GameObjects);
         });
     }
 
     static updatePositions(deltaT, smoothDeltaT) {
-        if(GameObjectManager.GameObjects == null) {
+        if (GameObjectManager.GameObjects == null) {
             GameObjectManager.GameObjects = [];
         }
 
-        GameObjectManager.GameObjects.forEach(function(gameObject) {
-            if(typeof(gameObject.updatePosition) == 'function') {
+        GameObjectManager.GameObjects.forEach((gameObject) => {
+            if (typeof gameObject.updatePosition  === 'function') {
                 gameObject.updatePosition(deltaT, smoothDeltaT, GameObjectManager.GameObjects);
             }
         });
@@ -61,14 +57,14 @@ export class GameObjectManager {
 
     static load(url, scene, callback) {
         function xhrCallback(json) {
-            if(json.player) {
+            if (json.player) {
                 json.player.position = new THREE.Vector3(
                     json.player.position.x,
                     json.player.position.y,
-                    json.player.position.z
+                    json.player.position.z,
                 );
 
-                let player = new Player(scene, 'player', json.player);
+                const player = new Player(scene, 'player', json.player);
                 GameObjectManager.add(player);
 
                 GameObjectManager.get('player').velocity.setX(json.player.initialVelocity.x);
@@ -76,42 +72,42 @@ export class GameObjectManager {
                 GameObjectManager.get('player').velocity.setZ(json.player.initialVelocity.z);
             }
 
-            if(json.planets) {
-                json.planets.forEach(function(planetOptions) {
+            if (json.planets) {
+                json.planets.forEach((planetOptions) => {
                     planetOptions.color = parseInt(planetOptions.color, 16);
                     planetOptions.position = new THREE.Vector3(
                         planetOptions.position.x,
                         planetOptions.position.y,
-                        planetOptions.position.z
+                        planetOptions.position.z,
                     );
 
-                    let planet = new Planet(scene, planetOptions.name, planetOptions);
+                    const planet = new Planet(scene, planetOptions.name, planetOptions);
                     GameObjectManager.add(planet);
 
                     GameObjectManager.get(planetOptions.name).velocity.set(
                         planetOptions.initialVelocity.x,
                         planetOptions.initialVelocity.y,
-                        planetOptions.initialVelocity.z
+                        planetOptions.initialVelocity.z,
                     );
                 });
             }
 
-            if(json.stars) {
-                json.stars.forEach(function(starOptions) {
+            if (json.stars) {
+                json.stars.forEach((starOptions) => {
                     starOptions.color = parseInt(starOptions.color, 16);
                     starOptions.position = new THREE.Vector3(
                         starOptions.position.x,
                         starOptions.position.y,
-                        starOptions.position.z
+                        starOptions.position.z,
                     );
 
-                    let star = new Star(scene, starOptions.name, starOptions);
+                    const star = new Star(scene, starOptions.name, starOptions);
                     GameObjectManager.add(star);
 
                     GameObjectManager.get(starOptions.name).velocity.set(
                         starOptions.initialVelocity.x,
                         starOptions.initialVelocity.y,
-                        starOptions.initialVelocity.z
+                        starOptions.initialVelocity.z,
                     );
                 });
             }
@@ -119,16 +115,16 @@ export class GameObjectManager {
             callback();
         }
 
-        let xhr = new XMLHttpRequest();
+        const xhr = new XMLHttpRequest();
         xhr.open('get', url, true);
         xhr.responseType = 'json';
-        xhr.onload = function() {
-            let status = xhr.status;
-            if (status == 200) {
+        xhr.onload = () => {
+            const { status } = xhr;
+            if (status === 200) {
                 return xhrCallback(xhr.response);
-            } else {
-                return null;
             }
+
+            return null;
         };
         xhr.send();
     }
