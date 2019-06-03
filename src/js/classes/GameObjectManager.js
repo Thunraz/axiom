@@ -119,7 +119,7 @@ class GameObjectManager {
         xhr.open('get', url, true);
         xhr.responseType = 'json';
         xhr.onload = () => {
-            const [status] = xhr.status;
+            const { status } = xhr;
             if (status === 200) {
                 return xhrCallback(xhr.response);
             }
