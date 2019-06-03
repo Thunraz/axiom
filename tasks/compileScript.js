@@ -25,12 +25,16 @@ function build() {
         input:    'src/js/axiom.js',
         plugins:  [pug()],
         cache,
-        external: [],
+        external: [
+            'three',
+        ],
     }).then(bundle => bundle.write({
         file:      'dist/app.js',
         sourcemap: true,
         format:    'iife',
-        globals:   { },
+        globals:   {
+            three: 'THREE',
+        },
     }));
 }
 
