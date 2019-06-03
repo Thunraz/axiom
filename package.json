@@ -27,11 +27,11 @@
     "gulp-rename": "^1.4.0",
     "gulp-uglify-es": "^1.0.4",
     "gulp-uglifycss": "^1.1.0",
-    "gulp-zip": "^4.2.0",
+    "gulp-zip": "^5.0.0",
     "pug": "^2.0.3",
     "rollup": "^1.12.3",
     "st": "^1.2.2",
-    "three": "^0.83.0",
+    "three": "^0.105.1",
     "through2": "^3.0.1"
   },
   "devDependencies": {
