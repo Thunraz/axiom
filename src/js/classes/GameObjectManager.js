@@ -10,7 +10,7 @@ class GameObjectManager {
             GameObjectManager.GameObjects = [];
         }
 
-        if (!Number.isNaN(index)) {
+        if (typeof index === 'number') {
             return GameObjectManager.GameObjects[index];
         }
 
