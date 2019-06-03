@@ -1,5 +1,7 @@
 # axiom
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/Thunraz/axiom.svg)](https://greenkeeper.io/)
+
 What?
 -----
 Axiom is a space game heavily under development. It uses Newtonian physics integrated using Velocity Verlet.
