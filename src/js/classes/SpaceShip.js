@@ -18,16 +18,17 @@ class SpaceShip extends AstronomicalObject {
         this.mass     = options.mass     || 5;
         this.position = options.position || new THREE.Vector3();
         this.color    = options.color    || 0x7fffd4;
-        options.model = options.model    || 'assets/models/ship.json';
+        options.model = options.model    || 'assets/models/ship.gltf';
         
         this.positionIndicatorScale = 3;
 
         const scope = this;
 
         const loader = new THREE.GLTFLoader();
-        loader.load(options.model, (shipGeometry, shipMaterials) => {
-            const shipMaterial = new THREE.MultiMaterial(shipMaterials);
-            scope.mesh         = new THREE.Mesh(shipGeometry, shipMaterial);
+        loader.load(options.model, (gltf) => {
+            const [gltfObjects] = gltf.scene.children;
+            [scope.mesh] = gltfObjects.children;
+            scope.mesh.geometry.computeBoundingSphere();
             scene.add(scope.mesh);
 
             scope.createPositionIndicator();

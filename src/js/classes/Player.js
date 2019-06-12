@@ -12,7 +12,7 @@ class Player extends SpaceShip {
             throw new Error('Player has not been initialized properly.');
         }
 
-        options.model = 'assets/models/ship.json';
+        options.model = 'assets/models/ship.gltf';
 
         super(scene, name, options);
         this.positionIndicatorScale = 1;
