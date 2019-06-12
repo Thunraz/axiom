@@ -219,7 +219,7 @@ class AstronomicalObject extends SpaceObject {
         for (let i = 0; i < gameObjects.length; i++) {
             const spaceObject = gameObjects[i];
 
-            if (spaceObject.id !== id) {
+            if (spaceObject.id !== id && spaceObject instanceof AstronomicalObject) {
                 const distance = position.distanceTo(spaceObject.position);
                 const val = Constants.GRAVITATIONAL_CONSTANT
                     * (mass * spaceObject.mass) / (distance ** 2);
