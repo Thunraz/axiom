@@ -25,7 +25,7 @@ class Planet extends AstronomicalObject {
         this.radius       = options.radius   || 100;
         this.position     = options.position || new THREE.Vector3();
         this.color        = options.color    || Math.round(
-            Math.random() * 0xffffff / 2 + 0xffffff / 2,
+            (Math.random() * 0xffffff) / 2 + 0xffffff / 2,
         );
 
         this.trail = [];
@@ -92,7 +92,7 @@ class Planet extends AstronomicalObject {
             this.trail[i].update(deltaT);
         }
 
-        this.trail = this.trail.filter(value => value.alive);
+        this.trail = this.trail.filter((value) => value.alive);
 
         if (config.showDirectionalVectors && this.arrowMesh == null) {
             this.arrowMesh = this.createDirectionalArrow();

@@ -50,7 +50,7 @@ class SpaceShip extends AstronomicalObject {
         const positionIndicatorGeometry = new THREE.Geometry();
             
         const numberSegments = 16;
-        const circleSegment = 2 * Math.PI / numberSegments;
+        const circleSegment = (2 * Math.PI) / numberSegments;
         const circleRadius = this.mesh.geometry.boundingSphere.radius * 1.1;
 
         for (let i = 0; i <= numberSegments; i++) {
