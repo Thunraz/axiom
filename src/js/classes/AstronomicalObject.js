@@ -82,7 +82,7 @@ class AstronomicalObject extends SpaceObject {
             // Create circle
             const circleGeometry = new THREE.Geometry();
             const numberSegments = 16;
-            const circleSegment  = 2 * Math.PI / numberSegments;
+            const circleSegment  = (2 * Math.PI) / numberSegments;
             radius *= 0.02;
 
             if (radius < 1) radius = 1;
@@ -221,8 +221,8 @@ class AstronomicalObject extends SpaceObject {
 
             if (spaceObject.id !== id && spaceObject instanceof AstronomicalObject) {
                 const distance = position.distanceTo(spaceObject.position);
-                const val = Constants.GRAVITATIONAL_CONSTANT
-                    * (mass * spaceObject.mass) / (distance ** 2);
+                const val = (Constants.GRAVITATIONAL_CONSTANT * (mass * spaceObject.mass))
+                    / (distance ** 2);
 
                 const direction = new THREE.Vector3(0, 0, 0)
                     .subVectors(spaceObject.position, position)
