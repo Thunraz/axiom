@@ -14,7 +14,7 @@ class GameObjectManager {
             return GameObjectManager.GameObjects[index];
         }
 
-        const found = GameObjectManager.GameObjects.find(o => o.name === index);
+        const found = GameObjectManager.GameObjects.find((o) => o.name === index);
 
         return found || GameObjectManager.GameObjects;
     }
