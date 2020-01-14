@@ -20,7 +20,7 @@
     "three": "^0.112.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.4",
+    "@babel/core": "^7.8.0",
     "@babel/preset-env": "^7.4.4",
     "@babel/register": "^7.4.4",
     "ansi-colors": "^4.0.1",
