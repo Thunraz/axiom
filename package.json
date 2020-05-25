@@ -37,7 +37,7 @@
     "gulp-uglifycss": "^1.1.0",
     "gulp-zip": "^5.0.0",
     "minimatch": "^3.0.4",
-    "pug": "^2.0.3",
+    "pug": "^3.0.0",
     "rollup": "^2.0.0",
     "rollup-plugin-pug": "^1.1.1",
     "serve": "^11.0.1",
