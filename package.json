@@ -38,7 +38,7 @@
     "gulp-zip": "^5.0.0",
     "minimatch": "^3.0.4",
     "pug": "^3.0.0",
-    "rollup": "^2.0.0",
+    "rollup": "^2.10.9",
     "rollup-plugin-pug": "^1.1.1",
     "serve": "^11.0.1",
     "st": "^2.0.0",
