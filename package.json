@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/Thunraz/axiom#readme",
   "dependencies": {
-    "three": "^0.115.0"
+    "three": "^0.116.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.0",
@@ -37,7 +37,7 @@
     "gulp-uglifycss": "^1.1.0",
     "gulp-zip": "^5.0.0",
     "minimatch": "^3.0.4",
-    "pug": "^2.0.3",
+    "pug": "^3.0.0",
     "rollup": "^2.10.9",
     "rollup-plugin-pug": "^1.1.1",
     "serve": "^11.0.1",
