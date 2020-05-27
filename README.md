@@ -3,7 +3,7 @@
 [![npm](https://img.shields.io/github/license/thunraz/axiom.svg)](https://github.com/Thunraz/axiom/blob/master/LICENSE)
 [![GitHub tag](https://img.shields.io/github/tag/thunraz/axiom.svg)](https://github.com/Thunraz/axiom/tags)
 [![Build Status](https://travis-ci.org/Thunraz/axiom.svg?branch=master)](https://travis-ci.org/Thunraz/axiom)
-[![Greenkeeper badge](https://badges.greenkeeper.io/Thunraz/axiom.svg)](https://greenkeeper.io/)
+
 
 What?
 -----
