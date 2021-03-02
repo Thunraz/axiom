@@ -134,7 +134,6 @@ class InputHandler {
             .addEventListener('change', showDirectionalVectors, false);
     }
     
-
     // ##############################################
     // # Public functions ###########################
     // ##############################################
