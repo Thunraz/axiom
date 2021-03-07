@@ -1,7 +1,7 @@
 const gulp = require('gulp');
 const fs   = require('fs');
 const pug  = require('pug');
-const gpug = require('gulp-pug');
+const gpug = require('gulp-pug-3');
 
 function writeFile(fname, data) {
     return new Promise((resolve, reject) => {
